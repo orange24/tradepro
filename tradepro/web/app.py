@@ -21,6 +21,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from datetime import datetime, timezone
 
+import numpy as np
 from flask import Flask, Response, abort, jsonify, redirect, render_template, request, url_for
 
 from ..advisor import advise
@@ -28,7 +29,7 @@ from ..config import DEFAULT
 from ..indicators import add_features
 from ..markets import MARKETS
 from ..prices import PriceService
-from ..setups import detect
+from ..setups import count_highs, detect
 from ..store import Store
 from ..watchlists import WATCHLISTS
 
@@ -47,6 +48,18 @@ STATUS_TH = {"hold": "ถือต่อ", "watch": "เฝ้าระวัง
 CONTEXT_TH = {"bull": "ขาขึ้น", "bear": "ขาลง", "range": "ไซด์เวย์"}
 CURRENCY = {"set": "฿", "us": "$"}
 SETUP_ORDER = {"H2": 0, "H1": 1, "BO_BULL": 2, "FAILED_BO": 3}
+
+
+def pivots(f, side: int = 3):
+    """Swing highs / lows: bars whose high (low) is the extreme of `side` bars on each side."""
+    hi, lo = f["high"].to_numpy(), f["low"].to_numpy()
+    out = []
+    for k in range(side, len(f) - side):
+        if hi[k] == hi[k - side:k + side + 1].max():
+            out.append((k, "high", hi[k]))
+        if lo[k] == lo[k - side:k + side + 1].min():
+            out.append((k, "low", lo[k]))
+    return out
 
 
 def market_cfg(market: str):
@@ -193,6 +206,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if market not in MARKETS:
             abort(404)
         return render_template("scan.html", market=market, scan=store.latest_scan(market),
+                               watchlist=WATCHLISTS[MARKETS[market].watchlist],
                                running=market in scanner.running, active="scan")
 
     @app.post("/scan/run")
@@ -201,6 +215,14 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if market in MARKETS:
             scanner.start(market)
         return redirect(url_for("scan_page", market=market))
+
+    @app.get("/chart")
+    def chart_lookup():
+        market = request.args.get("market", "set")
+        ticker = request.args.get("ticker", "").strip().upper()
+        if market not in MARKETS or not ticker:
+            return redirect(url_for("scan_page", market=market if market in MARKETS else "set"))
+        return redirect(url_for("chart_page", market=market, ticker=ticker))
 
     @app.get("/chart/<market>/<ticker>")
     def chart_page(market, ticker):
@@ -217,20 +239,50 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         except Exception as e:
             return jsonify(error=str(e)), 502
         cfg = market_cfg(market)
-        f = add_features(df, cfg).iloc[-250:]
+        full = add_features(df, cfg)
+        hc, _, hpb = count_highs(full["high"].to_numpy())
+        lc, _, lpb = count_highs(-full["low"].to_numpy())
+        f = full.iloc[-250:]
+        n0 = len(full) - len(f)
         day = lambda d: d.strftime("%Y-%m-%d")
+        num = lambda v: None if v is None or not np.isfinite(v) else round(float(v), 4)
         sigs = [s for s in detect(df.iloc[-300:], ticker, cfg) if s.date >= f.index[0]]
         a = advise(df, cfg)
         held = [h for h in store.holdings() if h["market"] == market and h["ticker"] == ticker.upper()]
+        L = cfg.range_lookback
+        rng = full.iloc[-L - 1:-1]
+        last = full.iloc[-1]
+        latest = next((s for s in reversed(sigs) if s.date >= full.index[-3]), None)   # live in the last 3 bars
+        bars = []
+        for k, (d, r) in enumerate(zip(f.index, f.itertuples())):
+            i = n0 + k
+            # label the bar that completes a count (the H1 / H2 bar itself)
+            count = (f"H{hc[i]}" if hpb[i] and hc[i] > hc[i - 1] else "") or \
+                    (f"L{lc[i]}" if lpb[i] and lc[i] > lc[i - 1] else "")
+            bars.append({"time": day(d), "ema": num(r.ema), "atr": num(r.atr), "context": r.context,
+                         "body": num(r.body_ratio), "close_pos": num(r.close_pos),
+                         "strong": bool(r.strong), "count": count})
         return jsonify(
             candles=[{"time": day(d), "open": r.open, "high": r.high, "low": r.low, "close": r.close}
                      for d, r in zip(f.index, f.itertuples())],
             ema=[{"time": day(d), "value": v} for d, v in f["ema"].items()],
-            signals=[{"time": day(s.date), "setup": s.setup, "direction": s.direction,
-                      "entry": s.entry, "stop": s.stop, "target": s.target} for s in sigs],
+            bars=bars,
+            swings=[{"time": day(f.index[k]), "kind": kind, "price": num(p)} for k, kind, p in pivots(f)],
+            signals=[{"time": day(s.date), "setup": s.setup, "direction": s.direction, "entry": s.entry,
+                      "stop": s.stop, "target": s.target, "reward_r": round(s.reward_r, 2), "note": s.note}
+                     for s in sigs],
+            latest=None if latest is None else {
+                "time": day(latest.date), "setup": latest.setup, "direction": latest.direction,
+                "entry": latest.entry, "stop": latest.stop, "target": latest.target,
+                "reward_r": round(latest.reward_r, 2), "note": latest.note},
+            levels={"range_high": num(rng["high"].max()), "range_low": num(rng["low"].min()),
+                    "range_mid": num((rng["high"].max() + rng["low"].min()) / 2), "range_bars": L,
+                    "ema": num(last.ema), "atr": num(last.atr), "frac_above": num(last.frac_above),
+                    "ema_slope_atr": num(last.ema_slope_atr), "strong": bool(last.strong)},
             advice={"status": a.status, "stop": a.stop, "resistance": a.resistance,
                     "context": a.context, "reasons": a.reasons},
             cost=held[0]["cost"] if held else None,
+            shares=held[0]["shares"] if held else None,
         )
 
     return app

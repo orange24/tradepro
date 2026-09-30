@@ -4,3 +4,4 @@ __pycache__/
 data/
 trades.csv
 .venv/
+data_web.log

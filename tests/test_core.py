@@ -27,6 +27,14 @@ def test_count_highs_two_legged_pullback():
     assert not in_pb[6]
 
 
+def test_count_highs_resets_on_strong_breakout():
+    high = np.array([10, 12, 11.5, 11.8, 11.0, 11.6, 11.2, 11.4])
+    reset = np.zeros(len(high), bool)
+    reset[5] = True                      # bar 5 would be H2, but it is a strong breakout: new leg
+    count, _, _ = count_highs(high, reset)
+    assert list(count) == [0, 0, 0, 1, 1, 0, 0, 1]
+
+
 def _bars(closes, spread=0.4):
     closes = np.asarray(closes, float)
     opens = np.r_[closes[0], closes[:-1]]
@@ -97,3 +105,24 @@ def test_cli_both_markets(tmp_path, capsys):
     assert set(pd.read_csv(out)["market"]) == {"set", "us"}
     main(["scan", "--market", "all", "--source", "synthetic", "--recent", "3"])
     assert "No setups" not in capsys.readouterr().out
+
+
+def test_signal_bar_rejects_doji_and_bear_bars():
+    from tradepro.indicators import is_good_bull_signal
+    from types import SimpleNamespace as R
+
+    cfg = Config()
+    good = R(open=10.0, close=10.8, high=10.9, low=9.9, range=1.0, body_ratio=0.8, close_pos=0.9, atr=1.0)
+    doji = R(open=10.4, close=10.5, high=10.9, low=9.9, range=1.0, body_ratio=0.1, close_pos=0.6, atr=1.0)
+    bear = R(open=10.8, close=10.0, high=10.9, low=9.9, range=1.0, body_ratio=0.8, close_pos=0.1, atr=1.0)
+    assert is_good_bull_signal(good, cfg)
+    assert not is_good_bull_signal(doji, cfg) and not is_good_bull_signal(bear, cfg)
+
+
+def test_breakout_waits_for_follow_through():
+    flat = [20 + 0.3 * np.sin(k) for k in range(40)]
+    df = _bars(flat + [22.5, 23.4], spread=0.05)      # breakout bar, then a follow-through bar
+    df.iloc[-1, df.columns.get_loc("low")] = 22.45     # gap above the breakout point
+    bo = lambda cfg: [s.date for s in detect(df, "X", cfg) if s.setup == "BO_BULL"]
+    assert df.index[-2] in bo(Config(bo_follow_through=False))
+    assert bo(Config(bo_follow_through=True)) == [df.index[-1]]

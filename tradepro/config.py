@@ -15,16 +15,20 @@ class Config:
     strong_slope_atr: float = 0.6
     atr_period: int = 14
 
+    pb_reset_on_breakout: bool = False  # HL-8: also reset the H/L count on a strong breakout bar (backtest: worse)
+    pb_breakout_bars: int = 5         # ... a strong bar closing above this many bars' highs
+
     # Bars (BAR-1..BAR-5)
     trend_bar_body: float = 0.6       # body / range for a trend bar
     doji_body: float = 0.25
-    signal_close_pos: float = 0.6     # close must be in the top 40% for a bull signal bar
+    signal_close_pos: float = 0.5     # bull signal bar closes at least above its midpoint (BAR-3)
     max_signal_bar_atr: float = 2.0   # skip signal bars bigger than this many ATRs
 
     # Breakouts (BO-1..BO-3)
     range_lookback: int = 20          # bars defining the range being broken
     bo_close_pos: float = 0.75
     bo_min_range_atr: float = 1.0
+    bo_follow_through: bool = False   # BO-6: wait for a follow-through bar before entering (backtest: worse)
 
     # Risk (RISK-1..RISK-5)
     reward_r: float = 2.0             # target for pullback setups, in multiples of risk

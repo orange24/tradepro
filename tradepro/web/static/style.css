@@ -57,3 +57,19 @@ button.ghost:hover { color: var(--red); border-color: var(--red); }
 details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
 #chart { height: 480px; }
 .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-top: 10px; }
+.toggles { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+.toggles label { flex-direction: row; align-items: center; gap: 5px; font-size: 13px; }
+.toggles input { min-width: auto; }
+.hover { font-size: 13px; color: var(--muted); min-height: 38px; margin-bottom: 6px; line-height: 1.45; }
+.hover b { color: var(--text); font-weight: 600; }
+.sw { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
+table.kv th { width: 190px; color: var(--text); font-weight: 500; border-top: 1px solid var(--line); }
+table.kv tr:first-child th, table.kv tr:first-child td { border-top: none; }
+table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
+@media (max-width: 640px) { #chart { height: 360px; } table.kv th { width: auto; } }
+.lookup { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+.lookup input { width: 150px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips a { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; color: var(--text); font-size: 13px; }
+.chips a:hover { border-color: var(--accent); color: var(--accent); }
+@media (max-width: 640px) { .bar { flex-wrap: wrap; } .lookup { margin-left: 0; width: 100%; } .lookup input { flex: 1; width: auto; } }

@@ -47,9 +47,10 @@ def add_features(df: pd.DataFrame, cfg: Config) -> pd.DataFrame:
 
 
 def is_good_bull_signal(row, cfg: Config) -> bool:
-    """BAR-3 / BAR-5: bull close in the upper part of the bar, not oversized."""
+    """BAR-3 / BAR-5: bull body (not a doji or bear bar), close above the midpoint, not oversized."""
     return (
-        row.close >= row.open
+        row.close > row.open
+        and row.body_ratio >= cfg.doji_body
         and row.close_pos >= cfg.signal_close_pos
         and row.range <= cfg.max_signal_bar_atr * row.atr
         and row.range > 0
@@ -59,7 +60,8 @@ def is_good_bull_signal(row, cfg: Config) -> bool:
 def is_good_bear_signal(row, cfg: Config) -> bool:
     """BAR-4 / BAR-5."""
     return (
-        row.close <= row.open
+        row.close < row.open
+        and row.body_ratio >= cfg.doji_body
         and row.close_pos <= 1 - cfg.signal_close_pos
         and row.range <= cfg.max_signal_bar_atr * row.atr
         and row.range > 0
