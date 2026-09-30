@@ -54,7 +54,7 @@ SETUP_ORDER = {"H2": 0, "H1": 1, "BO_BULL": 2, "W3": 3, "FAILED_BO": 4}
 
 # Scan universes: id -> (market, watchlist, label)
 SCANS = {
-    "set": ("set", "set50", "หุ้นไทย (SET50)"),
+    "set": ("set", "set100", "หุ้นไทย (SET100)"),
     "setall": ("set", "set_all", "หุ้นไทยทั้งหมด (SET + mai)"),
     "us": ("us", "us50", "หุ้นสหรัฐ (US50)"),
 }

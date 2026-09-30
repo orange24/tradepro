@@ -43,7 +43,7 @@ def main(argv=None):
         sp.add_argument("tickers", nargs="*", help="e.g. PTT KBANK or AAPL MSFT (default: the market's watchlist)")
         sp.add_argument("--market", default="set", choices=["set", "us", "all"])
         sp.add_argument("--watchlist", default=None, choices=sorted(WATCHLISTS),
-                        help="default: set50 for SET, us50 for US")
+                        help="default: set100 for SET, us50 for US")
         sp.add_argument("--source", default="yahoo", help="yahoo | csv | synthetic")
         sp.add_argument("--csv-dir", default="data/cache", help="per-market subfolders set/ and us/")
         sp.add_argument("--start", default=None, help="first date, e.g. 2015-01-01")

@@ -13,7 +13,7 @@ class Market:
 
 MARKETS = {
     # SET: ~0.157% commission each side + VAT, plus slippage
-    "set": Market("set", ".BK", "set50", 0.2),
+    "set": Market("set", ".BK", "set100", 0.2),
     # US: zero-commission brokers; cost is mostly spread/slippage
     "us": Market("us", "", "us50", 0.05),
 }

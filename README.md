@@ -6,7 +6,7 @@
   ให้ตรวจแต่ละข้อกับ NotebookLM แล้วปรับค่าใน [`tradepro/config.py`](tradepro/config.py)
 - **กลยุทธ์ Wave 3 + CDC Action Zone (ลุงโฉลก)**: setup `W3` ดู [`docs/chaloke_wave3.md`](docs/chaloke_wave3.md)
 - **ตลาด**: หุ้นไทย SET และหุ้นสหรัฐ (`--market set | us | all`, ค่าเริ่มต้น `set`), daily chart, ข้อมูลจาก Yahoo Finance
-  รายชื่อหุ้นตั้งต้น SET50 และ US50 อยู่ใน `tradepro/watchlists.py` หุ้นไทยทั้งหมด (SET + mai) อยู่ใน `tradepro/set_all.csv`
+  รายชื่อหุ้นตั้งต้น SET100 (และ SET50) และ US50 อยู่ใน `tradepro/watchlists.py` หุ้นไทยทั้งหมด (SET + mai) อยู่ใน `tradepro/set_all.csv`
   อัปเดตรายชื่อจากไฟล์ของ SET ด้วย `python -m tradepro.setlist` และสแกนด้วย `python -m tradepro scan --watchlist set_all` ส่วน tick size และค่าคอมแต่ละตลาดอยู่ใน `tradepro/markets.py`
 
 ## เว็บแอป (พอร์ต + สแกน) สำหรับรันบน server
@@ -14,7 +14,7 @@
 มี 3 หน้า
 - **พอร์ตของฉัน**: ใส่หุ้นที่ถือ (ตลาด, ชื่อหุ้น, จำนวน, ต้นทุนเฉลี่ย) แล้วแสดงราคาล่าสุด กำไร/ขาดทุน
   คำแนะนำ **ถือต่อ / เฝ้าระวัง / ควรขาย** พร้อมเหตุผลและราคา stop ที่ควรขาย (กฎ EXIT-1..4 ใน docs)
-- **สแกนหุ้นน่าซื้อ**: หุ้น SET50 / US50 (และหุ้นในพอร์ต) ที่วันล่าสุดเกิด setup ฝั่งซื้อ พร้อมราคาเข้า, stop, เป้า
+- **สแกนหุ้นน่าซื้อ**: หุ้น SET100 / หุ้นไทยทั้งหมด / US50 (และหุ้นในพอร์ต) ที่วันล่าสุดเกิด setup ฝั่งซื้อ พร้อมราคาเข้า, stop, เป้า
   สแกนอัตโนมัติทุก 6 ชั่วโมง หรือกดปุ่ม "สแกนใหม่"
 - **กราฟ**: กดชื่อหุ้นเพื่อดูแท่งเทียน + EMA20 + จุดสัญญาณ + เส้น stop + เส้นต้นทุน
 
@@ -58,7 +58,7 @@ pip install -r requirements.txt
 ### ใช้งาน
 
 ```bash
-# สแกนหา setup บนแท่งล่าสุดของหุ้น SET50 -> ได้รายการ entry / stop / target สำหรับวันทำการถัดไป
+# สแกนหา setup บนแท่งล่าสุดของหุ้น SET100 -> ได้รายการ entry / stop / target สำหรับวันทำการถัดไป
 python -m tradepro scan
 
 # สแกนทั้งหุ้นไทยและหุ้นสหรัฐ
