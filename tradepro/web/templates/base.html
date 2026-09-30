@@ -14,6 +14,11 @@
     <a href="{{ url_for('portfolio') }}" class="{{ 'on' if active == 'portfolio' }}">พอร์ตของฉัน</a>
     <a href="{{ url_for('scan_page', market='set') }}" class="{{ 'on' if active == 'scan' }}">สแกนหุ้นน่าซื้อ</a>
   </nav>
+  <form class="lookup" method="get" action="{{ url_for('chart_lookup') }}">
+    <select name="market" aria-label="ตลาด"><option value="set">SET</option><option value="us">US</option></select>
+    <input name="ticker" placeholder="ดูกราฟหุ้น เช่น PTT" aria-label="ชื่อหุ้น" required>
+    <button>ดูกราฟ</button>
+  </form>
 </div></header>
 <main>{% block body %}{% endblock %}
 <p class="note">ราคาจาก Yahoo Finance (ล่าช้าประมาณ 15–20 นาที) · สัญญาณคำนวณจากกราฟรายวันตามกฎ price action ของ Al Brooks · ไม่ใช่คำแนะนำการลงทุน</p>

@@ -206,6 +206,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if market not in MARKETS:
             abort(404)
         return render_template("scan.html", market=market, scan=store.latest_scan(market),
+                               watchlist=WATCHLISTS[MARKETS[market].watchlist],
                                running=market in scanner.running, active="scan")
 
     @app.post("/scan/run")
@@ -214,6 +215,14 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if market in MARKETS:
             scanner.start(market)
         return redirect(url_for("scan_page", market=market))
+
+    @app.get("/chart")
+    def chart_lookup():
+        market = request.args.get("market", "set")
+        ticker = request.args.get("ticker", "").strip().upper()
+        if market not in MARKETS or not ticker:
+            return redirect(url_for("scan_page", market=market if market in MARKETS else "set"))
+        return redirect(url_for("chart_page", market=market, ticker=ticker))
 
     @app.get("/chart/<market>/<ticker>")
     def chart_page(market, ticker):
