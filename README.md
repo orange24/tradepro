@@ -6,7 +6,8 @@
   ให้ตรวจแต่ละข้อกับ NotebookLM แล้วปรับค่าใน [`tradepro/config.py`](tradepro/config.py)
 - **กลยุทธ์ Wave 3 + CDC Action Zone (ลุงโฉลก)**: setup `W3` ดู [`docs/chaloke_wave3.md`](docs/chaloke_wave3.md)
 - **ตลาด**: หุ้นไทย SET และหุ้นสหรัฐ (`--market set | us | all`, ค่าเริ่มต้น `set`), daily chart, ข้อมูลจาก Yahoo Finance
-  รายชื่อหุ้นตั้งต้น SET50 และ US50 อยู่ใน `tradepro/watchlists.py` ส่วน tick size และค่าคอมแต่ละตลาดอยู่ใน `tradepro/markets.py`
+  รายชื่อหุ้นตั้งต้น SET50 และ US50 อยู่ใน `tradepro/watchlists.py` หุ้นไทยทั้งหมด (SET + mai) อยู่ใน `tradepro/set_all.csv`
+  อัปเดตรายชื่อจากไฟล์ของ SET ด้วย `python -m tradepro.setlist` และสแกนด้วย `python -m tradepro scan --watchlist set_all` ส่วน tick size และค่าคอมแต่ละตลาดอยู่ใน `tradepro/markets.py`
 
 ## เว็บแอป (พอร์ต + สแกน) สำหรับรันบน server
 
@@ -42,6 +43,7 @@ docker compose up -d --build
 | `TRADEPRO_PASSWORD` | รหัสผ่านเข้าเว็บ (ไม่ตั้ง = ไม่ถาม) | – |
 | `TRADEPRO_DB` | ไฟล์ฐานข้อมูล SQLite | `data/tradepro.db` |
 | `TRADEPRO_SOURCE` | `yahoo` / `csv` / `synthetic` | `yahoo` |
+| `TRADEPRO_MIN_VALUE` | แท็บหุ้นไทยทั้งหมด: ข้ามหุ้นที่มูลค่าซื้อขายเฉลี่ย 20 วันต่ำกว่านี้ (บาท/วัน, 0 = ไม่กรอง) | `1000000` |
 | `TRADEPRO_SCAN_HOURS` | สแกนใหม่เมื่อผลเก่ากว่ากี่ชั่วโมง (0 = ปิด) | `6` |
 
 ## Command line

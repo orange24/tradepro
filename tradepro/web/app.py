@@ -52,6 +52,15 @@ CURRENCY = {"set": "฿", "us": "$"}
 SETUP_ORDER = {"H2": 0, "H1": 1, "BO_BULL": 2, "W3": 3, "FAILED_BO": 4}
 
 
+# Scan universes: id -> (market, watchlist, label)
+SCANS = {
+    "set": ("set", "set50", "หุ้นไทย (SET50)"),
+    "setall": ("set", "set_all", "หุ้นไทยทั้งหมด (SET + mai)"),
+    "us": ("us", "us50", "หุ้นสหรัฐ (US50)"),
+}
+MIN_VALUE_THB = float(os.environ.get("TRADEPRO_MIN_VALUE", "1000000"))   # skip illiquid stocks in "setall"
+
+
 def pivots(f, side: int = 3):
     """Swing highs / lows: bars whose high (low) is the extreme of `side` bars on each side."""
     hi, lo = f["high"].to_numpy(), f["low"].to_numpy()
@@ -85,16 +94,22 @@ class Scanner:
         threading.Thread(target=self._run, args=(market,), daemon=True).start()
         return True
 
-    def _run(self, market: str):
+    def _run(self, scan_id: str):
+        market, watchlist, _ = SCANS[scan_id]
         try:
             cfg = market_cfg(market)
-            tickers = list(WATCHLISTS[MARKETS[market].watchlist])
+            tickers = list(WATCHLISTS[watchlist])
             tickers += [h["ticker"] for h in self.store.holdings() if h["market"] == market and h["ticker"] not in tickers]
             results, errors = [], []
 
             def one(t):
                 df = self.prices.history(market, t)
                 last, px = df.index[-1], float(df["close"].iloc[-1])
+                if scan_id == "setall":
+                    value = float((df["close"] * df["volume"]).iloc[-20:].mean())
+                    if not value >= MIN_VALUE_THB:
+                        return []                       # too thin to trade; skip
+
                 recent = list(df.index[-cfg.w3_recent_bars:])
                 green_now = bool(cdc_action_zone(df)["cdc_green"].iloc[-1])
                 rows = []
@@ -112,23 +127,23 @@ class Scanner:
                                                        "days_ago": len(df) - 1 - df.index.get_loc(s.date)})
                 return rows
 
-            with ThreadPoolExecutor(max_workers=4) as pool:
+            with ThreadPoolExecutor(max_workers=8 if len(tickers) > 100 else 4) as pool:
                 for t, fut in [(t, pool.submit(one, t)) for t in tickers]:
                     try:
                         results += fut.result()
                     except Exception as e:  # keep scanning the rest
                         errors.append(f"{t}: {e}")
             results.sort(key=lambda r: (SETUP_ORDER.get(r["setup"], 9), -r["reward_r"]))
-            self.store.save_scan(market, results, errors)
+            self.store.save_scan(scan_id, results, errors)
         except Exception:
-            log.exception("scan %s failed", market)
+            log.exception("scan %s failed", scan_id)
         finally:
             with self._lock:
-                self.running.discard(market)
+                self.running.discard(scan_id)
 
     def autoscan_forever(self, every_hours: float):
         while True:
-            for market in MARKETS:
+            for market in SCANS:
                 last = self.store.latest_scan(market)
                 age = (datetime.now(timezone.utc) - datetime.fromisoformat(last["run_at"])).total_seconds() \
                     if last else None
@@ -218,17 +233,18 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
 
     @app.get("/scan")
     def scan_page():
-        market = request.args.get("market", "set")
-        if market not in MARKETS:
+        scan_id = request.args.get("market", "set")
+        if scan_id not in SCANS:
             abort(404)
-        return render_template("scan.html", market=market, scan=store.latest_scan(market),
-                               watchlist=WATCHLISTS[MARKETS[market].watchlist],
-                               running=market in scanner.running, active="scan")
+        market, watchlist, _ = SCANS[scan_id]
+        return render_template("scan.html", market=market, scan_id=scan_id, scans=SCANS,
+                               scan=store.latest_scan(scan_id), watchlist=WATCHLISTS[watchlist],
+                               running=scan_id in scanner.running, active="scan")
 
     @app.post("/scan/run")
     def scan_run():
         market = request.form.get("market", "set")
-        if market in MARKETS:
+        if market in SCANS:
             scanner.start(market)
         return redirect(url_for("scan_page", market=market))
 

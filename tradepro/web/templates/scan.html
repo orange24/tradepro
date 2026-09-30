@@ -6,11 +6,12 @@
 <p class="sub">หุ้นที่แท่งเทียนวันล่าสุดเป็น signal bar ฝั่งซื้อ วางคำสั่งซื้อแบบ stop ที่ราคาเข้า สำหรับวันทำการถัดไป (W3 ซื้อที่ราคาเปิดวันถัดไป)</p>
 <div class="card-head">
   <div class="tabs">
-    <a href="{{ url_for('scan_page', market='set') }}" class="{{ 'on' if market == 'set' }}">หุ้นไทย (SET50)</a>
-    <a href="{{ url_for('scan_page', market='us') }}" class="{{ 'on' if market == 'us' }}">หุ้นสหรัฐ (US50)</a>
+    {% for sid, (m, wl, label) in scans.items() %}
+    <a href="{{ url_for('scan_page', market=sid) }}" class="{{ 'on' if scan_id == sid }}">{{ label }}</a>
+    {% endfor %}
   </div>
   <form method="post" action="{{ url_for('scan_run') }}" class="inline">
-    <input type="hidden" name="market" value="{{ market }}">
+    <input type="hidden" name="market" value="{{ scan_id }}">
     <button {{ 'disabled' if running }}>{{ 'กำลังสแกน…' if running else 'สแกนใหม่' }}</button>
   </form>
 </div>
@@ -47,8 +48,13 @@
 </section>
 
 <section class="card">
-  <h2 style="margin-bottom:10px">ดูกราฟหุ้นทุกตัวใน {{ 'SET50' if market == 'set' else 'US50' }}</h2>
+  {% if watchlist|length <= 100 %}
+  <h2 style="margin-bottom:10px">ดูกราฟหุ้นทุกตัวใน {{ scans[scan_id][2] }}</h2>
   <div class="chips">{% for t in watchlist %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}">{{ t }}</a>{% endfor %}</div>
+  {% else %}
+  <p class="note" style="margin:0">สแกนหุ้นไทยทั้งหมด {{ watchlist|length }} ตัว (SET + mai) ข้ามหุ้นที่มูลค่าซื้อขายเฉลี่ย 20 วันต่ำกว่า 1 ล้านบาทต่อวัน
+    ใช้เวลาสแกนหลายนาที ดูกราฟตัวไหนก็ได้จากช่องค้นหามุมขวาบน</p>
+  {% endif %}
 </section>
 <script>
 document.querySelectorAll("[data-utc]").forEach(el => {

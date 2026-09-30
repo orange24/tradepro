@@ -1,0 +1,930 @@
+symbol,market,industry,sector
+2S,SET,Industrials,Steel and Metal Products
+3BBIF,SET,Technology,Information & Communication Technology
+88TH,mai,Consumer Products,-
+A,SET,Property & Construction,Property Development
+A5,SET,Property & Construction,Property Development
+AAI,SET,Agro & Food Industry,Food & Beverage
+AAV,SET,Services,Transportation & Logistics
+ABM,mai,Resources,-
+ACAP,mai,Financials,-
+ACC,SET,Resources,Energy & Utilities
+ACE,SET,Resources,Energy & Utilities
+ACG,SET,Industrials,Automotive
+ADB,mai,Industrial,-
+ADD,mai,Services,-
+ADVANC,SET,Technology,Information & Communication Technology
+ADVICE,SET,Services,Commerce
+AE,SET,Resources,Energy & Utilities
+AEONTS,SET,Financials,Finance & Securities
+AF,mai,Financials,-
+AFC,SET,Consumer Products,Fashion
+AGE,SET,Resources,Energy & Utilities
+AH,SET,Industrials,Automotive
+AHC,SET,Services,Health Care Services
+AI,SET,Resources,Energy & Utilities
+AIE,SET,Resources,Energy & Utilities
+AIMCG,SET,Property & Construction,Property Fund & REITs
+AIMIRT,SET,Property & Construction,Property Fund & REITs
+AIRA,mai,Financials,-
+AIT,SET,Technology,Information & Communication Technology
+AJ,SET,Industrials,Packaging
+AJA,SET,Consumer Products,Home & Office Products
+AKP,mai,Services,-
+AKR,SET,Industrials,Industrial Materials & Machinery
+AKS,SET,Property & Construction,Property Development
+ALLA,SET,Industrials,Industrial Materials & Machinery
+ALLY,SET,Property & Construction,Property Fund & REITs
+ALPHAX,mai,Resources,-
+ALT,SET,Technology,Information & Communication Technology
+ALUCON,SET,Industrials,Packaging
+AMA,mai,Services,-
+AMANAH,SET,Financials,Finance & Securities
+AMARC,mai,Services,-
+AMARIN,SET,Services,Media & Publishing
+AMATA,SET,Property & Construction,Property Development
+AMATAR,SET,Property & Construction,Property Fund & REITs
+AMATAV,SET,Property & Construction,Property Development
+AMC,SET,Industrials,Steel and Metal Products
+AMR,SET,Technology,Information & Communication Technology
+ANAN,SET,Property & Construction,Property Development
+ANI,SET,Services,Transportation & Logistics
+AOT,SET,Services,Transportation & Logistics
+AP,SET,Property & Construction,Property Development
+APCO,SET,Consumer Products,Personal Products & Pharmaceuticals
+APCS,SET,Property & Construction,Construction Services
+APO,mai,Agro & Food Industry,-
+APP,mai,Technology,-
+APURE,SET,Agro & Food Industry,Food & Beverage
+AQUA,SET,Agro & Food Industry,Food & Beverage
+ARIN,mai,Property & Construction,-
+ARIP,mai,Services,-
+ARROW,mai,Property & Construction,-
+AS,SET,Services,Media & Publishing
+ASAP,SET,Industrials,Automotive
+ASEFA,SET,Industrials,Industrial Materials & Machinery
+ASIA,SET,Services,Tourism & Leisure
+ASIAN,SET,Agro & Food Industry,Food & Beverage
+ASIMAR,SET,Services,Transportation & Logistics
+ASK,SET,Financials,Finance & Securities
+ASN,mai,Financials,-
+ASP,SET,Financials,Finance & Securities
+ASTR,mai,Services,-
+ASW,SET,Property & Construction,Property Development
+ATLAS,SET,Resources,Energy & Utilities
+ATP30,mai,Services,-
+AU,mai,Agro & Food Industry,-
+AUCT,mai,Services,-
+AURA,SET,Consumer Products,Fashion
+AWC,SET,Property & Construction,Property Development
+AXTRART,SET,Property & Construction,Property Fund & REITs
+AYUD,SET,Financials,Insurance
+B,SET,Services,Transportation & Logistics
+B52,SET,Services,Commerce
+BA,SET,Services,Transportation & Logistics
+BAFS,SET,Resources,Energy & Utilities
+BAM,SET,Financials,Finance & Securities
+BANPU,SET,Resources,Energy & Utilities
+BAREIT,SET,Property & Construction,Property Fund & REITs
+BAY,SET,Financials,Banking
+BBGI,SET,Resources,Energy & Utilities
+BBIK,SET,Technology,Information & Communication Technology
+BBL,SET,Financials,Banking
+BC,mai,Property & Construction,-
+BCH,SET,Services,Health Care Services
+BCP,SET,Resources,Energy & Utilities
+BCPG,SET,Resources,Energy & Utilities
+BCT,SET,Industrials,Petrochemicals & Chemicals
+BDMS,SET,Services,Health Care Services
+BE8,mai,Technology,-
+BEAUTY,SET,Services,Commerce
+BEC,SET,Services,Media & Publishing
+BEM,SET,Services,Transportation & Logistics
+BEYOND,SET,Services,Tourism & Leisure
+BGC,SET,Industrials,Packaging
+BGRIM,SET,Resources,Energy & Utilities
+BGT,mai,Consumer Products,-
+BH,SET,Services,Health Care Services
+BIG,SET,Services,Commerce
+BIOTEC,SET,Resources,Energy & Utilities
+BIS,mai,Services,-
+BIZ,SET,Consumer Products,Personal Products & Pharmaceuticals
+BJC,SET,Services,Commerce
+BJCHI,SET,Property & Construction,Construction Services
+BKA,mai,Property & Construction,-
+BKD,SET,Property & Construction,Construction Services
+BKGI,SET,Services,Health Care Services
+BKIH,SET,Financials,Insurance
+BLA,SET,Financials,Insurance
+BLAND,SET,Property & Construction,Property Development
+BLC,SET,Consumer Products,Personal Products & Pharmaceuticals
+BLESS,mai,Property & Construction,-
+BLISS,SET,Technology,Information & Communication Technology
+BM,mai,Industrial,-
+BOFFICE,SET,Property & Construction,Property Fund & REITs
+BOL,mai,Services,-
+BPS,mai,Industrial,-
+BR,SET,Agro & Food Industry,Food & Beverage
+BRI,SET,Property & Construction,Property Development
+BROCK,SET,Property & Construction,Property Development
+BRR,SET,Agro & Food Industry,Food & Beverage
+BRRGIF,SET,Resources,Energy & Utilities
+BSBM,SET,Industrials,Steel and Metal Products
+BSM,mai,Property & Construction,-
+BTC,mai,Financials,-
+BTG,SET,Agro & Food Industry,Food & Beverage
+BTNC,SET,Consumer Products,Fashion
+BTS,SET,Services,Transportation & Logistics
+BTSGIF,SET,Services,Transportation & Logistics
+BTW,mai,Property & Construction,-
+BUI,SET,Financials,Insurance
+BVG,mai,Technology,-
+BWG,SET,Services,Professional Services
+B-WORK,SET,Property & Construction,Property Fund & REITs
+BYD,SET,Financials,Finance & Securities
+CAZ,mai,Property & Construction,-
+CBG,SET,Agro & Food Industry,Food & Beverage
+CCET,SET,Technology,Electronic Components
+CCP,SET,Property & Construction,Construction Materials
+CEN,SET,Industrials,Steel and Metal Products
+CENTEL,SET,Services,Tourism & Leisure
+CEYE,mai,Services,-
+CFARM,mai,Agro & Food Industry,-
+CFRESH,SET,Agro & Food Industry,Food & Beverage
+CGD,SET,Property & Construction,Property Development
+CGH,SET,Financials,Finance & Securities
+CH,SET,Agro & Food Industry,Food & Beverage
+CHAO,SET,Agro & Food Industry,Food & Beverage
+CHARAN,SET,Financials,Insurance
+CHASE,SET,Financials,Finance & Securities
+CHAYO,SET,Financials,Finance & Securities
+CHEWA,mai,Property & Construction,-
+CHG,SET,Services,Health Care Services
+CHIC,mai,Services,-
+CHO,mai,Industrial,-
+CHOTI,SET,Agro & Food Industry,Food & Beverage
+CHOW,mai,Industrial,-
+CI,SET,Property & Construction,Property Development
+CIG,mai,Industrial,-
+CITY,SET,Industrials,Steel and Metal Products
+CIVIL,SET,Property & Construction,Construction Services
+CK,SET,Property & Construction,Construction Services
+CKP,SET,Resources,Energy & Utilities
+CM,SET,Agro & Food Industry,Food & Beverage
+CMAN,SET,Industrials,Petrochemicals & Chemicals
+CMC,SET,Property & Construction,Property Development
+CMO,mai,Services,-
+CMR,SET,Services,Health Care Services
+CNT,SET,Property & Construction,Construction Services
+COCOCO,SET,Agro & Food Industry,Food & Beverage
+COLOUR,mai,Industrial,-
+COM7,SET,Services,Commerce
+COMAN,mai,Technology,-
+CPALL,SET,Services,Commerce
+CPANEL,mai,Property & Construction,-
+CPAXT,SET,Services,Commerce
+CPF,SET,Agro & Food Industry,Food & Beverage
+CPH,SET,Consumer Products,Fashion
+CPI,SET,Agro & Food Industry,Food & Beverage
+CPL,SET,Consumer Products,Fashion
+CPN,SET,Property & Construction,Property Development
+CPNCG,SET,Property & Construction,Property Fund & REITs
+CPNREIT,SET,Property & Construction,Property Fund & REITs
+CPR,mai,Industrial,-
+CPT,SET,Industrials,Industrial Materials & Machinery
+CPTREIT,SET,Property & Construction,Property Fund & REITs
+CPW,SET,Services,Commerce
+CRANE,SET,Industrials,Industrial Materials & Machinery
+CRC,SET,Services,Commerce
+CRD,mai,Property & Construction,-
+CREDIT,SET,Financials,Banking
+CSC,SET,Industrials,Packaging
+CSP,SET,Industrials,Steel and Metal Products
+CSR,SET,Services,Tourism & Leisure
+CSS,SET,Services,Commerce
+CTARAF,SET,Property & Construction,Property Fund & REITs
+CTW,SET,Industrials,Industrial Materials & Machinery
+CV,SET,Resources,Energy & Utilities
+CWT,SET,Industrials,Automotive
+D,mai,Services,-
+DCC,SET,Property & Construction,Construction Materials
+DCON,SET,Property & Construction,Construction Materials
+DDD,SET,Consumer Products,Personal Products & Pharmaceuticals
+DELTA,SET,Technology,Electronic Components
+DEMCO,SET,Property & Construction,Construction Services
+DEXON,mai,Services,-
+DHOUSE,mai,Property & Construction,-
+DIF,SET,Technology,Information & Communication Technology
+DIMET,mai,Property & Construction,-
+DITTO,SET,Technology,Information & Communication Technology
+DMT,SET,Services,Transportation & Logistics
+DOD,mai,Consumer Products,-
+DOHOME,SET,Services,Commerce
+DPAINT,mai,Property & Construction,-
+DREIT,SET,Property & Construction,Property Fund & REITs
+DRT,SET,Property & Construction,Construction Materials
+DTCENT,SET,Technology,Information & Communication Technology
+DTCI,SET,Consumer Products,Home & Office Products
+DUSIT,SET,Services,Tourism & Leisure
+EA,SET,Resources,Energy & Utilities
+EASON,SET,Industrials,Automotive
+EAST,SET,Financials,Finance & Securities
+EASTW,SET,Resources,Energy & Utilities
+ECF,mai,Consumer Products,-
+EFORL,mai,Consumer Products,-
+EGATIF,SET,Resources,Energy & Utilities
+EGCO,SET,Resources,Energy & Utilities
+EKH,SET,Services,Health Care Services
+EMC,SET,Property & Construction,Construction Services
+EMPIRE,mai,Property & Construction,-
+EP,SET,Resources,Energy & Utilities
+EPG,SET,Property & Construction,Construction Materials
+ERW,SET,Services,Tourism & Leisure
+ESTAR,SET,Property & Construction,Property Development
+ETC,SET,Resources,Energy & Utilities
+ETE,mai,Services,-
+ETL,SET,Services,Transportation & Logistics
+EURO,mai,Consumer Products,-
+EVER,SET,Property & Construction,Property Development
+F&D,SET,Agro & Food Industry,Food & Beverage
+FANCY,SET,Consumer Products,Home & Office Products
+FE,SET,Services,Media & Publishing
+FLE,mai,Industrial,-
+FLOYD,mai,Property & Construction,-
+FM,SET,Agro & Food Industry,Food & Beverage
+FMT,SET,Industrials,Industrial Materials & Machinery
+FN,SET,Services,Commerce
+FNS,SET,Financials,Finance & Securities
+FORTH,SET,Technology,Information & Communication Technology
+FPI,mai,Industrial,-
+FPT,SET,Property & Construction,Property Development
+FSMART,mai,Services,-
+FSX,SET,Financials,Finance & Securities
+FTE,SET,Industrials,Industrial Materials & Machinery
+FTI,SET,Consumer Products,Home & Office Products
+FTREIT,SET,Property & Construction,Property Fund & REITs
+FUTURERT,SET,Property & Construction,Property Fund & REITs
+FVC,mai,Services,-
+GABLE,SET,Technology,Information & Communication Technology
+GAHREIT,SET,Property & Construction,Property Fund & REITs
+GBX,SET,Financials,Finance & Securities
+GC,SET,Industrials,Petrochemicals & Chemicals
+GCAP,mai,Financials,-
+GEL,SET,Property & Construction,Construction Materials
+GENCO,SET,Services,Professional Services
+GFC,mai,Services,-
+GFPT,SET,Agro & Food Industry,Agribusiness
+GGC,SET,Industrials,Petrochemicals & Chemicals
+GJS,SET,Industrials,Steel and Metal Products
+GLOBAL,SET,Services,Commerce
+GLORY,mai,Services,-
+GPI,SET,Services,Media & Publishing
+GPSC,SET,Resources,Energy & Utilities
+GRAMMY,SET,Services,Media & Publishing
+GRAND,SET,Services,Tourism & Leisure
+GREEN,SET,Resources,Energy & Utilities
+GROREIT,SET,Property & Construction,Property Fund & REITs
+GST,SET,Technology,Information & Communication Technology
+GSTEEL,SET,Industrials,Steel and Metal Products
+GTB,mai,Industrial,-
+GTV,mai,Resources,-
+GULF,SET,Resources,Energy & Utilities
+GUNKUL,SET,Resources,Energy & Utilities
+GVREIT,SET,Property & Construction,Property Fund & REITs
+GYT,SET,Industrials,Automotive
+HANA,SET,Technology,Electronic Components
+HANN,mai,Services,-
+HARN,mai,Industrial,-
+HENG,SET,Financials,Finance & Securities
+HFT,SET,Industrials,Automotive
+HL,mai,Services,-
+HMPRO,SET,Services,Commerce
+HPF,SET,Property & Construction,Property Fund & REITs
+HPT,mai,Consumer Products,-
+HTC,SET,Agro & Food Industry,Food & Beverage
+HTECH,SET,Industrials,Industrial Materials & Machinery
+HUMAN,SET,Technology,Information & Communication Technology
+HYDRO,mai,Property & Construction,-
+HYDROGEN,SET,Property & Construction,Property Fund & REITs
+I2,mai,Technology,-
+ICC,SET,Services,Commerce
+ICHI,SET,Agro & Food Industry,Food & Beverage
+ICN,SET,Technology,Information & Communication Technology
+IDG,mai,Technology,-
+IFS,SET,Financials,Finance & Securities
+IHL,SET,Consumer Products,Fashion
+IIG,mai,Technology,-
+III,SET,Services,Transportation & Logistics
+ILINK,SET,Technology,Information & Communication Technology
+ILM,SET,Services,Commerce
+IMH,mai,Services,-
+IMPACT,SET,Property & Construction,Property Fund & REITs
+IND,mai,Property & Construction,-
+INET,SET,Technology,Information & Communication Technology
+INETREIT,SET,Property & Construction,Property Fund & REITs
+INGRS,SET,Industrials,Automotive
+INOX,SET,Industrials,Steel and Metal Products
+INSET,SET,Technology,Information & Communication Technology
+INSURE,SET,Financials,Insurance
+IP,SET,Consumer Products,Personal Products & Pharmaceuticals
+IRC,SET,Industrials,Automotive
+IRCP,mai,Technology,-
+IROYAL,mai,Services,-
+IRPC,SET,Resources,Energy & Utilities
+ISSARA,SET,Property & Construction,Property Fund & REITs
+IT,SET,Services,Commerce
+ITC,SET,Agro & Food Industry,Food & Beverage
+ITD,SET,Property & Construction,Construction Services
+ITEL,SET,Technology,Information & Communication Technology
+ITNS,mai,Technology,-
+ITTHI,mai,Consumer Products,-
+IVF,mai,Services,-
+IVL,SET,Industrials,Petrochemicals & Chemicals
+J,SET,Property & Construction,Property Development
+JAK,mai,Property & Construction,-
+JAS,SET,Technology,Information & Communication Technology
+JCK,SET,Property & Construction,Property Development
+JCT,SET,Consumer Products,Personal Products & Pharmaceuticals
+JDF,SET,Agro & Food Industry,Food & Beverage
+JMART,SET,Technology,Information & Communication Technology
+JMT,SET,Financials,Finance & Securities
+JPARK,mai,Services,-
+JR,SET,Property & Construction,Construction Services
+JSP,mai,Consumer Products,-
+JTS,SET,Technology,Information & Communication Technology
+JUBILE,mai,Consumer Products,-
+K,mai,Services,-
+KAMART,SET,Services,Commerce
+KASET,mai,Agro & Food Industry,-
+KBANK,SET,Financials,Banking
+KBS,SET,Agro & Food Industry,Food & Beverage
+KBSPIF,SET,Resources,Energy & Utilities
+KC,SET,Property & Construction,Property Development
+KCAR,SET,Financials,Finance & Securities
+KCC,mai,Financials,-
+KCE,SET,Technology,Electronic Components
+KCG,SET,Agro & Food Industry,Food & Beverage
+KCM,mai,Industrial,-
+KDH,SET,Services,Health Care Services
+KGEN,mai,Services,-
+KGI,SET,Financials,Finance & Securities
+KIAT,SET,Services,Transportation & Logistics
+KISS,SET,Consumer Products,Personal Products & Pharmaceuticals
+KJL,mai,Industrial,-
+KK,mai,Services,-
+KKC,SET,Industrials,Industrial Materials & Machinery
+KKP,SET,Financials,Banking
+KLINIQ,SET,Services,Health Care Services
+KOOL,mai,Services,-
+KPNREIT,SET,Property & Construction,Property Fund & REITs
+KSL,SET,Agro & Food Industry,Food & Beverage
+KTB,SET,Financials,Banking
+KTBSTMR,SET,Property & Construction,Property Fund & REITs
+KTC,SET,Financials,Finance & Securities
+KTIS,SET,Agro & Food Industry,Food & Beverage
+KTMS,mai,Services,-
+KUMWEL,mai,Industrial,-
+KUN,SET,Property & Construction,Property Development
+KWC,SET,Services,Transportation & Logistics
+KWI,SET,Financials,Insurance
+KWM,mai,Industrial,-
+KYE,SET,Consumer Products,Home & Office Products
+L&E,SET,Consumer Products,Home & Office Products
+LALIN,SET,Property & Construction,Property Development
+LANNA,SET,Resources,Energy & Utilities
+LDC,mai,Services,-
+LEE,SET,Agro & Food Industry,Agribusiness
+LEO,mai,Services,-
+LH,SET,Property & Construction,Property Development
+LHFG,SET,Financials,Banking
+LHHOTEL,SET,Property & Construction,Property Fund & REITs
+LHK,SET,Industrials,Steel and Metal Products
+LHRREIT,SET,Property & Construction,Property Fund & REITs
+LHSC,SET,Property & Construction,Property Fund & REITs
+LIT,mai,Financials,-
+LOXLEY,SET,Services,Commerce
+LPH,SET,Services,Health Care Services
+LPN,SET,Property & Construction,Property Development
+LST,SET,Agro & Food Industry,Food & Beverage
+LTMH,mai,Services,-
+LTS,mai,Consumer Products,-
+LUXF,SET,Property & Construction,Property Fund & REITs
+M,SET,Agro & Food Industry,Food & Beverage
+MADAME,SET,Agro & Food Industry,Food & Beverage
+MAGURO,mai,Agro & Food Industry,-
+MAJOR,SET,Services,Media & Publishing
+MALEE,SET,Agro & Food Industry,Food & Beverage
+MANRIN,SET,Services,Tourism & Leisure
+MASTEC,SET,Industrials,Industrial Materials & Machinery
+MASTER,SET,Services,Health Care Services
+MATCH,SET,Services,Media & Publishing
+MATI,SET,Services,Media & Publishing
+MBAX,mai,Industrial,-
+MBK,SET,Property & Construction,Property Development
+MC,SET,Services,Commerce
+MCA,mai,Services,-
+M-CHAI,SET,Services,Health Care Services
+MCOT,SET,Services,Media & Publishing
+MCS,SET,Industrials,Steel and Metal Products
+MDX,SET,Resources,Energy & Utilities
+MEB,mai,Services,-
+MEDEZE,SET,Services,Health Care Services
+MEGA,SET,Services,Commerce
+MENA,SET,Services,Transportation & Logistics
+META,mai,Property & Construction,-
+METCO,SET,Technology,Electronic Components
+MFC,SET,Financials,Finance & Securities
+MFEC,SET,Technology,Information & Communication Technology
+MGC,SET,Industrials,Automotive
+MGI,mai,Consumer Products,-
+MGT,mai,Industrial,-
+MICRO,SET,Financials,Finance & Securities
+MIDA,SET,Services,Commerce
+MII,SET,Property & Construction,Property Fund & REITs
+MILL,SET,Industrials,Steel and Metal Products
+MINT,SET,Services,Tourism & Leisure
+MIPF,SET,Property & Construction,Property Fund & REITs
+MITSIB,mai,Financials,-
+MJD,SET,Property & Construction,Property Development
+MJLF,SET,Property & Construction,Property Fund & REITs
+MK,SET,Property & Construction,Property Development
+ML,SET,Financials,Finance & Securities
+MMM,mai,Property & Construction,-
+MNIT,SET,Property & Construction,Property Fund & REITs
+MNIT2,SET,Property & Construction,Property Fund & REITs
+MNRF,SET,Property & Construction,Property Fund & REITs
+MODERN,SET,Consumer Products,Home & Office Products
+MONO,SET,Services,Media & Publishing
+MOONG,mai,Consumer Products,-
+MORE,mai,Services,-
+MOSHI,SET,Services,Commerce
+MOTHER,mai,Services,-
+M-PAT,SET,Property & Construction,Property Fund & REITs
+MPJ,mai,Services,-
+MRDIYT,SET,Services,Commerce
+MSC,SET,Technology,Information & Communication Technology
+MST,SET,Financials,Finance & Securities
+M-STOR,SET,Property & Construction,Property Fund & REITs
+MTC,SET,Financials,Finance & Securities
+MTI,SET,Financials,Insurance
+MTW,mai,Industrial,-
+MUD,mai,Agro & Food Industry,-
+MVP,mai,Services,-
+NAM,SET,Consumer Products,Personal Products & Pharmaceuticals
+NAT,mai,Technology,-
+NATION,SET,Services,Media & Publishing
+NC,SET,Consumer Products,Fashion
+NCAP,SET,Financials,Finance & Securities
+NCH,SET,Property & Construction,Property Development
+NCL,mai,Services,-
+NCP,mai,Services,-
+NDR,mai,Industrial,-
+NEO,SET,Consumer Products,Personal Products & Pharmaceuticals
+NEP,SET,Consumer Products,Fashion
+NER,SET,Agro & Food Industry,Agribusiness
+NETBAY,mai,Technology,-
+NEW,SET,Services,Health Care Services
+NEX,SET,Industrials,Automotive
+NFC,SET,Industrials,Petrochemicals & Chemicals
+NKI,SET,Financials,Insurance
+NKT,SET,Services,Health Care Services
+NL,SET,Property & Construction,Construction Services
+NNCL,SET,Property & Construction,Property Development
+NOBLE,SET,Property & Construction,Property Development
+NOVA,SET,Resources,Energy & Utilities
+NPK,mai,Consumer Products,-
+NRF,SET,Agro & Food Industry,Food & Beverage
+NSL,SET,Agro & Food Industry,Food & Beverage
+NTF,mai,Agro & Food Industry,-
+NTSC,mai,Agro & Food Industry,-
+NTV,SET,Services,Health Care Services
+NUT,mai,Consumer Products,-
+NV,SET,Consumer Products,Personal Products & Pharmaceuticals
+NVD,SET,Property & Construction,Property Development
+NWR,SET,Property & Construction,Construction Services
+NYT,SET,Services,Transportation & Logistics
+OCC,SET,Consumer Products,Personal Products & Pharmaceuticals
+OGC,SET,Consumer Products,Home & Office Products
+OHTL,SET,Services,Tourism & Leisure
+OKJ,SET,Agro & Food Industry,Food & Beverage
+ONEE,SET,Services,Media & Publishing
+ONSENS,SET,Services,Tourism & Leisure
+OR,SET,Resources,Energy & Utilities
+ORI,SET,Property & Construction,Property Development
+ORN,SET,Property & Construction,Property Development
+OSP,SET,Agro & Food Industry,Food & Beverage
+PACO,mai,Industrial,-
+PAF,SET,Consumer Products,Fashion
+PANEL,mai,Property & Construction,-
+PAP,SET,Industrials,Steel and Metal Products
+PATO,SET,Industrials,Petrochemicals & Chemicals
+PB,SET,Agro & Food Industry,Food & Beverage
+PCC,SET,Industrials,Industrial Materials & Machinery
+PCE,SET,Agro & Food Industry,Agribusiness
+PCSGH,SET,Industrials,Automotive
+PDG,mai,Industrial,-
+PDJ,SET,Consumer Products,Fashion
+PEACE,SET,Property & Construction,Property Development
+PEER,mai,Services,-
+PERM,SET,Industrials,Steel and Metal Products
+PF,SET,Property & Construction,Property Development
+PG,SET,Consumer Products,Fashion
+PHAT,mai,Agro & Food Industry,-
+PHG,SET,Services,Health Care Services
+PHOL,mai,Industrial,-
+PICO,mai,Services,-
+PIMO,mai,Industrial,-
+PIN,SET,Property & Construction,Property Development
+PIS,mai,Technology,-
+PJW,SET,Industrials,Packaging
+PK,SET,Industrials,Industrial Materials & Machinery
+PL,SET,Financials,Finance & Securities
+PLANB,SET,Services,Media & Publishing
+PLANET,mai,Technology,-
+PLAT,SET,Property & Construction,Property Development
+PLE,SET,Property & Construction,Construction Services
+PLT,mai,Services,-
+PLUS,SET,Agro & Food Industry,Food & Beverage
+PM,SET,Agro & Food Industry,Food & Beverage
+PMC,mai,Industrial,-
+PMTA,SET,Industrials,Petrochemicals & Chemicals
+POLY,SET,Industrials,Automotive
+POPF,SET,Property & Construction,Property Fund & REITs
+PORT,SET,Services,Transportation & Logistics
+POWER,mai,Resources,-
+PPM,mai,Industrial,-
+PPP,SET,Property & Construction,Construction Materials
+PPPM,SET,Agro & Food Industry,Agribusiness
+PPS,mai,Property & Construction,-
+PQS,SET,Agro & Food Industry,Food & Beverage
+PR9,SET,Services,Health Care Services
+PRAKIT,SET,Services,Media & Publishing
+PRAPAT,mai,Industrial,-
+PREB,SET,Property & Construction,Construction Services
+PRECHA,SET,Property & Construction,Property Development
+PRG,SET,Agro & Food Industry,Food & Beverage
+PRI,mai,Property & Construction,-
+PRIME,SET,Resources,Energy & Utilities
+PRIN,SET,Property & Construction,Property Development
+PRINC,SET,Services,Health Care Services
+PRM,SET,Services,Transportation & Logistics
+PROEN,mai,Technology,-
+PROS,mai,Property & Construction,-
+PROSPECT,SET,Property & Construction,Property Fund & REITs
+PROUD,SET,Property & Construction,Property Development
+PRTR,SET,Services,Professional Services
+PSGC,mai,Property & Construction,-
+PSH,SET,Property & Construction,Property Development
+PSL,SET,Services,Transportation & Logistics
+PSP,SET,Industrials,Industrial Materials & Machinery
+PT,SET,Technology,Information & Communication Technology
+PTC,mai,Resources,-
+PTG,SET,Resources,Energy & Utilities
+PTL,SET,Industrials,Packaging
+PTT,SET,Resources,Energy & Utilities
+PTTEP,SET,Resources,Energy & Utilities
+PTTGC,SET,Industrials,Petrochemicals & Chemicals
+PYLON,SET,Property & Construction,Construction Services
+Q-CON,SET,Property & Construction,Construction Materials
+QDC,mai,Agro & Food Industry,-
+QH,SET,Property & Construction,Property Development
+QHBREIT,SET,Property & Construction,Property Fund & REITs
+QHHRREIT,SET,Property & Construction,Property Fund & REITs
+QHOP,SET,Property & Construction,Property Fund & REITs
+QLT,mai,Services,-
+QTC,SET,Industrials,Industrial Materials & Machinery
+QTCG,mai,Property & Construction,-
+RABBIT,SET,Property & Construction,Property Development
+RAM,SET,Services,Health Care Services
+RATCH,SET,Resources,Energy & Utilities
+RBF,SET,Agro & Food Industry,Food & Beverage
+RCL,SET,Services,Transportation & Logistics
+READY,mai,Technology,-
+RICHY,SET,Property & Construction,Property Development
+RJH,SET,Services,Health Care Services
+RML,SET,Property & Construction,Property Development
+ROCK,SET,Consumer Products,Home & Office Products
+ROCTEC,SET,Technology,Information & Communication Technology
+ROH,SET,Services,Tourism & Leisure
+ROJNA,SET,Property & Construction,Property Development
+RP,mai,Services,-
+RPC,SET,Resources,Energy & Utilities
+RPH,SET,Services,Health Care Services
+RS,SET,Services,Commerce
+RSP,SET,Services,Commerce
+RT,SET,Property & Construction,Construction Services
+RWI,mai,Industrial,-
+S,SET,Property & Construction,Property Development
+S&J,SET,Consumer Products,Personal Products & Pharmaceuticals
+S11,SET,Financials,Finance & Securities
+SA,SET,Property & Construction,Property Development
+SAAM,mai,Resources,-
+SABINA,SET,Consumer Products,Fashion
+SAF,mai,Industrial,-
+SAFE,SET,Services,Health Care Services
+SAK,SET,Financials,Finance & Securities
+SALEE,mai,Industrial,-
+SAM,SET,Industrials,Steel and Metal Products
+SAMART,SET,Technology,Information & Communication Technology
+SAMCO,SET,Property & Construction,Property Development
+SAMTEL,SET,Technology,Information & Communication Technology
+SANKO,mai,Industrial,-
+SAPPE,SET,Agro & Food Industry,Food & Beverage
+SAT,SET,Industrials,Automotive
+SAUCE,SET,Agro & Food Industry,Food & Beverage
+SAV,SET,Services,Transportation & Logistics
+SAWAD,SET,Financials,Finance & Securities
+SAWANG,SET,Consumer Products,Fashion
+SC,SET,Property & Construction,Property Development
+SCAP,SET,Financials,Finance & Securities
+SCB,SET,Financials,Banking
+SCC,SET,Property & Construction,Construction Materials
+SCCC,SET,Property & Construction,Construction Materials
+SCG,SET,Resources,Energy & Utilities
+SCGD,SET,Property & Construction,Construction Materials
+SCGP,SET,Industrials,Packaging
+SCI,SET,Industrials,Industrial Materials & Machinery
+SCL,mai,Industrial,-
+SCM,SET,Services,Commerce
+SCN,SET,Resources,Energy & Utilities
+SCP,SET,Property & Construction,Construction Materials
+SDC,SET,Technology,Information & Communication Technology
+SE,SET,Industrials,Industrial Materials & Machinery
+SEAFCO,SET,Property & Construction,Construction Services
+SEAOIL,SET,Resources,Energy & Utilities
+SECURE,mai,Technology,-
+SE-ED,SET,Services,Media & Publishing
+SEI,mai,Consumer Products,-
+SELIC,SET,Industrials,Industrial Materials & Machinery
+SENA,SET,Property & Construction,Property Development
+SENX,mai,Property & Construction,-
+SFLEX,SET,Industrials,Packaging
+SFT,mai,Industrial,-
+SGC,SET,Financials,Finance & Securities
+SGF,mai,Financials,-
+SGP,SET,Resources,Energy & Utilities
+SHANG,SET,Services,Tourism & Leisure
+SHR,SET,Services,Tourism & Leisure
+SIAM,SET,Consumer Products,Home & Office Products
+SICT,mai,Technology,-
+SIMAT,mai,Technology,-
+SINGER,SET,Services,Commerce
+SINO,SET,Services,Transportation & Logistics
+SIRI,SET,Property & Construction,Property Development
+SIRIPRT,SET,Property & Construction,Property Fund & REITs
+SIS,SET,Technology,Information & Communication Technology
+SISB,SET,Services,Professional Services
+SITHAI,SET,Industrials,Packaging
+SJWD,SET,Services,Transportation & Logistics
+SK,mai,Property & Construction,-
+SKE,SET,Resources,Energy & Utilities
+SKIN,mai,Consumer Products,-
+SKN,SET,Property & Construction,Construction Materials
+SKR,SET,Services,Health Care Services
+SKY,SET,Technology,Information & Communication Technology
+SLP,SET,Industrials,Packaging
+SMART,mai,Property & Construction,-
+SMD100,mai,Consumer Products,-
+SMIT,SET,Industrials,Steel and Metal Products
+SMO,SET,Agro & Food Industry,Agribusiness
+SMPC,SET,Industrials,Packaging
+SMT,SET,Technology,Electronic Components
+SNC,SET,Industrials,Industrial Materials & Machinery
+SNNP,SET,Agro & Food Industry,Food & Beverage
+SNP,SET,Agro & Food Industry,Food & Beverage
+SNPS,SET,Consumer Products,Personal Products & Pharmaceuticals
+SO,SET,Services,Professional Services
+SOLAR,SET,Property & Construction,Construction Services
+SONIC,mai,Services,-
+SORKON,SET,Agro & Food Industry,Food & Beverage
+SPA,SET,Services,Tourism & Leisure
+SPACK,SET,Industrials,Packaging
+SPALI,SET,Property & Construction,Property Development
+SPC,SET,Services,Commerce
+SPCG,SET,Resources,Energy & Utilities
+SPG,SET,Industrials,Automotive
+SPI,SET,Services,Commerce
+SPRC,SET,Resources,Energy & Utilities
+SPREME,SET,Technology,Information & Communication Technology
+SPRIME,SET,Property & Construction,Property Fund & REITs
+SPTX,mai,Services,-
+SPVI,mai,Technology,-
+SQ,SET,Property & Construction,Construction Services
+SR,mai,Resources,-
+SRICHA,SET,Property & Construction,Construction Services
+SRIPANWA,SET,Property & Construction,Property Fund & REITs
+SRS,mai,Technology,-
+SSF,SET,Agro & Food Industry,Food & Beverage
+SSP,SET,Resources,Energy & Utilities
+SSPF,SET,Property & Construction,Property Fund & REITs
+SSSC,SET,Industrials,Steel and Metal Products
+SST,SET,Agro & Food Industry,Food & Beverage
+SSTRT,SET,Property & Construction,Property Fund & REITs
+STA,SET,Agro & Food Industry,Agribusiness
+STANLY,SET,Industrials,Automotive
+STARM,SET,Financials,Finance & Securities
+STC,mai,Property & Construction,-
+STECH,SET,Property & Construction,Construction Materials
+STECON,SET,Property & Construction,Construction Services
+STELLA,SET,Property & Construction,Property Development
+STGT,SET,Consumer Products,Personal Products & Pharmaceuticals
+STI,SET,Property & Construction,Construction Services
+STOWER,mai,Resources,-
+STP,mai,Industrial,-
+STPI,SET,Property & Construction,Construction Services
+STX,mai,Property & Construction,-
+SUC,SET,Consumer Products,Fashion
+SUN,SET,Agro & Food Industry,Food & Beverage
+SUPER,SET,Resources,Energy & Utilities
+SUPEREIF,SET,Resources,Energy & Utilities
+SUSCO,SET,Resources,Energy & Utilities
+SUTHA,SET,Industrials,Petrochemicals & Chemicals
+SVOA,SET,Technology,Information & Communication Technology
+SVR,mai,Property & Construction,-
+SVT,SET,Services,Commerce
+SWC,mai,Industrial,-
+SYMC,SET,Technology,Information & Communication Technology
+SYNEX,SET,Technology,Information & Communication Technology
+SYNTEC,SET,Property & Construction,Construction Services
+TACC,mai,Agro & Food Industry,-
+TAE,SET,Resources,Energy & Utilities
+TAKUNI,mai,Resources,-
+TAN,SET,Services,Commerce
+TAPAC,mai,Property & Construction,-
+TASCO,SET,Property & Construction,Construction Materials
+TATG,mai,Industrial,-
+TBN,mai,Technology,-
+TBSP,SET,Services,Media & Publishing
+TC,SET,Agro & Food Industry,Food & Beverage
+TCAP,SET,Financials,Banking
+TCC,SET,Resources,Energy & Utilities
+TCJ,SET,Industrials,Industrial Materials & Machinery
+TCMC,SET,Consumer Products,Home & Office Products
+TCOAT,SET,Industrials,Packaging
+TEAM,SET,Technology,Electronic Components
+TEAMG,SET,Property & Construction,Construction Services
+TEGH,SET,Agro & Food Industry,Agribusiness
+TEKA,SET,Property & Construction,Construction Services
+TERA,mai,Technology,-
+TFFIF,SET,Services,Transportation & Logistics
+TFG,SET,Agro & Food Industry,Food & Beverage
+TFI,SET,Industrials,Packaging
+TFM,SET,Agro & Food Industry,Agribusiness
+TFMAMA,SET,Agro & Food Industry,Food & Beverage
+TGE,SET,Resources,Energy & Utilities
+TGH,SET,Financials,Insurance
+TGPRO,SET,Industrials,Steel and Metal Products
+TH,SET,Financials,Finance & Securities
+THAI,SET,Services,Transportation & Logistics
+THANA,mai,Property & Construction,-
+THANI,SET,Financials,Finance & Securities
+THE,SET,Industrials,Steel and Metal Products
+THG,SET,Services,Health Care Services
+THIP,SET,Industrials,Packaging
+THMUI,mai,Services,-
+THRE,SET,Financials,Insurance
+THREL,SET,Financials,Insurance
+TIDLOR,SET,Financials,Finance & Securities
+TIF1,SET,Property & Construction,Property Fund & REITs
+TIGER,mai,Property & Construction,-
+TIPCO,SET,Agro & Food Industry,Food & Beverage
+TIPH,SET,Financials,Insurance
+TISCO,SET,Financials,Banking
+TITLE,SET,Property & Construction,Property Development
+TK,SET,Financials,Finance & Securities
+TKC,SET,Technology,Information & Communication Technology
+TKN,SET,Agro & Food Industry,Food & Beverage
+TKS,SET,Services,Media & Publishing
+TKT,SET,Industrials,Automotive
+TL,SET,Technology,Information & Communication Technology
+TLHPF,SET,Property & Construction,Property Fund & REITs
+TLI,SET,Financials,Insurance
+TM,mai,Consumer Products,-
+TMAN,SET,Consumer Products,Personal Products & Pharmaceuticals
+TMC,mai,Industrial,-
+TMD,SET,Industrials,Packaging
+TMI,mai,Industrial,-
+TMILL,mai,Agro & Food Industry,-
+TMT,SET,Industrials,Steel and Metal Products
+TMW,mai,Industrial,-
+TNDT,mai,Services,-
+TNH,mai,Services,-
+TNITY,SET,Financials,Finance & Securities
+TNL,SET,Financials,Finance & Securities
+TNP,mai,Services,-
+TNPC,SET,Industrials,Automotive
+TNPF,SET,Property & Construction,Property Fund & REITs
+TNR,SET,Consumer Products,Personal Products & Pharmaceuticals
+TOA,SET,Property & Construction,Construction Materials
+TOG,SET,Consumer Products,Personal Products & Pharmaceuticals
+TOP,SET,Resources,Energy & Utilities
+TOPP,SET,Industrials,Packaging
+TPA,SET,Industrials,Petrochemicals & Chemicals
+TPAC,SET,Industrials,Packaging
+TPBI,SET,Industrials,Packaging
+TPCH,mai,Resources,-
+TPCS,SET,Industrials,Industrial Materials & Machinery
+TPIPL,SET,Property & Construction,Construction Materials
+TPIPP,SET,Resources,Energy & Utilities
+TPL,mai,Services,-
+TPLAS,mai,Industrial,-
+TPOLY,SET,Property & Construction,Construction Services
+TPP,SET,Industrials,Packaging
+TPRIME,SET,Property & Construction,Property Fund & REITs
+TPS,mai,Technology,-
+TQM,SET,Financials,Insurance
+TQR,mai,Financials,-
+TR,SET,Consumer Products,Fashion
+TRC,SET,Property & Construction,Construction Services
+TRITN,SET,Property & Construction,Construction Services
+TRP,mai,Services,-
+TRT,mai,Industrial,-
+TRU,SET,Industrials,Automotive
+TRUBB,SET,Agro & Food Industry,Agribusiness
+TRUE,SET,Technology,Information & Communication Technology
+TRV,mai,Industrial,-
+TSC,SET,Industrials,Automotive
+TSE,SET,Resources,Energy & Utilities
+TSI,SET,Financials,Insurance
+TSR,SET,Consumer Products,Home & Office Products
+TSTE,SET,Services,Transportation & Logistics
+TSTH,SET,Industrials,Steel and Metal Products
+TTA,SET,Services,Transportation & Logistics
+TTB,SET,Financials,Banking
+TTCL,SET,Property & Construction,Construction Services
+TTI,SET,Consumer Products,Fashion
+TTLPF,SET,Property & Construction,Property Fund & REITs
+TTT,SET,Consumer Products,Fashion
+TTW,SET,Resources,Energy & Utilities
+TU,SET,Agro & Food Industry,Food & Beverage
+TU-PF,SET,Property & Construction,Property Fund & REITs
+TURBO,SET,Financials,Finance & Securities
+TURTLE,mai,Services,-
+TVDH,mai,Services,-
+TVH,SET,Financials,Insurance
+TVO,SET,Agro & Food Industry,Food & Beverage
+TVT,mai,Services,-
+TWP,SET,Industrials,Steel and Metal Products
+TWPC,SET,Agro & Food Industry,Food & Beverage
+TWZ,SET,Technology,Information & Communication Technology
+TYCN,SET,Industrials,Steel and Metal Products
+UAC,SET,Industrials,Petrochemicals & Chemicals
+UBA,mai,Services,-
+UBE,SET,Resources,Energy & Utilities
+UBIS,mai,Industrial,-
+UEC,mai,Industrial,-
+UKEM,mai,Industrial,-
+UMI,SET,Property & Construction,Construction Materials
+UMS,mai,Resources,-
+UNIQ,SET,Property & Construction,Construction Services
+UNIX,SET,Industrials,Packaging
+UP,SET,Industrials,Petrochemicals & Chemicals
+UPF,SET,Consumer Products,Fashion
+UPOIC,SET,Agro & Food Industry,Agribusiness
+UREKA,mai,Industrial,-
+UTP,SET,Industrials,Paper & Printing Materials
+UV,SET,Property & Construction,Property Development
+UVAN,SET,Agro & Food Industry,Agribusiness
+VARO,SET,Industrials,Industrial Materials & Machinery
+VCOM,mai,Technology,-
+VGI,SET,Services,Media & Publishing
+VIBE,mai,Services,-
+VIBHA,SET,Services,Health Care Services
+VIH,SET,Services,Health Care Services
+VL,mai,Services,-
+VNG,SET,Property & Construction,Construction Materials
+VPO,SET,Agro & Food Industry,Agribusiness
+VRANDA,SET,Services,Tourism & Leisure
+VS,mai,Services,-
+WACOAL,SET,Consumer Products,Fashion
+WARRIX,mai,Consumer Products,-
+WASH,mai,Services,-
+WAVE,SET,Services,Professional Services
+WELL,mai,Property & Construction,-
+WFX,SET,Consumer Products,Fashion
+WGE,SET,Property & Construction,Construction Services
+WHA,SET,Property & Construction,Property Development
+WHABT,SET,Property & Construction,Property Fund & REITs
+WHAIR,SET,Property & Construction,Property Fund & REITs
+WHART,SET,Property & Construction,Property Fund & REITs
+WHAUP,SET,Resources,Energy & Utilities
+WICE,SET,Services,Transportation & Logistics
+WIIK,SET,Property & Construction,Construction Materials
+WIN,SET,Property & Construction,Property Development
+WINDOW,SET,Property & Construction,Construction Materials
+WINMED,mai,Consumer Products,-
+WINNER,mai,Agro & Food Industry,-
+WORK,SET,Services,Media & Publishing
+WP,SET,Resources,Energy & Utilities
+WPH,SET,Services,Health Care Services
+WSOL,SET,Services,Commerce
+XBIO,SET,Agro & Food Industry,Food & Beverage
+XO,mai,Agro & Food Industry,-
+XPG,SET,Financials,Finance & Securities
+XYZ,SET,Technology,Information & Communication Technology
+YGG,mai,Services,-
+YONG,mai,Property & Construction,-
+YUASA,mai,Industrial,-
+ZAA,SET,Services,Media & Publishing
+ZEN,SET,Agro & Food Industry,Food & Beverage
+ZIGA,mai,Industrial,-

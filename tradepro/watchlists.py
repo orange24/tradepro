@@ -10,6 +10,13 @@ SET50 = [
 
 WATCHLISTS = {"set50": SET50}
 
+# Every SET + mai stock (tradepro/set_all.csv, refresh with `python -m tradepro.setlist`)
+try:
+    from .setlist import load as _load_set_all
+    WATCHLISTS["set_all"] = [r["symbol"] for r in _load_set_all()]
+except FileNotFoundError:  # pragma: no cover
+    pass
+
 # Large, liquid US stocks (mega caps across sectors). Edit freely.
 US50 = [
     "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "AVGO", "BRK-B", "JPM",
