@@ -7,14 +7,52 @@
 - **ตลาด**: หุ้นไทย SET และหุ้นสหรัฐ (`--market set | us | all`, ค่าเริ่มต้น `set`), daily chart, ข้อมูลจาก Yahoo Finance
   รายชื่อหุ้นตั้งต้น SET50 และ US50 อยู่ใน `tradepro/watchlists.py` ส่วน tick size และค่าคอมแต่ละตลาดอยู่ใน `tradepro/markets.py`
 
-## ติดตั้ง
+## เว็บแอป (พอร์ต + สแกน) สำหรับรันบน server
+
+มี 3 หน้า
+- **พอร์ตของฉัน**: ใส่หุ้นที่ถือ (ตลาด, ชื่อหุ้น, จำนวน, ต้นทุนเฉลี่ย) แล้วแสดงราคาล่าสุด กำไร/ขาดทุน
+  คำแนะนำ **ถือต่อ / เฝ้าระวัง / ควรขาย** พร้อมเหตุผลและราคา stop ที่ควรขาย (กฎ EXIT-1..4 ใน docs)
+- **สแกนหุ้นน่าซื้อ**: หุ้น SET50 / US50 (และหุ้นในพอร์ต) ที่วันล่าสุดเกิด setup ฝั่งซื้อ พร้อมราคาเข้า, stop, เป้า
+  สแกนอัตโนมัติทุก 6 ชั่วโมง หรือกดปุ่ม "สแกนใหม่"
+- **กราฟ**: กดชื่อหุ้นเพื่อดูแท่งเทียน + EMA20 + จุดสัญญาณ + เส้น stop + เส้นต้นทุน
+
+### ลองในเครื่อง
+
+```bash
+pip install -r requirements.txt
+python -m tradepro.web            # เปิด http://127.0.0.1:8000
+TRADEPRO_SOURCE=synthetic python -m tradepro.web   # ข้อมูลจำลอง ไม่ต้องใช้เน็ต
+```
+
+### ขึ้น server (VPS ที่มี Docker เช่น DigitalOcean, AWS Lightsail, Google Cloud)
+
+```bash
+git clone https://github.com/orange24/tradepro.git && cd tradepro
+echo "TRADEPRO_PASSWORD=ตั้งรหัสผ่านที่เดายาก" > .env
+docker compose up -d --build
+```
+
+เปิด `http://<IP ของ server>:8000` ใส่ username อะไรก็ได้ + รหัสผ่านที่ตั้งไว้
+ข้อมูลพอร์ตเก็บใน `data/tradepro.db` บน server (สำรองไฟล์นี้ไว้)
+ถ้าจะใช้ผ่านอินเทอร์เน็ตจริงจัง ควรตั้งโดเมน + HTTPS (เช่น Caddy หรือ Cloudflare Tunnel) เพราะรหัสผ่านส่งแบบ Basic auth
+
+| ตัวแปร | ความหมาย | ค่าเริ่มต้น |
+|---|---|---|
+| `TRADEPRO_PASSWORD` | รหัสผ่านเข้าเว็บ (ไม่ตั้ง = ไม่ถาม) | – |
+| `TRADEPRO_DB` | ไฟล์ฐานข้อมูล SQLite | `data/tradepro.db` |
+| `TRADEPRO_SOURCE` | `yahoo` / `csv` / `synthetic` | `yahoo` |
+| `TRADEPRO_SCAN_HOURS` | สแกนใหม่เมื่อผลเก่ากว่ากี่ชั่วโมง (0 = ปิด) | `6` |
+
+## Command line
+
+### ติดตั้ง
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## ใช้งาน
+### ใช้งาน
 
 ```bash
 # สแกนหา setup บนแท่งล่าสุดของหุ้น SET50 -> ได้รายการ entry / stop / target สำหรับวันทำการถัดไป
@@ -71,6 +109,9 @@ tradepro/
   backtest.py    จำลองการเทรดและสรุปผล
   markets.py     ค่าต่อตลาด (suffix ของ Yahoo, watchlist, ค่าคอม)
   ticks.py       tick size ของ SET และ US
+  advisor.py     คำแนะนำถือ/ขายสำหรับหุ้นในพอร์ต
+  store.py       เก็บพอร์ตและผลสแกน (SQLite)
+  web/           เว็บแอป Flask + กราฟ (TradingView Lightweight Charts, Apache-2.0)
 ```
 
 > ไม่ใช่คำแนะนำการลงทุน ใช้เพื่อศึกษาและทดสอบระบบก่อนใช้เงินจริง

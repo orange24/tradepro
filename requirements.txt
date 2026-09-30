@@ -1,4 +1,6 @@
 pandas>=2.1
 numpy>=1.26
 yfinance>=0.2.40
+flask>=3.0
+gunicorn>=22
 pytest>=8

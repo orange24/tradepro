@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}สแกนหุ้นน่าซื้อ · TradePro{% endblock %}
+{% block head %}{% if running %}<meta http-equiv="refresh" content="10">{% endif %}{% endblock %}
+{% block body %}
+<h1>สแกนหุ้นน่าซื้อ</h1>
+<p class="sub">หุ้นที่แท่งเทียนวันล่าสุดเป็น signal bar ฝั่งซื้อ วางคำสั่งซื้อแบบ stop ที่ราคาเข้า สำหรับวันทำการถัดไป</p>
+<div class="card-head">
+  <div class="tabs">
+    <a href="{{ url_for('scan_page', market='set') }}" class="{{ 'on' if market == 'set' }}">หุ้นไทย (SET50)</a>
+    <a href="{{ url_for('scan_page', market='us') }}" class="{{ 'on' if market == 'us' }}">หุ้นสหรัฐ (US50)</a>
+  </div>
+  <form method="post" action="{{ url_for('scan_run') }}" class="inline">
+    <input type="hidden" name="market" value="{{ market }}">
+    <button {{ 'disabled' if running }}>{{ 'กำลังสแกน…' if running else 'สแกนใหม่' }}</button>
+  </form>
+</div>
+
+<section class="card">
+{% if scan %}
+  <p class="note" style="margin-top:0">สแกนล่าสุด: <span data-utc="{{ scan.run_at }}">{{ scan.run_at }}</span>
+    {% if running %} · กำลังสแกนใหม่ หน้านี้จะรีเฟรชเอง{% endif %}</p>
+  {% if scan.results %}
+  <div class="table-wrap"><table>
+    <tr><th>หุ้น</th><th>Setup</th><th class="n">ราคาล่าสุด</th><th class="n">ซื้อเมื่อราคาถึง</th>
+        <th class="n">Stop</th><th class="n">เป้าหมาย</th><th class="n">Reward/Risk</th><th>บริบท</th></tr>
+    {% for s in scan.results %}
+    <tr>
+      <td><a class="tk" href="{{ url_for('chart_page', market=market, ticker=s.ticker) }}">{{ s.ticker }}</a></td>
+      <td><b>{{ s.setup }}</b><div class="note">{{ SETUP_TH.get(s.setup, '') }}{% if s.note %} · {{ s.note }}{% endif %}</div></td>
+      <td class="n">{{ '{:,.2f}'.format(s.last_close) }}</td>
+      <td class="n"><b>{{ '{:,.2f}'.format(s.entry) }}</b></td>
+      <td class="n neg">{{ '{:,.2f}'.format(s.stop) }}</td>
+      <td class="n pos">{{ '{:,.2f}'.format(s.target) }}</td>
+      <td class="n">{{ '{:.1f}'.format(s.reward_r) }}R</td>
+      <td>{{ CONTEXT_TH.get(s.context, s.context) }}</td>
+    </tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p class="empty">วันนี้ไม่มีหุ้นที่เข้าเงื่อนไขซื้อ</p>{% endif %}
+  {% if scan.errors %}<details><summary>ดึงข้อมูลไม่ได้ {{ scan.errors|length }} ตัว</summary>
+    <ul class="reasons">{% for e in scan.errors %}<li>{{ e }}</li>{% endfor %}</ul></details>{% endif %}
+{% elif running %}
+  <p class="empty">กำลังสแกนครั้งแรก หน้านี้จะรีเฟรชเอง…</p>
+{% else %}
+  <p class="empty">ยังไม่เคยสแกน กด "สแกนใหม่" ได้เลย</p>
+{% endif %}
+</section>
+<script>
+document.querySelectorAll("[data-utc]").forEach(el => {
+  const d = new Date(el.dataset.utc);
+  if (!isNaN(d)) el.textContent = d.toLocaleString("th-TH", {dateStyle: "medium", timeStyle: "short"});
+});
+</script>
+{% endblock %}

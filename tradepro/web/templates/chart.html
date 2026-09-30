@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ ticker }} · TradePro{% endblock %}
+{% block head %}<script src="{{ url_for('static', filename='lightweight-charts.standalone.production.js') }}"></script>{% endblock %}
+{% block body %}
+<h1>{{ ticker }} <span class="note">{{ 'หุ้นไทย (SET)' if market == 'set' else 'หุ้นสหรัฐ (US)' }}</span></h1>
+<p class="sub" id="summary">กำลังโหลด…</p>
+<section class="card">
+  <div id="chart"></div>
+  <div class="legend">
+    <span>เส้นส้ม = EMA20</span><span>▲ สัญญาณซื้อ</span><span>▼ สัญญาณขาย</span>
+    <span>เส้นแดงประ = จุดขาย (stop)</span><span>เส้นเทาประ = ต้นทุนของคุณ</span>
+    <span>กราฟโดย <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView Lightweight Charts</a></span>
+  </div>
+</section>
+<section class="card"><h2 style="margin-bottom:8px">คำแนะนำ</h2><ul class="reasons" id="reasons"></ul></section>
+<script>
+const STATUS = {{ STATUS_TH|tojson }}, CONTEXT = {{ CONTEXT_TH|tojson }};
+const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+const el = document.getElementById("chart");
+const chart = LightweightCharts.createChart(el, {
+  autoSize: true,
+  layout: {background: {color: "transparent"}, textColor: dark ? "#98a0b3" : "#6b7385"},
+  grid: {vertLines: {color: dark ? "#232833" : "#eef0f3"}, horzLines: {color: dark ? "#232833" : "#eef0f3"}},
+  timeScale: {borderVisible: false}, rightPriceScale: {borderVisible: false},
+});
+const candles = chart.addCandlestickSeries({upColor: "#0f8a5f", downColor: "#c8373a",
+  wickUpColor: "#0f8a5f", wickDownColor: "#c8373a", borderVisible: false});
+const ema = chart.addLineSeries({color: "#e08a1e", lineWidth: 2, priceLineVisible: false, lastValueVisible: false});
+fetch("{{ url_for('chart_data', market=market, ticker=ticker) }}").then(r => r.json()).then(d => {
+  if (d.error) { document.getElementById("summary").textContent = "ดึงราคาไม่ได้: " + d.error; return; }
+  candles.setData(d.candles);
+  ema.setData(d.ema);
+  candles.setMarkers(d.signals.map(s => ({
+    time: s.time, position: s.direction === "long" ? "belowBar" : "aboveBar",
+    color: s.direction === "long" ? "#2458d6" : "#c8373a",
+    shape: s.direction === "long" ? "arrowUp" : "arrowDown", text: s.setup,
+  })));
+  candles.createPriceLine({price: d.advice.stop, color: "#c8373a", lineStyle: 2, title: "stop"});
+  if (d.cost) candles.createPriceLine({price: d.cost, color: "#8a93a6", lineStyle: 2, title: "ต้นทุน"});
+  chart.timeScale().setVisibleLogicalRange({from: d.candles.length - 120, to: d.candles.length + 3});
+  const last = d.candles[d.candles.length - 1];
+  document.getElementById("summary").innerHTML =
+    `ราคาล่าสุด <b>${last.close.toLocaleString(undefined, {maximumFractionDigits: 2})}</b> (${last.time}) · ` +
+    `บริบท: ${CONTEXT[d.advice.context]} · ถ้าถืออยู่: <span class="badge b-${d.advice.status}">${STATUS[d.advice.status]}</span>`;
+  const ul = document.getElementById("reasons");
+  d.advice.reasons.forEach(t => { const li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+  const recent = d.signals.slice(-5).reverse();
+  recent.forEach(s => { const li = document.createElement("li");
+    li.textContent = `${s.time}: ${s.setup} ${s.direction === "long" ? "ซื้อ" : "ขาย"} ที่ ${s.entry}, stop ${s.stop}, เป้า ${s.target}`;
+    ul.appendChild(li); });
+});
+</script>
+{% endblock %}

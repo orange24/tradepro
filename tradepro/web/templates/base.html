@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}TradePro{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+<header><div class="bar">
+  <div class="brand">TradePro</div>
+  <nav>
+    <a href="{{ url_for('portfolio') }}" class="{{ 'on' if active == 'portfolio' }}">พอร์ตของฉัน</a>
+    <a href="{{ url_for('scan_page', market='set') }}" class="{{ 'on' if active == 'scan' }}">สแกนหุ้นน่าซื้อ</a>
+  </nav>
+</div></header>
+<main>{% block body %}{% endblock %}
+<p class="note">ราคาจาก Yahoo Finance (ล่าช้าประมาณ 15–20 นาที) · สัญญาณคำนวณจากกราฟรายวันตามกฎ price action ของ Al Brooks · ไม่ใช่คำแนะนำการลงทุน</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}พอร์ตของฉัน · TradePro{% endblock %}
+{% block body %}
+<h1>พอร์ตของฉัน</h1>
+<p class="sub">ราคาตลาด กำไร/ขาดทุน และคำแนะนำว่าควรถือต่อหรือขาย</p>
+
+{% for m, g in groups.items() %}
+{% set cur = CURRENCY[m] %}
+<section class="card">
+  <div class="card-head">
+    <h2>{{ 'หุ้นไทย (SET)' if m == 'set' else 'หุ้นสหรัฐ (US)' }}</h2>
+    <div class="stats">
+      <div class="stat"><div class="k">ต้นทุนรวม</div><div class="v">{{ cur }}{{ '{:,.2f}'.format(g.basis) }}</div></div>
+      <div class="stat"><div class="k">มูลค่าตลาด</div><div class="v">{{ cur }}{{ '{:,.2f}'.format(g.value) }}</div></div>
+      <div class="stat"><div class="k">กำไร/ขาดทุน</div>
+        <div class="v {{ 'pos' if g.pnl >= 0 else 'neg' }}">{{ '{:+,.2f}'.format(g.pnl) }} ({{ '{:+.2f}'.format(g.pnl_pct) }}%)</div></div>
+    </div>
+  </div>
+  <div class="table-wrap"><table>
+    <tr><th>หุ้น</th><th class="n">จำนวน</th><th class="n">ต้นทุน/หุ้น</th><th class="n">ราคาล่าสุด</th>
+        <th class="n">กำไร/ขาดทุน</th><th>คำแนะนำ</th><th class="n">จุดขาย (stop)</th><th>เหตุผล</th><th></th></tr>
+    {% for r in g.rows %}
+    <tr>
+      <td><a class="tk" href="{{ url_for('chart_page', market=m, ticker=r.ticker) }}">{{ r.ticker }}</a>
+        {% if r.note %}<div class="note">{{ r.note }}</div>{% endif %}</td>
+      <td class="n">{{ '{:,.0f}'.format(r.shares) if r.shares == r.shares|int else r.shares }}</td>
+      <td class="n">{{ '{:,.2f}'.format(r.cost) }}</td>
+      {% if r.error %}
+      <td colspan="5" class="neg">ดึงราคาไม่ได้: {{ r.error }}</td>
+      {% else %}
+      <td class="n">{{ '{:,.2f}'.format(r.price) }}</td>
+      <td class="n {{ 'pos' if r.pnl >= 0 else 'neg' }}">{{ '{:+,.2f}'.format(r.pnl) }}<br>{{ '{:+.2f}'.format(r.pnl_pct) }}%</td>
+      <td><span class="badge b-{{ r.advice.status }}">{{ STATUS_TH[r.advice.status] }}</span>
+        <div class="note">{{ CONTEXT_TH[r.advice.context] }}</div></td>
+      <td class="n">{{ '{:,.2f}'.format(r.advice.stop) }}</td>
+      <td><ul class="reasons">{% for x in r.advice.reasons %}<li>{{ x }}</li>{% endfor %}
+        {% if r.advice.buy_signals and r.advice.status != 'sell' %}<li class="pos">มีสัญญาณซื้อเพิ่ม: {{ r.advice.buy_signals|join(', ') }}</li>{% endif %}</ul></td>
+      {% endif %}
+      <td>
+        <details><summary>แก้ไข</summary>
+          <form method="post" action="{{ url_for('edit_holding', hid=r.id) }}" class="form-row" style="margin-top:8px">
+            <label>จำนวน<input type="number" name="shares" step="any" value="{{ r.shares }}" required></label>
+            <label>ต้นทุน/หุ้น<input type="number" name="cost" step="any" value="{{ r.cost }}" required></label>
+            <label>โน้ต<input name="note" value="{{ r.note }}"></label>
+            <button>บันทึก</button>
+          </form>
+          <form method="post" action="{{ url_for('delete_holding', hid=r.id) }}" class="inline"
+                onsubmit="return confirm('ลบ {{ r.ticker }} ออกจากพอร์ต?')"><button class="ghost">ลบ</button></form>
+        </details>
+      </td>
+    </tr>
+    {% endfor %}
+  </table></div>
+</section>
+{% else %}
+<section class="card"><p class="empty">ยังไม่มีหุ้นในพอร์ต เพิ่มหุ้นตัวแรกด้านล่างได้เลย</p></section>
+{% endfor %}
+
+<section class="card">
+  <h2 style="margin-bottom:12px">เพิ่มหุ้นในพอร์ต</h2>
+  <form method="post" action="{{ url_for('add_holding') }}" class="form-row">
+    <label>ตลาด<select name="market"><option value="set">หุ้นไทย (SET)</option><option value="us">หุ้นสหรัฐ (US)</option></select></label>
+    <label>ชื่อหุ้น<input name="ticker" placeholder="เช่น PTT หรือ AAPL" required style="width:150px"></label>
+    <label>จำนวนหุ้น<input type="number" name="shares" step="any" min="0" required></label>
+    <label>ต้นทุนเฉลี่ย/หุ้น<input type="number" name="cost" step="any" min="0" required></label>
+    <label>โน้ต<input name="note" placeholder="ไม่ใส่ก็ได้"></label>
+    <button>เพิ่ม</button>
+  </form>
+</section>
+{% endblock %}

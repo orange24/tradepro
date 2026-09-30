@@ -1,0 +1,12 @@
+services:
+  tradepro:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      TRADEPRO_PASSWORD: ${TRADEPRO_PASSWORD:?set TRADEPRO_PASSWORD in .env}
+      TRADEPRO_SCAN_HOURS: "6"
+      TZ: Asia/Bangkok
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
