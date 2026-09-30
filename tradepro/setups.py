@@ -9,7 +9,7 @@ import pandas as pd
 
 from .config import DEFAULT, Config
 from .indicators import BEAR, BULL, RANGE, add_features, is_good_bear_signal, is_good_bull_signal
-from .ticks import round_to_tick, set_tick
+from .ticks import round_to_tick, tick_size
 
 
 @dataclass
@@ -70,15 +70,15 @@ def count_highs(high: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     return count, armed, in_pb
 
 
-def _long(ticker, row, setup, target, context, note):
-    entry = round_to_tick(row.high + set_tick(row.high), up=True)    # HL-7: 1 tick above
-    stop = round_to_tick(row.low - set_tick(row.low), up=False)       # RISK-1: 1 tick below
+def _long(ticker, row, setup, target, context, note, m):
+    entry = round_to_tick(row.high + tick_size(row.high, m), up=True, market=m)   # HL-7: 1 tick above
+    stop = round_to_tick(row.low - tick_size(row.low, m), up=False, market=m)     # RISK-1: 1 tick below
     return Signal(ticker, row.Index, setup, "long", entry, stop, target(entry, entry - stop), context, note)
 
 
-def _short(ticker, row, setup, target, context, note):
-    entry = round_to_tick(row.low - set_tick(row.low), up=False)
-    stop = round_to_tick(row.high + set_tick(row.high), up=True)
+def _short(ticker, row, setup, target, context, note, m):
+    entry = round_to_tick(row.low - tick_size(row.low, m), up=False, market=m)
+    stop = round_to_tick(row.high + tick_size(row.high, m), up=True, market=m)
     return Signal(ticker, row.Index, setup, "short", entry, stop, target(entry, stop - entry), context, note)
 
 
@@ -105,16 +105,16 @@ def detect(df: pd.DataFrame, ticker: str = "", cfg: Config = DEFAULT) -> list[Si
         # H2 / H1 pullbacks in a bull trend (HL-3, HL-4)
         if ctx == BULL and hpb[i] and harmed[i] and is_good_bull_signal(row, cfg):
             if hc[i] == 1:
-                signals.append(_long(ticker, row, "H2", long_r, ctx, "EMA pullback" if near_ema else ""))
+                signals.append(_long(ticker, row, "H2", long_r, ctx, "EMA pullback" if near_ema else "", cfg.market))
             elif hc[i] == 0 and row.strong:
-                signals.append(_long(ticker, row, "H1", long_r, ctx, "strong trend"))
+                signals.append(_long(ticker, row, "H1", long_r, ctx, "strong trend", cfg.market))
 
         # L2 / L1 in a bear trend (HL-6)
         if ctx == BEAR and lpb[i] and larmed[i] and is_good_bear_signal(row, cfg):
             if lc[i] == 1:
-                signals.append(_short(ticker, row, "L2", short_r, ctx, "EMA pullback" if near_ema else ""))
+                signals.append(_short(ticker, row, "L2", short_r, ctx, "EMA pullback" if near_ema else "", cfg.market))
             elif lc[i] == 0 and row.strong:
-                signals.append(_short(ticker, row, "L1", short_r, ctx, "strong trend"))
+                signals.append(_short(ticker, row, "L1", short_r, ctx, "strong trend", cfg.market))
 
         # Strong breakout bars (BO-1) with a measured-move target (BO-2)
         hi, lo = prior_hi[i], prior_lo[i]
@@ -124,21 +124,21 @@ def detect(df: pd.DataFrame, ticker: str = "", cfg: Config = DEFAULT) -> list[Si
             if big and row.close > hi and row.close_pos >= cfg.bo_close_pos:
                 mm = hi + height
                 signals.append(_long(ticker, row, "BO_BULL", lambda e, r: round(max(mm, e + cfg.min_reward_r * r), 4),
-                                     ctx, f"range {lo:.2f}-{hi:.2f}"))
+                                     ctx, f"range {lo:.2f}-{hi:.2f}", cfg.market))
             elif big and row.close < lo and row.close_pos <= 1 - cfg.bo_close_pos:
                 mm = lo - height
                 signals.append(_short(ticker, row, "BO_BEAR", lambda e, r: round(min(mm, e - cfg.min_reward_r * r), 4),
-                                      ctx, f"range {lo:.2f}-{hi:.2f}"))
+                                      ctx, f"range {lo:.2f}-{hi:.2f}", cfg.market))
 
             # Failed breakouts of a trading range (BO-3, CTX-6); target the middle of the range
             mid = (hi + lo) / 2
             if prev_context[i] == RANGE:
                 if row.low < lo and row.close > lo and is_good_bull_signal(row, cfg):
-                    s = _long(ticker, row, "FAILED_BO", lambda e, r: round(mid, 4), ctx, "failed bear breakout")
+                    s = _long(ticker, row, "FAILED_BO", lambda e, r: round(mid, 4), ctx, "failed bear breakout", cfg.market)
                     if s.target > s.entry and s.reward_r >= cfg.min_reward_r:
                         signals.append(s)
                 if row.high > hi and row.close < hi and is_good_bear_signal(row, cfg):
-                    s = _short(ticker, row, "FAILED_BO", lambda e, r: round(mid, 4), ctx, "failed bull breakout")
+                    s = _short(ticker, row, "FAILED_BO", lambda e, r: round(mid, 4), ctx, "failed bull breakout", cfg.market)
                     if s.target < s.entry and s.reward_r >= cfg.min_reward_r:
                         signals.append(s)
     if cfg.long_only:

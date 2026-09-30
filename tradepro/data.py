@@ -90,10 +90,11 @@ class SyntheticSource(DataSource):
                              "volume": rng.integers(1e5, 1e7, n)}, index=idx)
 
 
-def make_source(name: str, csv_dir: str = "data/cache") -> DataSource:
+def make_source(name: str, csv_dir: str = "data/cache", yahoo_suffix: str = ".BK") -> DataSource:
+    """csv_dir is both the CSV source's folder and the Yahoo download cache."""
     name = name.lower()
     if name in ("yahoo", "yf", "yfinance"):
-        return YahooSource()
+        return YahooSource(suffix=yahoo_suffix, cache_dir=csv_dir)
     if name == "csv":
         return CSVSource(csv_dir)
     if name == "synthetic":

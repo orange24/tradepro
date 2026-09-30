@@ -74,3 +74,26 @@ def test_synthetic_end_to_end(tmp_path):
     trades = backtest.run({"PTT": again})
     assert not trades.empty
     assert "ALL" in backtest.summarize(trades).index
+
+
+def test_us_ticks_and_market_aware_signals():
+    from tradepro.ticks import tick_size
+
+    assert tick_size(150.0, "us") == 0.01
+    assert tick_size(0.5, "us") == 0.0001
+    assert round_to_tick(150.004, up=True, market="us") == 150.01
+    df = SyntheticSource().get("AAPL")
+    for s in detect(df, "AAPL", Config(market="us"))[:50]:
+        assert round(s.entry * 100) == pytest.approx(s.entry * 100, abs=1e-6)
+
+
+def test_cli_both_markets(tmp_path, capsys):
+    from tradepro.__main__ import main
+
+    out = tmp_path / "t.csv"
+    main(["backtest", "--market", "all", "--source", "synthetic", "--out", str(out)])
+    text = capsys.readouterr().out
+    assert "=== SET ===" in text and "=== US ===" in text
+    assert set(pd.read_csv(out)["market"]) == {"set", "us"}
+    main(["scan", "--market", "all", "--source", "synthetic", "--recent", "3"])
+    assert "No setups" not in capsys.readouterr().out

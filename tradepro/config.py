@@ -31,6 +31,7 @@ class Config:
     min_reward_r: float = 1.0         # skip setups whose target is closer than this
     max_hold_bars: int = 20
     cost_pct: float = 0.2             # round-trip commission + slippage, percent of price
+    market: str = "set"               # "set" or "us": tick sizes (see markets.py)
     long_only: bool = False           # SET retail short selling is limited (SBL only)
 
 
