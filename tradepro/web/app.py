@@ -94,9 +94,23 @@ class Scanner:
 
             def one(t):
                 df = self.prices.history(market, t)
-                last = df.index[-1]
-                return [s.as_dict() | {"last_close": round(float(df["close"].iloc[-1]), 4)}
-                        for s in detect(df, t, cfg) if s.date == last and s.direction == "long"]
+                last, px = df.index[-1], float(df["close"].iloc[-1])
+                recent = list(df.index[-cfg.w3_recent_bars:])
+                green_now = bool(cdc_action_zone(df)["cdc_green"].iloc[-1])
+                rows = []
+                for s in detect(df, t, cfg):
+                    if s.direction != "long":
+                        continue
+                    if s.date == last:
+                        rows.append(s.as_dict() | {"last_close": round(px, 4), "days_ago": 0})
+                    elif s.setup == "W3" and s.date in recent and green_now and px > s.stop:
+                        # W3 stays buyable for a few days while CDC is still green and the price has not
+                        # run away: reward/risk from today's close must still meet w3_min_rr ("ไม่ตกรถ")
+                        rr_now = (s.target - px) / (px - s.stop)
+                        if rr_now >= cfg.w3_min_rr:
+                            rows.append(s.as_dict() | {"last_close": round(px, 4), "reward_r": round(rr_now, 2),
+                                                       "days_ago": len(df) - 1 - df.index.get_loc(s.date)})
+                return rows
 
             with ThreadPoolExecutor(max_workers=4) as pool:
                 for t, fut in [(t, pool.submit(one, t)) for t in tickers]:

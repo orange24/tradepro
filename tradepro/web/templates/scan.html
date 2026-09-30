@@ -28,7 +28,7 @@
       <td><a class="tk" href="{{ url_for('chart_page', market=market, ticker=s.ticker) }}">{{ s.ticker }}</a></td>
       <td><b>{{ s.setup }}</b><div class="note">{{ SETUP_TH.get(s.setup, '') }}{% if s.note %} · {{ s.note }}{% endif %}</div></td>
       <td class="n">{{ '{:,.2f}'.format(s.last_close) }}</td>
-      <td class="n">{% if s.order == 'open' %}<b>ราคาเปิด</b><div class="note">วันถัดไป (ปิดล่าสุด {{ '{:,.2f}'.format(s.entry) }})</div>{% else %}<b>{{ '{:,.2f}'.format(s.entry) }}</b>{% endif %}</td>
+      <td class="n">{% if s.order == 'open' %}<b>ราคาเปิด</b><div class="note">วันถัดไป{% if s.days_ago %} · เขียวแรกเมื่อ {{ s.days_ago }} วันก่อน ยังไม่ตกรถ{% endif %}</div>{% else %}<b>{{ '{:,.2f}'.format(s.entry) }}</b>{% endif %}</td>
       <td class="n neg">{{ '{:,.2f}'.format(s.stop) }}</td>
       <td class="n pos">{{ '{:,.2f}'.format(s.target) }}</td>
       <td class="n">{{ '{:.1f}'.format(s.reward_r) }}R</td>

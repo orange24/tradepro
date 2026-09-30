@@ -142,7 +142,9 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker) }}").then(r => r.j
       stat("Reward / Risk", s.reward_r + "R");
     document.getElementById("signal-how").textContent = atOpen
       ? `Wave 2 ย่อ ${fmt(s.levels.retrace * 100)}% ของ Wave 1 (${fmt(s.levels.w1_base)} → ${fmt(s.levels.w1_top)}) แล้ว CDC Action Zone เพิ่งเขียวแรก ` +
-        `ซื้อที่ราคาเปิดวันทำการถัดไป stop ใต้ปลาย Wave 2 ที่ ${fmt(s.stop)} เป้า 161.8% ${fmt(s.target)} · 261.8% ${fmt(s.levels.t2)} · 423.6% ${fmt(s.levels.t3)}`
+        `ซื้อที่ราคาเปิดวันทำการถัดไป stop ใต้ปลาย Wave 2 ที่ ${fmt(s.stop)} เป้า 161.8% ${fmt(s.target)} · 261.8% ${fmt(s.levels.t2)} · 423.6% ${fmt(s.levels.t3)}. ` +
+        (s.levels.confirm.length ? `สัญญาณยืนยัน: ${s.levels.confirm.join(", ")}` : "ยังไม่มีสัญญาณยืนยันร่วม") +
+        (s.levels.confirm.some(c => c.startsWith("แมงเม่า")) ? " (backtest: มีแมงเม่าที่ปลาย W2 ให้ผลดีกว่า)" : "")
       : long
       ? `วางคำสั่ง buy stop ที่ ${fmt(s.entry)} (1 tick เหนือ high ของแท่งสัญญาณ) สำหรับวันทำการถัดไป ถ้าราคาไม่ขึ้นไปถึงก็ไม่เข้า ถ้าเข้าแล้วให้ตั้ง stop ที่ ${fmt(s.stop)} (1 tick ใต้ low ของแท่งสัญญาณ)`
       : `สัญญาณฝั่งขาย: ถ้าถือหุ้นอยู่ให้ระวัง ถ้าราคาลงต่ำกว่า ${fmt(s.entry)} เป็นการยืนยันแรงขาย`;

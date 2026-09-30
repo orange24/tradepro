@@ -45,6 +45,8 @@ class Config:
     w3_retrace_max: float = 0.942
     w3_max_bars_after_low: int = 20   # first green must come within this many bars of the wave 2 low
     w3_max_hold_bars: int = 120       # wave 3 takes longer than a Brooks swing
+    w3_min_rr: float = 2.0            # W3-6: reward/risk to the 161.8% target, from the signal close
+    w3_recent_bars: int = 5           # scan keeps a W3 for this many days if it has not run away (W3-8)
     market: str = "set"               # "set" or "us": tick sizes (see markets.py)
     long_only: bool = False           # SET retail short selling is limited (SBL only)
 

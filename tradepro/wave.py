@@ -7,6 +7,9 @@ docs/chaloke_wave3.md.
         buying at the next day's open.
   W3-4  Stop just below the wave 2 low.
   W3-5  Targets: Fibonacci extensions of wave 1 from the wave 2 low: 161.8%, 261.8%, 423.6%.
+  W3-6  Good stock: reward/risk to the 161.8% target of at least w3_min_rr (1:2).
+  W3-7  Confirmations (shown, not required): break of the wave 2 down channel, runaway gap + big white,
+        panic selling ("แมงเม่า") at the wave 2 low (gap down + big black, or an ATR spike).
 """
 
 from __future__ import annotations
@@ -33,7 +36,17 @@ def cdc_action_zone(df: pd.DataFrame) -> pd.DataFrame:
 def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
     """f: output of indicators.add_features. Returns long signals (setup "W3") entered at the next open."""
     z = cdc_action_zone(f)
-    hi, lo, close, atr = (f[k].to_numpy() for k in ("high", "low", "close", "atr"))
+    op, hi, lo, close, atr = (f[k].to_numpy() for k in ("open", "high", "low", "close", "atr"))
+    body = f["body_ratio"].to_numpy()
+    rng = hi - lo
+    big = (body >= cfg.trend_bar_body) & (rng >= atr)
+    big_white = big & (close > op)
+    big_black = big & (close < op)
+    gap_up = np.r_[False, op[1:] > hi[:-1]]
+    gap_down = np.r_[False, op[1:] < lo[:-1]]
+    prev_close = np.r_[close[0], close[:-1]]
+    tr = np.maximum(hi, prev_close) - np.minimum(lo, prev_close)
+    atr_prev = np.r_[atr[0], atr[:-1]]
     green = z["cdc_green"].to_numpy()
     k, n = cfg.w3_pivot_bars, len(f)
     m = cfg.market
@@ -66,12 +79,30 @@ def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
             continue                                      # W3-2
         if i - w2i > cfg.w3_max_bars_after_low:
             continue                                      # green came too long after the wave 2 low
-        used.add(h)
         stop = round_to_tick(w2 - tick_size(w2, m), up=False, market=m)                     # W3-4
         t1, t2, t3 = (w2 + x * w1 for x in (1.618, 2.618, 4.236))                            # W3-5
+        rr = (t1 - close[i]) / (close[i] - stop) if close[i] > stop else 0.0
+        if rr < cfg.w3_min_rr:
+            continue                                      # W3-6: stop too far for the reward (or ran away)
+        used.add(h)
+
+        # W3-7 confirmations
+        conf = []
+        seg = hi[h + k:i]                                 # lower highs of wave 2 after the top
+        if len(seg):
+            j2 = h + k + int(np.argmax(seg))
+            line = top + (hi[j2] - top) / (j2 - h) * (i - h)
+            if close[i] > line:
+                conf.append("breakout กรอบขาลง")
+        if any(gap_up[j] and big_white[j] for j in range(w2i + 1, i + 1)):
+            conf.append("runaway gap + big white")
+        near = range(max(1, w2i - 3), min(n, w2i + 2))
+        if any((gap_down[j] and big_black[j]) or (close[j] < op[j] and tr[j] >= 2 * atr_prev[j]) for j in near):
+            conf.append("แมงเม่า panic sell ที่ปลาย W2")
         zone = "sweet spot" if 0.786 <= retr <= 0.887 else ""
         note = (f"W1 {base:,.2f}→{top:,.2f} · ย่อ {retr * 100:.1f}%{' (' + zone + ')' if zone else ''}"
-                f" · เป้า 261.8% {t2:,.2f} · 423.6% {t3:,.2f}")
+                f" · เป้า 261.8% {t2:,.2f} · 423.6% {t3:,.2f}"
+                + (f" · ยืนยัน: {', '.join(conf)}" if conf else ""))
         out.append(signal_cls(ticker, f.index[i], "W3", "long", round(float(close[i]), 4), stop,
                               round(float(t1), 4), f["context"].iloc[i], note, order="open",
                               max_hold=cfg.w3_max_hold_bars,
@@ -79,5 +110,6 @@ def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
                                       "w2_low": round(float(w2), 4), "retrace": round(float(retr), 3),
                                       "fib_786": round(float(top - 0.786 * w1), 4),
                                       "fib_887": round(float(top - 0.887 * w1), 4),
-                                      "t2": round(float(t2), 4), "t3": round(float(t3), 4)}))
+                                      "t2": round(float(t2), 4), "t3": round(float(t3), 4),
+                                      "sweet": bool(zone), "confirm": conf}))
     return out
