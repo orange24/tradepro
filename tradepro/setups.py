@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 
 import numpy as np
 import pandas as pd
@@ -10,6 +10,7 @@ import pandas as pd
 from .config import DEFAULT, Config
 from .indicators import BEAR, BULL, RANGE, add_features, is_good_bear_signal, is_good_bull_signal
 from .ticks import round_to_tick, tick_size
+from .wave import detect_wave3
 
 
 @dataclass
@@ -23,6 +24,9 @@ class Signal:
     target: float
     context: str
     note: str = ""
+    order: str = "stop"       # "stop": stop order at entry; "open": buy/sell at the next bar's open
+    max_hold: int | None = None   # bars before a time exit (default cfg.max_hold_bars)
+    levels: dict = field(default_factory=dict)   # extra chart levels, e.g. wave 1 base / top for W3
 
     @property
     def risk(self) -> float:
@@ -164,6 +168,9 @@ def detect(df: pd.DataFrame, ticker: str = "", cfg: Config = DEFAULT) -> list[Si
                     s = _short(ticker, row, "FAILED_BO", lambda e, r: round(mid, 4), ctx, "failed bull breakout", cfg.market)
                     if s.target < s.entry and s.reward_r >= cfg.min_reward_r:
                         signals.append(s)
+    if cfg.wave3:
+        signals += detect_wave3(f, ticker, cfg, Signal)
+        signals.sort(key=lambda s: s.date)
     if cfg.long_only:
         signals = [s for s in signals if s.direction == "long"]
     return signals

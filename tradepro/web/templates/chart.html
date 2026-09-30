@@ -18,6 +18,8 @@
     <label><input type="checkbox" data-layer="trail" checked> จุดขาย (swing low)</label>
     <label><input type="checkbox" data-layer="swings" checked> swing high / low</label>
     <label><input type="checkbox" data-layer="markers" checked> สัญญาณในอดีต</label>
+    <label><input type="checkbox" data-layer="wave" checked> Wave 3 (Fibonacci)</label>
+    <label><input type="checkbox" data-layer="cdc" checked> แถบ CDC Action Zone</label>
   </div>
   <div class="hover" id="hover">ชี้เมาส์บนแท่งเทียนเพื่อดูค่าของแท่งนั้น</div>
   <div id="chart"></div>
@@ -27,7 +29,8 @@
     <span><i class="sw" style="background:#c8373a"></i>stop</span>
     <span><i class="sw" style="background:#0f8a5f"></i>เป้าหมาย</span>
     <span><i class="sw" style="background:#8a93a6"></i>ขอบกรอบ / ต้นทุน</span>
-    <span>▲▼ สัญญาณ · ● swing</span>
+    <span><i class="sw" style="background:#8e5bd6"></i>Wave 1 / Fibonacci</span>
+    <span>▲▼ สัญญาณ · ● swing · แถบล่าง = CDC (เขียว/แดง)</span>
     <span>กราฟโดย <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView Lightweight Charts</a></span>
   </div>
 </section>
@@ -48,7 +51,7 @@
 <script>
 const STATUS = {{ STATUS_TH|tojson }}, CONTEXT = {{ CONTEXT_TH|tojson }}, SETUP = {{ SETUP_TH|tojson }};
 const CUR = {{ CURRENCY[market]|tojson }};
-const C = {ema: "#e08a1e", entry: "#2458d6", stop: "#c8373a", target: "#0f8a5f", grey: "#8a93a6"};
+const C = {ema: "#e08a1e", entry: "#2458d6", stop: "#c8373a", target: "#0f8a5f", grey: "#8a93a6", wave: "#8e5bd6"};
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
 const fmt = v => v == null ? "–" : Number(v).toLocaleString(undefined, {maximumFractionDigits: 2});
 const pct = v => v == null ? "–" : Math.round(v * 100) + "%";
@@ -67,11 +70,18 @@ const candles = chart.addCandlestickSeries({upColor: "#0f8a5f", downColor: "#c83
 const ema = chart.addLineSeries({color: C.ema, lineWidth: 2, priceLineVisible: false, lastValueVisible: false,
   crosshairMarkerVisible: false});
 
+const cdcBar = chart.addHistogramSeries({priceScaleId: "cdc", priceLineVisible: false, lastValueVisible: false,
+  priceFormat: {type: "custom", formatter: () => ""}});
+chart.priceScale("cdc").applyOptions({scaleMargins: {top: 0.96, bottom: 0}, visible: false});
+
 fetch("{{ url_for('chart_data', market=market, ticker=ticker) }}").then(r => r.json()).then(d => {
   if (d.error) { document.getElementById("summary").textContent = "ดึงราคาไม่ได้: " + d.error; return; }
   candles.setData(d.candles);
   ema.setData(d.ema);
   const lv = d.levels, a = d.advice, s = d.latest, last = d.candles[d.candles.length - 1];
+  const cdcData = d.bars.map(b => ({time: b.time, value: 1,
+    color: b.cdc === "green" ? "#0f8a5f" : b.cdc === "red" ? "#c8373a" : "#8a93a655"}));
+  const w3 = d.signals.filter(x => x.setup === "W3").pop();   // most recent wave 3 setup on the chart
 
   // Price lines, grouped so each layer can be switched on and off
   const line = (price, color, title, style = 2, width = 1) => price == null ? null :
@@ -83,6 +93,10 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker) }}").then(r => r.j
             line(lv.range_mid, C.grey, "กลางกรอบ", 1)],
     trail: [line(a.stop, C.stop, "จุดขาย (swing low)")],
     cost: [line(d.cost, C.grey, "ต้นทุน", 3)],
+    wave: w3 ? [line(w3.levels.w1_base, C.wave, "ฐาน W1"), line(w3.levels.w1_top, C.wave, "ยอด W1"),
+                line(w3.levels.fib_786, C.wave, "78.6%", 1), line(w3.levels.fib_887, C.wave, "88.7%", 1),
+                ...(w3 === s ? [] : [line(w3.stop, C.stop, "stop W3", 1), line(w3.target, C.target, "161.8%", 1)]),
+                line(w3.levels.t2, C.target, "261.8%", 1), line(w3.levels.t3, C.target, "423.6%", 1)] : [],
   };
   const lineOpts = {};
   for (const [k, arr] of Object.entries(layers)) lineOpts[k] = arr.filter(Boolean);
@@ -100,6 +114,7 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker) }}").then(r => r.j
       arr.forEach(pl => pl.applyOptions({lineVisible: show[k] !== false, axisLabelVisible: show[k] !== false}));
     const m = [...(show.markers ? sigMarkers : []), ...(show.swings ? swingMarkers : [])];
     candles.setMarkers(m.sort((p, q) => p.time < q.time ? -1 : p.time > q.time ? 1 : 0));
+    cdcBar.setData(show.cdc ? cdcData : []);
   };
   document.querySelectorAll("#toggles input").forEach(cb => {
     show[cb.dataset.layer] = cb.checked;
@@ -118,13 +133,17 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker) }}").then(r => r.j
     document.getElementById("signal-card").hidden = false;
     document.getElementById("signal-title").textContent = `${s.setup} · ${s.time} · ${SETUP[s.setup] || ""}`;
     const stat = (k, v, cls = "") => `<div class="stat"><div class="k">${k}</div><div class="v ${cls}">${v}</div></div>`;
+    const atOpen = s.order === "open";
     document.getElementById("signal-stats").innerHTML =
-      stat(long ? "ซื้อเมื่อราคาถึง" : "ขายเมื่อราคาลงถึง", CUR + fmt(s.entry)) +
+      stat(atOpen ? "ซื้อที่ราคาเปิดวันถัดไป (ปิดล่าสุด)" : long ? "ซื้อเมื่อราคาถึง" : "ขายเมื่อราคาลงถึง", CUR + fmt(s.entry)) +
       stat("Stop", CUR + fmt(s.stop), "neg") +
       stat("เป้าหมาย", CUR + fmt(s.target), "pos") +
       stat("ความเสี่ยงต่อหุ้น", CUR + fmt(risk) + ` (${fmt(risk / s.entry * 100)}%)`) +
       stat("Reward / Risk", s.reward_r + "R");
-    document.getElementById("signal-how").textContent = long
+    document.getElementById("signal-how").textContent = atOpen
+      ? `Wave 2 ย่อ ${fmt(s.levels.retrace * 100)}% ของ Wave 1 (${fmt(s.levels.w1_base)} → ${fmt(s.levels.w1_top)}) แล้ว CDC Action Zone เพิ่งเขียวแรก ` +
+        `ซื้อที่ราคาเปิดวันทำการถัดไป stop ใต้ปลาย Wave 2 ที่ ${fmt(s.stop)} เป้า 161.8% ${fmt(s.target)} · 261.8% ${fmt(s.levels.t2)} · 423.6% ${fmt(s.levels.t3)}`
+      : long
       ? `วางคำสั่ง buy stop ที่ ${fmt(s.entry)} (1 tick เหนือ high ของแท่งสัญญาณ) สำหรับวันทำการถัดไป ถ้าราคาไม่ขึ้นไปถึงก็ไม่เข้า ถ้าเข้าแล้วให้ตั้ง stop ที่ ${fmt(s.stop)} (1 tick ใต้ low ของแท่งสัญญาณ)`
       : `สัญญาณฝั่งขาย: ถ้าถือหุ้นอยู่ให้ระวัง ถ้าราคาลงต่ำกว่า ${fmt(s.entry)} เป็นการยืนยันแรงขาย`;
   }
@@ -170,7 +189,7 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker) }}").then(r => r.j
     if (!c) return;
     const bull = c.close > c.open, bear = c.close < c.open;
     const kind = b.body < 0.25 ? "doji" : (bull ? "แท่งเขียว" : bear ? "แท่งแดง" : "doji") + (b.body >= 0.6 ? " (trend bar)" : "");
-    const extra = [b.count && `นับได้ ${b.count}`, ...(swingByTime[t] || []),
+    const extra = [b.count && `นับได้ ${b.count}`, b.cdc && `CDC ${b.cdc === "green" ? "เขียว" : "แดง"}`, ...(swingByTime[t] || []),
       sigByTime[t] && `สัญญาณ ${sigByTime[t].setup} เข้า ${fmt(sigByTime[t].entry)} stop ${fmt(sigByTime[t].stop)}`].filter(Boolean);
     hover.innerHTML = `<b>${t}</b> O ${fmt(c.open)} H ${fmt(c.high)} L ${fmt(c.low)} C ${fmt(c.close)}` +
       ` · EMA20 ${fmt(b.ema)} · ATR ${fmt(b.atr)} · ${kind}, body ${pct(b.body)}, ปิดที่ ${pct(b.close_pos)} ของแท่ง` +

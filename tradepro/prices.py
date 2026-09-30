@@ -16,7 +16,9 @@ TTL_SECONDS = int(os.environ.get("TRADEPRO_PRICE_TTL", "900"))  # Yahoo quotes a
 
 
 class PriceService:
-    def __init__(self, source: str = "yahoo", cache_dir: str = "data/cache"):
+    # Own cache folder: the web app fetches only recent years and must not overwrite the long
+    # histories that `python -m tradepro download` keeps in data/cache for backtests.
+    def __init__(self, source: str = "yahoo", cache_dir: str = "data/web-cache"):
         self.sources = {m.name: make_source(source, str(Path(cache_dir) / m.name), m.yahoo_suffix)
                         for m in MARKETS.values()}
         self._cache: dict[tuple[str, str], tuple[float, pd.DataFrame]] = {}

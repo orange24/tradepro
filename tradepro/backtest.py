@@ -41,7 +41,9 @@ def simulate(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) -> 
             continue
         j = i + 1
         long = s.direction == "long"
-        if long and h[j] >= s.entry:
+        if s.order == "open":
+            fill = o[j]
+        elif long and h[j] >= s.entry:
             fill = max(o[j], s.entry)
         elif not long and l[j] <= s.entry:
             fill = min(o[j], s.entry)
@@ -54,7 +56,8 @@ def simulate(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) -> 
         if risk <= 0:
             continue
         exit_px, reason, k = None, "time", j
-        last = min(len(df) - 1, j + cfg.max_hold_bars)
+        hold = s.max_hold or cfg.max_hold_bars
+        last = min(len(df) - 1, j + hold)
         for k in range(j, last + 1):
             first = k == j
             if long:
@@ -71,7 +74,7 @@ def simulate(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) -> 
                 break
         if exit_px is None:
             exit_px, k = c[last], last
-            reason = "time" if last == j + cfg.max_hold_bars else "open"
+            reason = "time" if last == j + hold else "open"
         pnl = (exit_px - fill) if long else (fill - exit_px)
         pnl -= fill * cfg.cost_pct / 100
         trades.append(Trade(s.ticker, s.setup, s.direction, s.date, dates[j], dates[k],

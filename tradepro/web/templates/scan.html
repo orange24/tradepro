@@ -3,7 +3,7 @@
 {% block head %}{% if running %}<meta http-equiv="refresh" content="10">{% endif %}{% endblock %}
 {% block body %}
 <h1>สแกนหุ้นน่าซื้อ</h1>
-<p class="sub">หุ้นที่แท่งเทียนวันล่าสุดเป็น signal bar ฝั่งซื้อ วางคำสั่งซื้อแบบ stop ที่ราคาเข้า สำหรับวันทำการถัดไป</p>
+<p class="sub">หุ้นที่แท่งเทียนวันล่าสุดเป็น signal bar ฝั่งซื้อ วางคำสั่งซื้อแบบ stop ที่ราคาเข้า สำหรับวันทำการถัดไป (W3 ซื้อที่ราคาเปิดวันถัดไป)</p>
 <div class="card-head">
   <div class="tabs">
     <a href="{{ url_for('scan_page', market='set') }}" class="{{ 'on' if market == 'set' }}">หุ้นไทย (SET50)</a>
@@ -28,7 +28,7 @@
       <td><a class="tk" href="{{ url_for('chart_page', market=market, ticker=s.ticker) }}">{{ s.ticker }}</a></td>
       <td><b>{{ s.setup }}</b><div class="note">{{ SETUP_TH.get(s.setup, '') }}{% if s.note %} · {{ s.note }}{% endif %}</div></td>
       <td class="n">{{ '{:,.2f}'.format(s.last_close) }}</td>
-      <td class="n"><b>{{ '{:,.2f}'.format(s.entry) }}</b></td>
+      <td class="n">{% if s.order == 'open' %}<b>ราคาเปิด</b><div class="note">วันถัดไป (ปิดล่าสุด {{ '{:,.2f}'.format(s.entry) }})</div>{% else %}<b>{{ '{:,.2f}'.format(s.entry) }}</b>{% endif %}</td>
       <td class="n neg">{{ '{:,.2f}'.format(s.stop) }}</td>
       <td class="n pos">{{ '{:,.2f}'.format(s.target) }}</td>
       <td class="n">{{ '{:.1f}'.format(s.reward_r) }}R</td>

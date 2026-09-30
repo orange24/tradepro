@@ -126,3 +126,19 @@ def test_breakout_waits_for_follow_through():
     bo = lambda cfg: [s.date for s in detect(df, "X", cfg) if s.setup == "BO_BULL"]
     assert df.index[-2] in bo(Config(bo_follow_through=False))
     assert bo(Config(bo_follow_through=True)) == [df.index[-1]]
+
+
+def test_wave3_after_deep_wave2_and_first_cdc_green():
+    from tradepro.wave import cdc_action_zone
+
+    closes = (list(np.linspace(100, 101, 30)) + list(np.linspace(101, 130, 20))      # base, wave 1
+              + list(np.linspace(130, 107, 18)) + list(np.linspace(107.5, 124, 22)))   # wave 2 (~80%), turn up
+    df = _bars(closes, spread=0.3)
+    w3 = [s for s in detect(df, "X") if s.setup == "W3"]
+    assert len(w3) == 1
+    s = w3[0]
+    green = cdc_action_zone(df)["cdc_green"]
+    assert green[s.date] and not green.shift(1)[s.date]          # first green bar
+    assert 0.618 <= s.levels["retrace"] <= 0.942 and s.order == "open"
+    assert s.stop < s.levels["w2_low"] and s.target == pytest.approx(s.levels["w2_low"] + 1.618 * (
+        s.levels["w1_top"] - s.levels["w1_base"]), abs=0.01)

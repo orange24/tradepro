@@ -35,6 +35,16 @@ class Config:
     min_reward_r: float = 1.0         # skip setups whose target is closer than this
     max_hold_bars: int = 20
     cost_pct: float = 0.2             # round-trip commission + slippage, percent of price
+    # Wave 3 + CDC Action Zone, ChalokeDotCom (W3-1..W3-5, docs/chaloke_wave3.md)
+    wave3: bool = True
+    w3_pivot_bars: int = 5            # swing high = highest of 5 bars each side
+    w3_min_atr: float = 3.0           # wave 1 must rise at least this many ATRs
+    w3_max_wave1_bars: int = 60       # look this far back from the wave 1 top for its base
+    w3_max_wave2_bars: int = 60       # wave 2 (top to first green) must finish within this many bars
+    w3_retrace_min: float = 0.618
+    w3_retrace_max: float = 0.942
+    w3_max_bars_after_low: int = 20   # first green must come within this many bars of the wave 2 low
+    w3_max_hold_bars: int = 120       # wave 3 takes longer than a Brooks swing
     market: str = "set"               # "set" or "us": tick sizes (see markets.py)
     long_only: bool = False           # SET retail short selling is limited (SBL only)
 

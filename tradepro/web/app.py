@@ -30,6 +30,7 @@ from ..indicators import add_features
 from ..markets import MARKETS
 from ..prices import PriceService
 from ..setups import count_highs, detect
+from ..wave import cdc_action_zone
 from ..store import Store
 from ..watchlists import WATCHLISTS
 
@@ -43,11 +44,12 @@ SETUP_TH = {
     "L2": "Low 2: เด้ง 2 ขาในเทรนด์ขาลงแล้วกลับลง",
     "L1": "Low 1: เด้งขาแรกในเทรนด์ขาลงที่แรงมาก",
     "BO_BEAR": "Breakout ลง: แท่งแดงใหญ่ปิดหลุดกรอบ 20 วัน",
+    "W3": "Wave 3 (ลุงโฉลก): Wave 2 ย่อ 61.8–94.2% แล้ว CDC Action Zone เขียวแรก",
 }
 STATUS_TH = {"hold": "ถือต่อ", "watch": "เฝ้าระวัง", "sell": "ควรขาย"}
 CONTEXT_TH = {"bull": "ขาขึ้น", "bear": "ขาลง", "range": "ไซด์เวย์"}
 CURRENCY = {"set": "฿", "us": "$"}
-SETUP_ORDER = {"H2": 0, "H1": 1, "BO_BULL": 2, "FAILED_BO": 3}
+SETUP_ORDER = {"H2": 0, "H1": 1, "BO_BULL": 2, "W3": 3, "FAILED_BO": 4}
 
 
 def pivots(f, side: int = 3):
@@ -242,9 +244,13 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         full = add_features(df, cfg)
         hc, _, hpb = count_highs(full["high"].to_numpy())
         lc, _, lpb = count_highs(-full["low"].to_numpy())
+        cdc = cdc_action_zone(full)
         f = full.iloc[-250:]
         n0 = len(full) - len(f)
         day = lambda d: d.strftime("%Y-%m-%d")
+        sig_json = lambda s: {"time": day(s.date), "setup": s.setup, "direction": s.direction, "entry": s.entry,
+                              "stop": s.stop, "target": s.target, "reward_r": round(s.reward_r, 2),
+                              "note": s.note, "order": s.order, "levels": s.levels}
         num = lambda v: None if v is None or not np.isfinite(v) else round(float(v), 4)
         sigs = [s for s in detect(df.iloc[-300:], ticker, cfg) if s.date >= f.index[0]]
         a = advise(df, cfg)
@@ -261,20 +267,16 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
                     (f"L{lc[i]}" if lpb[i] and lc[i] > lc[i - 1] else "")
             bars.append({"time": day(d), "ema": num(r.ema), "atr": num(r.atr), "context": r.context,
                          "body": num(r.body_ratio), "close_pos": num(r.close_pos),
-                         "strong": bool(r.strong), "count": count})
+                         "strong": bool(r.strong), "count": count,
+                         "cdc": "green" if cdc["cdc_green"].iloc[i] else "red" if cdc["cdc_red"].iloc[i] else ""})
         return jsonify(
             candles=[{"time": day(d), "open": r.open, "high": r.high, "low": r.low, "close": r.close}
                      for d, r in zip(f.index, f.itertuples())],
             ema=[{"time": day(d), "value": v} for d, v in f["ema"].items()],
             bars=bars,
             swings=[{"time": day(f.index[k]), "kind": kind, "price": num(p)} for k, kind, p in pivots(f)],
-            signals=[{"time": day(s.date), "setup": s.setup, "direction": s.direction, "entry": s.entry,
-                      "stop": s.stop, "target": s.target, "reward_r": round(s.reward_r, 2), "note": s.note}
-                     for s in sigs],
-            latest=None if latest is None else {
-                "time": day(latest.date), "setup": latest.setup, "direction": latest.direction,
-                "entry": latest.entry, "stop": latest.stop, "target": latest.target,
-                "reward_r": round(latest.reward_r, 2), "note": latest.note},
+            signals=[sig_json(s) for s in sigs],
+            latest=None if latest is None else sig_json(latest),
             levels={"range_high": num(rng["high"].max()), "range_low": num(rng["low"].min()),
                     "range_mid": num((rng["high"].max() + rng["low"].min()) / 2), "range_bars": L,
                     "ema": num(last.ema), "atr": num(last.atr), "frac_above": num(last.frac_above),

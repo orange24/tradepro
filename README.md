@@ -4,6 +4,7 @@
 
 - **ความรู้ที่ใช้**: [`docs/brooks_knowledge.md`](docs/brooks_knowledge.md) ทุกกฎมีรหัส (เช่น `HL-2`) ที่อ้างในโค้ด
   ให้ตรวจแต่ละข้อกับ NotebookLM แล้วปรับค่าใน [`tradepro/config.py`](tradepro/config.py)
+- **กลยุทธ์ Wave 3 + CDC Action Zone (ลุงโฉลก)**: setup `W3` ดู [`docs/chaloke_wave3.md`](docs/chaloke_wave3.md)
 - **ตลาด**: หุ้นไทย SET และหุ้นสหรัฐ (`--market set | us | all`, ค่าเริ่มต้น `set`), daily chart, ข้อมูลจาก Yahoo Finance
   รายชื่อหุ้นตั้งต้น SET50 และ US50 อยู่ใน `tradepro/watchlists.py` ส่วน tick size และค่าคอมแต่ละตลาดอยู่ใน `tradepro/markets.py`
 
