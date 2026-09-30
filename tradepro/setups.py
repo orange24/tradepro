@@ -39,8 +39,11 @@ class Signal:
         return d
 
 
-def count_highs(high: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def count_highs(high: np.ndarray, reset: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Brooks High 1 / High 2 bar counting (HL-1, HL-2, HL-8).
+
+    reset marks strong bull breakout bars: they end the pullback and start a new leg,
+    so the count starts again from that bar (HL-8).
 
     Returns per bar:
       count  - H-counts completed in the current pullback (0, 1, 2, ...)
@@ -57,7 +60,7 @@ def count_highs(high: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     leg_high = high[0]
     c, a = 0, False
     for i in range(1, n):
-        if high[i] > leg_high:          # new trend high: reset the count (HL-8)
+        if high[i] > leg_high or (reset is not None and reset[i]):   # new trend high or strong breakout (HL-8)
             leg_high, c, a = high[i], 0, False
         else:
             in_pb[i] = True
@@ -85,11 +88,22 @@ def _short(ticker, row, setup, target, context, note, m):
 def detect(df: pd.DataFrame, ticker: str = "", cfg: Config = DEFAULT) -> list[Signal]:
     """Scan every bar of df and return all setups found (signal bar = that bar)."""
     f = add_features(df, cfg)
-    hc, harmed, hpb = count_highs(f["high"].to_numpy())
-    lc, larmed, lpb = count_highs(-f["low"].to_numpy())
+    big = ((f["range"] >= cfg.bo_min_range_atr * f["atr"]) & (f["body_ratio"] >= cfg.trend_bar_body)).to_numpy()
+    strong_bull = big & (f["close"] > f["open"]).to_numpy() & (f["close_pos"] >= cfg.bo_close_pos).to_numpy()
+    strong_bear = big & (f["close"] < f["open"]).to_numpy() & (f["close_pos"] <= 1 - cfg.bo_close_pos).to_numpy()
+    # HL-8: a strong bar that also closes beyond the last few bars' extremes breaks out of the pullback
+    K = cfg.pb_breakout_bars
+    pb_break_up = strong_bull & (f["close"] > f["high"].shift(1).rolling(K, min_periods=1).max()).to_numpy()
+    pb_break_down = strong_bear & (f["close"] < f["low"].shift(1).rolling(K, min_periods=1).min()).to_numpy()
+    reset_up, reset_down = (pb_break_up, pb_break_down) if cfg.pb_reset_on_breakout else (None, None)
+    hc, harmed, hpb = count_highs(f["high"].to_numpy(), reset_up)
+    lc, larmed, lpb = count_highs(-f["low"].to_numpy(), reset_down)
     L = cfg.range_lookback
     prior_hi = f["high"].shift(1).rolling(L, min_periods=L).max().to_numpy()
     prior_lo = f["low"].shift(1).rolling(L, min_periods=L).min().to_numpy()
+    close = f["close"].to_numpy()
+    bo_up = strong_bull & (close > prior_hi)      # BO-1: strong bull bar closing above the range
+    bo_down = strong_bear & (close < prior_lo)
     prev_context = f["context"].shift(1).to_numpy()
 
     signals: list[Signal] = []
@@ -116,20 +130,29 @@ def detect(df: pd.DataFrame, ticker: str = "", cfg: Config = DEFAULT) -> list[Si
             elif lc[i] == 0 and row.strong:
                 signals.append(_short(ticker, row, "L1", short_r, ctx, "strong trend", cfg.market))
 
-        # Strong breakout bars (BO-1) with a measured-move target (BO-2)
+        # Breakouts (BO-1) with a measured-move target from the range height (BO-2).
+        # With bo_follow_through the signal bar is the bar after the breakout bar: it must close
+        # near its high and leave a gap above the breakout point (BO-6).
         hi, lo = prior_hi[i], prior_lo[i]
-        if np.isfinite(hi) and np.isfinite(lo):
-            height = hi - lo
-            big = row.range >= cfg.bo_min_range_atr * row.atr and row.body_ratio >= cfg.trend_bar_body
-            if big and row.close > hi and row.close_pos >= cfg.bo_close_pos:
-                mm = hi + height
+        j = i - 1 if cfg.bo_follow_through else i
+        if cfg.bo_follow_through:
+            ft_up = bo_up[j] and row.close > row.open and row.close_pos >= cfg.bo_close_pos and row.low > prior_hi[j]
+            ft_down = bo_down[j] and row.close < row.open and row.close_pos <= 1 - cfg.bo_close_pos and row.high < prior_lo[j]
+        else:
+            ft_up, ft_down = bo_up[i], bo_down[i]
+        if ft_up or ft_down:
+            bhi, blo = prior_hi[j], prior_lo[j]
+            height = bhi - blo
+            if ft_up:
+                mm = bhi + height
                 signals.append(_long(ticker, row, "BO_BULL", lambda e, r: round(max(mm, e + cfg.min_reward_r * r), 4),
-                                     ctx, f"range {lo:.2f}-{hi:.2f}", cfg.market))
-            elif big and row.close < lo and row.close_pos <= 1 - cfg.bo_close_pos:
-                mm = lo - height
+                                     ctx, f"range {blo:.2f}-{bhi:.2f}", cfg.market))
+            else:
+                mm = blo - height
                 signals.append(_short(ticker, row, "BO_BEAR", lambda e, r: round(min(mm, e - cfg.min_reward_r * r), 4),
-                                      ctx, f"range {lo:.2f}-{hi:.2f}", cfg.market))
+                                      ctx, f"range {blo:.2f}-{bhi:.2f}", cfg.market))
 
+        if np.isfinite(hi) and np.isfinite(lo):
             # Failed breakouts of a trading range (BO-3, CTX-6); target the middle of the range
             mid = (hi + lo) / 2
             if prev_context[i] == RANGE:
