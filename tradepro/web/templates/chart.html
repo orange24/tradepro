@@ -4,50 +4,182 @@
 {% block body %}
 <h1>{{ ticker }} <span class="note">{{ 'หุ้นไทย (SET)' if market == 'set' else 'หุ้นสหรัฐ (US)' }}</span></h1>
 <p class="sub" id="summary">กำลังโหลด…</p>
+
+<section class="card" id="signal-card" hidden>
+  <h2 style="margin-bottom:10px">สัญญาณล่าสุด <span class="note" id="signal-title"></span></h2>
+  <div class="stats" id="signal-stats"></div>
+  <p class="note" id="signal-how" style="margin:10px 0 0"></p>
+</section>
+
 <section class="card">
+  <div class="toggles" id="toggles">
+    <label><input type="checkbox" data-layer="signal" checked> ราคาเข้า / stop / เป้า</label>
+    <label><input type="checkbox" data-layer="range" checked> กรอบ 20 วัน</label>
+    <label><input type="checkbox" data-layer="trail" checked> จุดขาย (swing low)</label>
+    <label><input type="checkbox" data-layer="swings" checked> swing high / low</label>
+    <label><input type="checkbox" data-layer="markers" checked> สัญญาณในอดีต</label>
+  </div>
+  <div class="hover" id="hover">ชี้เมาส์บนแท่งเทียนเพื่อดูค่าของแท่งนั้น</div>
   <div id="chart"></div>
   <div class="legend">
-    <span>เส้นส้ม = EMA20</span><span>▲ สัญญาณซื้อ</span><span>▼ สัญญาณขาย</span>
-    <span>เส้นแดงประ = จุดขาย (stop)</span><span>เส้นเทาประ = ต้นทุนของคุณ</span>
+    <span><i class="sw" style="background:#e08a1e"></i>EMA20</span>
+    <span><i class="sw" style="background:#2458d6"></i>ราคาเข้า</span>
+    <span><i class="sw" style="background:#c8373a"></i>stop</span>
+    <span><i class="sw" style="background:#0f8a5f"></i>เป้าหมาย</span>
+    <span><i class="sw" style="background:#8a93a6"></i>ขอบกรอบ / ต้นทุน</span>
+    <span>▲▼ สัญญาณ · ● swing</span>
     <span>กราฟโดย <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView Lightweight Charts</a></span>
   </div>
 </section>
-<section class="card"><h2 style="margin-bottom:8px">คำแนะนำ</h2><ul class="reasons" id="reasons"></ul></section>
+
+<section class="card">
+  <h2 style="margin-bottom:10px">ค่าสำคัญ</h2>
+  <table class="kv"><tbody id="levels"></tbody></table>
+</section>
+
+<section class="card"><h2 style="margin-bottom:8px">คำแนะนำถ้าถืออยู่</h2><ul class="reasons" id="reasons"></ul></section>
+
+<section class="card">
+  <h2 style="margin-bottom:8px">สัญญาณย้อนหลัง</h2>
+  <table><thead><tr><th>วันที่</th><th>Setup</th><th>ฝั่ง</th><th>ราคาเข้า</th><th>Stop</th><th>เป้า</th><th>R</th></tr></thead>
+  <tbody id="history"></tbody></table>
+</section>
+
 <script>
-const STATUS = {{ STATUS_TH|tojson }}, CONTEXT = {{ CONTEXT_TH|tojson }};
+const STATUS = {{ STATUS_TH|tojson }}, CONTEXT = {{ CONTEXT_TH|tojson }}, SETUP = {{ SETUP_TH|tojson }};
+const CUR = {{ CURRENCY[market]|tojson }};
+const C = {ema: "#e08a1e", entry: "#2458d6", stop: "#c8373a", target: "#0f8a5f", grey: "#8a93a6"};
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+const fmt = v => v == null ? "–" : Number(v).toLocaleString(undefined, {maximumFractionDigits: 2});
+const pct = v => v == null ? "–" : Math.round(v * 100) + "%";
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
 const el = document.getElementById("chart");
 const chart = LightweightCharts.createChart(el, {
   autoSize: true,
   layout: {background: {color: "transparent"}, textColor: dark ? "#98a0b3" : "#6b7385"},
   grid: {vertLines: {color: dark ? "#232833" : "#eef0f3"}, horzLines: {color: dark ? "#232833" : "#eef0f3"}},
   timeScale: {borderVisible: false}, rightPriceScale: {borderVisible: false},
+  crosshair: {mode: LightweightCharts.CrosshairMode.Normal},
 });
 const candles = chart.addCandlestickSeries({upColor: "#0f8a5f", downColor: "#c8373a",
   wickUpColor: "#0f8a5f", wickDownColor: "#c8373a", borderVisible: false});
-const ema = chart.addLineSeries({color: "#e08a1e", lineWidth: 2, priceLineVisible: false, lastValueVisible: false});
+const ema = chart.addLineSeries({color: C.ema, lineWidth: 2, priceLineVisible: false, lastValueVisible: false,
+  crosshairMarkerVisible: false});
+
 fetch("{{ url_for('chart_data', market=market, ticker=ticker) }}").then(r => r.json()).then(d => {
   if (d.error) { document.getElementById("summary").textContent = "ดึงราคาไม่ได้: " + d.error; return; }
   candles.setData(d.candles);
   ema.setData(d.ema);
-  candles.setMarkers(d.signals.map(s => ({
-    time: s.time, position: s.direction === "long" ? "belowBar" : "aboveBar",
-    color: s.direction === "long" ? "#2458d6" : "#c8373a",
-    shape: s.direction === "long" ? "arrowUp" : "arrowDown", text: s.setup,
-  })));
-  candles.createPriceLine({price: d.advice.stop, color: "#c8373a", lineStyle: 2, title: "stop"});
-  if (d.cost) candles.createPriceLine({price: d.cost, color: "#8a93a6", lineStyle: 2, title: "ต้นทุน"});
+  const lv = d.levels, a = d.advice, s = d.latest, last = d.candles[d.candles.length - 1];
+
+  // Price lines, grouped so each layer can be switched on and off
+  const line = (price, color, title, style = 2, width = 1) => price == null ? null :
+    candles.createPriceLine({price, color, title, lineStyle: style, lineWidth: width, axisLabelVisible: true});
+  const layers = {
+    signal: s ? [line(s.entry, C.entry, s.direction === "long" ? "ซื้อ " + s.setup : "ขาย " + s.setup, 0, 2),
+                 line(s.stop, C.stop, "stop สัญญาณ", 0, 2), line(s.target, C.target, "เป้า", 0, 2)] : [],
+    range: [line(lv.range_high, C.grey, "ขอบบน 20 วัน"), line(lv.range_low, C.grey, "ขอบล่าง 20 วัน"),
+            line(lv.range_mid, C.grey, "กลางกรอบ", 1)],
+    trail: [line(a.stop, C.stop, "จุดขาย (swing low)")],
+    cost: [line(d.cost, C.grey, "ต้นทุน", 3)],
+  };
+  const lineOpts = {};
+  for (const [k, arr] of Object.entries(layers)) lineOpts[k] = arr.filter(Boolean);
+
+  const sigMarkers = d.signals.map(x => ({
+    time: x.time, position: x.direction === "long" ? "belowBar" : "aboveBar",
+    color: x.direction === "long" ? C.entry : C.stop,
+    shape: x.direction === "long" ? "arrowUp" : "arrowDown", text: x.setup}));
+  const swingMarkers = d.swings.map(x => ({
+    time: x.time, position: x.kind === "high" ? "aboveBar" : "belowBar",
+    color: C.grey, shape: "circle", size: 0.5, text: fmt(x.price)}));
+  const show = {};
+  const redraw = () => {
+    for (const [k, arr] of Object.entries(lineOpts))
+      arr.forEach(pl => pl.applyOptions({lineVisible: show[k] !== false, axisLabelVisible: show[k] !== false}));
+    const m = [...(show.markers ? sigMarkers : []), ...(show.swings ? swingMarkers : [])];
+    candles.setMarkers(m.sort((p, q) => p.time < q.time ? -1 : p.time > q.time ? 1 : 0));
+  };
+  document.querySelectorAll("#toggles input").forEach(cb => {
+    show[cb.dataset.layer] = cb.checked;
+    cb.addEventListener("change", () => { show[cb.dataset.layer] = cb.checked; redraw(); });
+  });
+  redraw();
   chart.timeScale().setVisibleLogicalRange({from: d.candles.length - 120, to: d.candles.length + 3});
-  const last = d.candles[d.candles.length - 1];
+
   document.getElementById("summary").innerHTML =
-    `ราคาล่าสุด <b>${last.close.toLocaleString(undefined, {maximumFractionDigits: 2})}</b> (${last.time}) · ` +
-    `บริบท: ${CONTEXT[d.advice.context]} · ถ้าถืออยู่: <span class="badge b-${d.advice.status}">${STATUS[d.advice.status]}</span>`;
+    `ราคาล่าสุด <b>${fmt(last.close)}</b> (${last.time}) · บริบท: ${CONTEXT[a.context]}${lv.strong ? " (แรง)" : ""}` +
+    ` · ถ้าถืออยู่: <span class="badge b-${a.status}">${STATUS[a.status]}</span>`;
+
+  // Latest live signal: the numbers to place the order with
+  if (s) {
+    const long = s.direction === "long", risk = Math.abs(s.entry - s.stop);
+    document.getElementById("signal-card").hidden = false;
+    document.getElementById("signal-title").textContent = `${s.setup} · ${s.time} · ${SETUP[s.setup] || ""}`;
+    const stat = (k, v, cls = "") => `<div class="stat"><div class="k">${k}</div><div class="v ${cls}">${v}</div></div>`;
+    document.getElementById("signal-stats").innerHTML =
+      stat(long ? "ซื้อเมื่อราคาถึง" : "ขายเมื่อราคาลงถึง", CUR + fmt(s.entry)) +
+      stat("Stop", CUR + fmt(s.stop), "neg") +
+      stat("เป้าหมาย", CUR + fmt(s.target), "pos") +
+      stat("ความเสี่ยงต่อหุ้น", CUR + fmt(risk) + ` (${fmt(risk / s.entry * 100)}%)`) +
+      stat("Reward / Risk", s.reward_r + "R");
+    document.getElementById("signal-how").textContent = long
+      ? `วางคำสั่ง buy stop ที่ ${fmt(s.entry)} (1 tick เหนือ high ของแท่งสัญญาณ) สำหรับวันทำการถัดไป ถ้าราคาไม่ขึ้นไปถึงก็ไม่เข้า ถ้าเข้าแล้วให้ตั้ง stop ที่ ${fmt(s.stop)} (1 tick ใต้ low ของแท่งสัญญาณ)`
+      : `สัญญาณฝั่งขาย: ถ้าถือหุ้นอยู่ให้ระวัง ถ้าราคาลงต่ำกว่า ${fmt(s.entry)} เป็นการยืนยันแรงขาย`;
+  }
+
+  // Key values with what each one means
+  const rows = [
+    ["ราคาล่าสุด", fmt(last.close), `ราคาปิดของแท่งล่าสุด (${last.time})`],
+    ["EMA20", fmt(lv.ema), last.close >= lv.ema ? "ราคาอยู่เหนือ EMA20 (ฝั่งซื้อได้เปรียบ)" : "ราคาอยู่ใต้ EMA20 (ฝั่งขายได้เปรียบ)"],
+    ["บริบทตลาด", CONTEXT[a.context] + (lv.strong ? " (แรง)" : ""),
+      `ปิดเหนือ EMA ${pct(lv.frac_above)} ของ 20 แท่ง · ความชัน EMA ${fmt(lv.ema_slope_atr)} ATR ใน 5 แท่ง (เทรนด์ต้อง ≥ 70% และชัน ≥ 0.15)`],
+    ["ATR 14 วัน", fmt(lv.atr), `ราคาแกว่งเฉลี่ยต่อวัน ${fmt(lv.atr / last.close * 100)}% ของราคา`],
+    ["ขอบบนกรอบ 20 วัน", fmt(lv.range_high), "high สูงสุด 20 แท่งก่อนหน้า: แนวต้าน ถ้าปิดทะลุด้วยแท่งเขียวใหญ่ = breakout"],
+    ["กลางกรอบ", fmt(lv.range_mid), "เป้าของ failed breakout · ในกรอบราคามักวิ่งกลับมาหาจุดนี้"],
+    ["ขอบล่างกรอบ 20 วัน", fmt(lv.range_low), "low ต่ำสุด 20 แท่งก่อนหน้า: แนวรับ"],
+    ["จุดขาย (trailing stop)", fmt(a.stop), "1 tick ใต้ swing low ล่าสุด ถ้าราคาปิดต่ำกว่านี้ขาขึ้นเสียโครงสร้าง"],
+  ];
+  if (a.resistance) rows.push(["แนวต้าน / ทำกำไรแรก", fmt(a.resistance), "high 20 วันที่ยังอยู่เหนือราคาปัจจุบัน"]);
+  if (d.cost) {
+    const pnl = (last.close / d.cost - 1) * 100;
+    rows.push(["ต้นทุนของคุณ", fmt(d.cost), `กำไร/ขาดทุน <span class="${pnl >= 0 ? "pos" : "neg"}">${fmt(pnl)}%</span>` +
+      (d.shares ? ` (${fmt((last.close - d.cost) * d.shares)} ${CUR} จาก ${fmt(d.shares)} หุ้น)` : "")]);
+  }
+  document.getElementById("levels").innerHTML = rows.map(([k, v, t]) =>
+    `<tr><th>${k}</th><td class="num">${v}</td><td class="note">${t}</td></tr>`).join("");
+
   const ul = document.getElementById("reasons");
-  d.advice.reasons.forEach(t => { const li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
-  const recent = d.signals.slice(-5).reverse();
-  recent.forEach(s => { const li = document.createElement("li");
-    li.textContent = `${s.time}: ${s.setup} ${s.direction === "long" ? "ซื้อ" : "ขาย"} ที่ ${s.entry}, stop ${s.stop}, เป้า ${s.target}`;
-    ul.appendChild(li); });
+  a.reasons.forEach(t => { const li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+
+  document.getElementById("history").innerHTML = d.signals.slice().reverse().map(x =>
+    `<tr><td>${x.time}</td><td title="${esc(SETUP[x.setup] || "")}">${x.setup}</td>` +
+    `<td class="${x.direction === "long" ? "pos" : "neg"}">${x.direction === "long" ? "ซื้อ" : "ขาย"}</td>` +
+    `<td>${fmt(x.entry)}</td><td>${fmt(x.stop)}</td><td>${fmt(x.target)}</td><td>${x.reward_r}R</td></tr>`).join("")
+    || `<tr><td colspan="7" class="empty">ไม่มีสัญญาณใน 250 วันที่ผ่านมา</td></tr>`;
+
+  // Hover: the values of the bar under the cursor
+  const byTime = Object.fromEntries(d.candles.map((c, i) => [c.time, [c, d.bars[i]]]));
+  const sigByTime = Object.fromEntries(d.signals.map(x => [x.time, x]));
+  const swingByTime = {};
+  d.swings.forEach(x => (swingByTime[x.time] = swingByTime[x.time] || []).push(x.kind === "high" ? "swing high" : "swing low"));
+  const hover = document.getElementById("hover");
+  const describe = t => {
+    const [c, b] = byTime[t] || [];
+    if (!c) return;
+    const bull = c.close > c.open, bear = c.close < c.open;
+    const kind = b.body < 0.25 ? "doji" : (bull ? "แท่งเขียว" : bear ? "แท่งแดง" : "doji") + (b.body >= 0.6 ? " (trend bar)" : "");
+    const extra = [b.count && `นับได้ ${b.count}`, ...(swingByTime[t] || []),
+      sigByTime[t] && `สัญญาณ ${sigByTime[t].setup} เข้า ${fmt(sigByTime[t].entry)} stop ${fmt(sigByTime[t].stop)}`].filter(Boolean);
+    hover.innerHTML = `<b>${t}</b> O ${fmt(c.open)} H ${fmt(c.high)} L ${fmt(c.low)} C ${fmt(c.close)}` +
+      ` · EMA20 ${fmt(b.ema)} · ATR ${fmt(b.atr)} · ${kind}, body ${pct(b.body)}, ปิดที่ ${pct(b.close_pos)} ของแท่ง` +
+      ` · ${CONTEXT[b.context]}` + (extra.length ? ` · <b>${extra.join(" · ")}</b>` : "");
+  };
+  describe(last.time);
+  const pad = n => String(n).padStart(2, "0");
+  const key = t => typeof t === "object" ? `${t.year}-${pad(t.month)}-${pad(t.day)}` : t;
+  chart.subscribeCrosshairMove(p => describe(p && p.time ? key(p.time) : last.time));
 });
 </script>
 {% endblock %}

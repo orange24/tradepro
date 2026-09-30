@@ -28,6 +28,9 @@ def test_scan_and_chart(client):
     assert "สแกนล่าสุด" in html
     d = client.get("/api/chart/us/NVDA").get_json()
     assert len(d["candles"]) == 250 and d["advice"]["status"] in ("hold", "watch", "sell")
+    assert len(d["bars"]) == 250 and d["swings"]
+    lv = d["levels"]
+    assert lv["range_low"] <= lv["range_mid"] <= lv["range_high"]
 
 
 def test_password(tmp_path, monkeypatch):
