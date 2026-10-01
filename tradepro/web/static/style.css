@@ -74,3 +74,20 @@ table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
 .chips a:hover { border-color: var(--accent); color: var(--accent); }
 @media (max-width: 640px) { .bar { flex-wrap: wrap; } .lookup { margin-left: 0; width: 100%; } .lookup input { flex: 1; width: auto; } }
 .tabs.tf { margin-bottom: 12px; }
+.chart-area { display: flex; gap: 8px; }
+.chart-wrap { position: relative; flex: 1; min-width: 0; }
+.draw-tools { display: flex; flex-direction: column; gap: 4px; }
+.draw-tools .tool { width: 34px; height: 30px; padding: 0; font-size: 13px; background: transparent; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 6px; }
+.draw-tools .tool:hover { color: var(--text); border-color: var(--accent); }
+.draw-tools .tool.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tool-sep { height: 6px; }
+.draw-layer { position: absolute; top: 0; left: 0; pointer-events: none; overflow: hidden; z-index: 2; }
+.draw-layer.active { pointer-events: all; cursor: crosshair; }
+.draw-layer.erasing .shape { pointer-events: all; cursor: pointer; }
+.draw-layer.erasing .shape:hover { opacity: .45; }
+.draw-layer .preview { opacity: .7; }
+.tool-hint { position: absolute; top: 6px; left: 8px; font-size: 12px; color: var(--muted); background: var(--card);
+  padding: 2px 6px; border-radius: 5px; z-index: 3; pointer-events: none; }
+.tool-hint:empty { display: none; }
+@media (max-width: 640px) { .chart-area { flex-direction: column; } .draw-tools { flex-direction: row; flex-wrap: wrap; } }

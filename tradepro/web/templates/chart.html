@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ ticker }} · TradePro{% endblock %}
-{% block head %}<script src="{{ url_for('static', filename='lightweight-charts.standalone.production.js') }}"></script>{% endblock %}
+{% block head %}<script src="{{ url_for('static', filename='lightweight-charts.standalone.production.js') }}"></script>
+<script src="{{ url_for('static', filename='drawing.js') }}"></script>{% endblock %}
 {% block body %}
 {% set UNIT = {'D': 'วัน', 'W': 'สัปดาห์', 'M': 'เดือน', 'Y': 'ปี'}[tf] %}
 <h1>{{ ticker }} <span class="note">{{ 'หุ้นไทย (SET)' if market == 'set' else 'หุ้นสหรัฐ (US)' }}</span></h1>
@@ -13,10 +14,14 @@
 </section>
 
 <section class="card">
-  <div class="tabs tf">
-    {% for k, label in [('D', 'รายวัน'), ('W', 'รายสัปดาห์'), ('M', 'รายเดือน'), ('Y', 'รายปี')] %}
-    <a href="{{ url_for('chart_page', market=market, ticker=ticker, tf=k) }}" class="{{ 'on' if tf == k }}">{{ label }}</a>
-    {% endfor %}
+  <div class="card-head" style="margin-bottom:12px">
+    <div class="tabs tf" style="margin:0">
+      {% for k, label in [('D', 'รายวัน'), ('W', 'รายสัปดาห์'), ('M', 'รายเดือน'), ('Y', 'รายปี')] %}
+      <a href="{{ url_for('chart_page', market=market, ticker=ticker, tf=k) }}" class="{{ 'on' if tf == k }}">{{ label }}</a>
+      {% endfor %}
+    </div>
+    <a class="note" target="_blank" rel="noopener"
+       href="https://www.tradingview.com/chart/?symbol={{ ('SET:' if market == 'set' else '') ~ ticker|urlencode }}">เปิดใน TradingView ↗</a>
   </div>
   {% if tf != 'D' %}<p class="note" style="margin:0 0 8px">แต่ละแท่ง = 1 {{ UNIT }} สัญญาณและเส้นต่าง ๆ คำนวณจากแท่ง{{ UNIT }} (คำแนะนำถือ/ขายยังใช้กราฟรายวัน)</p>{% endif %}
   <div class="toggles" id="toggles">
@@ -29,7 +34,10 @@
     <label><input type="checkbox" data-layer="cdc" checked> แถบ CDC Action Zone</label>
   </div>
   <div class="hover" id="hover">ชี้เมาส์บนแท่งเทียนเพื่อดูค่าของแท่งนั้น</div>
-  <div id="chart"></div>
+  <div class="chart-area">
+    <div class="draw-tools" id="draw-tools" aria-label="เครื่องมือวาด"></div>
+    <div class="chart-wrap"><div id="chart"></div></div>
+  </div>
   <div class="legend">
     <span><i class="sw" style="background:#e08a1e"></i>EMA20</span>
     <span><i class="sw" style="background:#2458d6"></i>ราคาเข้า</span>
@@ -215,6 +223,9 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
   const pad = n => String(n).padStart(2, "0");
   const key = t => typeof t === "object" ? `${t.year}-${pad(t.month)}-${pad(t.day)}` : t;
   chart.subscribeCrosshairMove(p => describe(p && p.time ? key(p.time) : last.time));
+
+  initDrawing({chart, series: candles, el, toolbar: document.getElementById("draw-tools"), candles: d.candles,
+               tf: TF, storageKey: "tradepro:draw:{{ market }}:{{ ticker }}"});
 });
 </script>
 {% endblock %}
