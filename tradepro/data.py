@@ -100,3 +100,18 @@ def make_source(name: str, csv_dir: str = "data/cache", yahoo_suffix: str = ".BK
     if name == "synthetic":
         return SyntheticSource()
     raise ValueError(f"unknown data source: {name}")
+
+
+TIMEFRAMES = {"D": None, "W": "W-FRI", "M": "ME", "Y": "YE"}
+
+
+def resample(df: pd.DataFrame, tf: str) -> pd.DataFrame:
+    """Daily bars -> weekly / monthly / yearly bars, each dated by its first trading day."""
+    rule = TIMEFRAMES[tf]
+    if rule is None:
+        return df
+    g = df.assign(first_day=df.index).groupby(pd.Grouper(freq=rule))
+    out = g.agg(open=("open", "first"), high=("high", "max"), low=("low", "min"), close=("close", "last"),
+                volume=("volume", "sum"), first_day=("first_day", "first")).dropna(subset=["close"])
+    out.index = pd.DatetimeIndex(out.pop("first_day"), name="date")
+    return out

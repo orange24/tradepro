@@ -26,6 +26,7 @@ from flask import Flask, Response, abort, jsonify, redirect, render_template, re
 
 from ..advisor import advise
 from ..config import DEFAULT
+from ..data import TIMEFRAMES, resample
 from ..indicators import add_features
 from ..markets import MARKETS
 from ..prices import PriceService
@@ -260,14 +261,22 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
     def chart_page(market, ticker):
         if market not in MARKETS:
             abort(404)
-        return render_template("chart.html", market=market, ticker=ticker.upper(), active="")
+        tf = request.args.get("tf", "D")
+        if tf not in TIMEFRAMES:
+            tf = "D"
+        return render_template("chart.html", market=market, ticker=ticker.upper(), tf=tf, active="")
 
     @app.get("/api/chart/<market>/<ticker>")
     def chart_data(market, ticker):
         if market not in MARKETS:
             abort(404)
+        tf = request.args.get("tf", "D")
+        if tf not in TIMEFRAMES:
+            abort(404)
         try:
-            df = prices.history(market, ticker)
+            daily = prices.history(market, ticker)
+            # weekly and longer bars need a long history (monthly / yearly back to 2000)
+            df = daily if tf == "D" else resample(prices.history(market, ticker, start="2000-01-01"), tf)
         except Exception as e:
             return jsonify(error=str(e)), 502
         cfg = market_cfg(market)
@@ -275,7 +284,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         hc, _, hpb = count_highs(full["high"].to_numpy())
         lc, _, lpb = count_highs(-full["low"].to_numpy())
         cdc = cdc_action_zone(full)
-        f = full.iloc[-250:]
+        f = full.iloc[-250:] if tf in ("D", "W") else full
         n0 = len(full) - len(f)
         day = lambda d: d.strftime("%Y-%m-%d")
         sig_json = lambda s: {"time": day(s.date), "setup": s.setup, "direction": s.direction, "entry": s.entry,
@@ -283,7 +292,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
                               "note": s.note, "order": s.order, "levels": s.levels}
         num = lambda v: None if v is None or not np.isfinite(v) else round(float(v), 4)
         sigs = [s for s in detect(df.iloc[-300:], ticker, cfg) if s.date >= f.index[0]]
-        a = advise(df, cfg)
+        a = advise(daily, cfg)          # hold / sell advice always comes from the daily chart
         held = [h for h in store.holdings() if h["market"] == market and h["ticker"] == ticker.upper()]
         L = cfg.range_lookback
         rng = full.iloc[-L - 1:-1]
@@ -313,6 +322,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
                     "ema_slope_atr": num(last.ema_slope_atr), "strong": bool(last.strong)},
             advice={"status": a.status, "stop": a.stop, "resistance": a.resistance,
                     "context": a.context, "reasons": a.reasons},
+            last_date=day(daily.index[-1]),
             cost=held[0]["cost"] if held else None,
             shares=held[0]["shares"] if held else None,
         )

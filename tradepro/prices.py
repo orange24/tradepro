@@ -25,7 +25,7 @@ class PriceService:
         self._lock = threading.Lock()
 
     def history(self, market: str, ticker: str, start: str = "2023-01-01") -> pd.DataFrame:
-        key = (market, ticker.upper())
+        key = (market, ticker.upper(), start)
         with self._lock:
             hit = self._cache.get(key)
         if hit and time.time() - hit[0] < TTL_SECONDS:

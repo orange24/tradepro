@@ -73,3 +73,4 @@ table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
 .chips a { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; color: var(--text); font-size: 13px; }
 .chips a:hover { border-color: var(--accent); color: var(--accent); }
 @media (max-width: 640px) { .bar { flex-wrap: wrap; } .lookup { margin-left: 0; width: 100%; } .lookup input { flex: 1; width: auto; } }
+.tabs.tf { margin-bottom: 12px; }
