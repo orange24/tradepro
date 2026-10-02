@@ -24,6 +24,26 @@ SET100 = [
 
 WATCHLISTS = {"set50": SET50, "set100": SET100}
 
+# Bitcoin, gold and other assets Chaloke follows (Yahoo Finance symbols)
+ASSETS = {
+    "BTC-USD": ("Bitcoin", "BTCUSD"),
+    "ETH-USD": ("Ethereum", "ETHUSD"),
+    "GC=F": ("ทองคำ (Gold futures)", "COMEX:GC1!"),
+    "SI=F": ("แร่เงิน (Silver futures)", "COMEX:SI1!"),
+}
+WATCHLISTS["assets"] = list(ASSETS)
+ASSET_ALIASES = {"BTC": "BTC-USD", "BITCOIN": "BTC-USD", "ETH": "ETH-USD", "GOLD": "GC=F", "XAU": "GC=F",
+                 "XAUUSD": "GC=F", "ทอง": "GC=F", "ทองคำ": "GC=F", "SILVER": "SI=F", "XAG": "SI=F", "เงิน": "SI=F"}
+
+
+def normalize_ticker(market: str, ticker: str) -> tuple[str, str]:
+    """(market, ticker) with asset nicknames resolved: "BTC" or "ทอง" go to the asset market whatever was picked."""
+    t = ticker.strip().upper()
+    alias = ASSET_ALIASES.get(t) or ASSET_ALIASES.get(ticker.strip())
+    if alias or t in ASSETS:
+        return "asset", alias or t
+    return market, t
+
 # Every SET + mai stock (tradepro/set_all.csv, refresh with `python -m tradepro.setlist`)
 try:
     from .setlist import load as _load_set_all

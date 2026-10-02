@@ -15,8 +15,8 @@
     <a href="{{ url_for('scan_page', market='set') }}" class="{{ 'on' if active == 'scan' }}">สแกนหุ้นน่าซื้อ</a>
   </nav>
   <form class="lookup" method="get" action="{{ url_for('chart_lookup') }}">
-    <select name="market" aria-label="ตลาด"><option value="set">SET</option><option value="us">US</option></select>
-    <input name="ticker" placeholder="ดูกราฟหุ้น เช่น PTT" aria-label="ชื่อหุ้น" required>
+    <select name="market" aria-label="ตลาด"><option value="set">SET</option><option value="us">US</option><option value="asset">BTC / ทอง</option></select>
+    <input name="ticker" placeholder="เช่น PTT, AAPL, BTC, GOLD" aria-label="ชื่อหุ้น" required>
     <button>ดูกราฟ</button>
   </form>
 </div></header>

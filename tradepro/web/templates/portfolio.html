@@ -8,7 +8,7 @@
 {% set cur = CURRENCY[m] %}
 <section class="card">
   <div class="card-head">
-    <h2>{{ 'หุ้นไทย (SET)' if m == 'set' else 'หุ้นสหรัฐ (US)' }}</h2>
+    <h2>{{ MARKET_TH[m] }}</h2>
     <div class="stats">
       <div class="stat"><div class="k">ต้นทุนรวม</div><div class="v">{{ cur }}{{ '{:,.2f}'.format(g.basis) }}</div></div>
       <div class="stat"><div class="k">มูลค่าตลาด</div><div class="v">{{ cur }}{{ '{:,.2f}'.format(g.value) }}</div></div>
@@ -61,8 +61,8 @@
 <section class="card">
   <h2 style="margin-bottom:12px">เพิ่มหุ้นในพอร์ต</h2>
   <form method="post" action="{{ url_for('add_holding') }}" class="form-row">
-    <label>ตลาด<select name="market"><option value="set">หุ้นไทย (SET)</option><option value="us">หุ้นสหรัฐ (US)</option></select></label>
-    <label>ชื่อหุ้น<input name="ticker" placeholder="เช่น PTT หรือ AAPL" required style="width:150px"></label>
+    <label>ตลาด<select name="market"><option value="set">หุ้นไทย (SET)</option><option value="us">หุ้นสหรัฐ (US)</option><option value="asset">คริปโต / ทองคำ (BTC, ทอง)</option></select></label>
+    <label>ชื่อหุ้น<input name="ticker" placeholder="เช่น PTT, AAPL, BTC, GOLD" required style="width:150px"></label>
     <label>จำนวนหุ้น<input type="number" name="shares" step="any" min="0" required></label>
     <label>ต้นทุนเฉลี่ย/หุ้น<input type="number" name="cost" step="any" min="0" required></label>
     <label>โน้ต<input name="note" placeholder="ไม่ใส่ก็ได้"></label>

@@ -35,7 +35,7 @@ class Config:
 
     max_hold_bars: int = 0            # backtest time exit for signals without their own max_hold (0 = none)
     cost_pct: float = 0.2             # round-trip commission + slippage, percent of price
-    market: str = "set"               # "set" or "us": tick sizes (see markets.py)
+    market: str = "set"               # "set", "us" or "asset": tick sizes (see markets.py)
 
 
 DEFAULT = Config()

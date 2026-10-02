@@ -50,7 +50,7 @@
 <section class="card">
   {% if watchlist|length <= 100 %}
   <h2 style="margin-bottom:10px">ดูกราฟหุ้นทุกตัวใน {{ scans[scan_id][2] }}</h2>
-  <div class="chips">{% for t in watchlist %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}">{{ t }}</a>{% endfor %}</div>
+  <div class="chips">{% for t in watchlist %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}">{{ ASSETS[t][0] ~ " · " if t in ASSETS }}{{ t }}</a>{% endfor %}</div>
   {% else %}
   <p class="note" style="margin:0">สแกนหุ้นไทยทั้งหมด {{ watchlist|length }} ตัว (SET + mai) ข้ามหุ้นที่มูลค่าซื้อขายเฉลี่ย 20 วันต่ำกว่า 1 ล้านบาทต่อวัน
     ใช้เวลาสแกนหลายนาที ดูกราฟตัวไหนก็ได้จากช่องค้นหามุมขวาบน</p>

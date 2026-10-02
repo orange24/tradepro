@@ -34,7 +34,7 @@ from ..prices import PriceService
 from ..setups import detect
 from ..wave import cdc_action_zone
 from ..store import Store
-from ..watchlists import WATCHLISTS
+from ..watchlists import ASSETS, WATCHLISTS, normalize_ticker
 
 log = logging.getLogger("tradepro.web")
 
@@ -42,7 +42,8 @@ SETUP_TH = {"W3": "Wave 3 (ลุงโฉลก): Wave 2 ย่อ 61.8–94.2%
 STATUS_TH = {"hold": "ถือต่อ", "watch": "เฝ้าระวัง", "sell": "ควรขาย"}
 ACTION_TH = {"add": "ซื้อเพิ่มได้", "trim": "ขายรินกำไร", "sell": "ขายทั้งหมด", "hold": "ถือ ยังไม่ต้องทำอะไร"}
 CONTEXT_TH = {k: "CDC " + v[0] for k, v in CDC_TH.items()} | {"": "-"}
-CURRENCY = {"set": "฿", "us": "$"}
+CURRENCY = {k: m.currency for k, m in MARKETS.items()}
+MARKET_TH = {k: m.label for k, m in MARKETS.items()}
 SETUP_ORDER = {"W3": 0}
 
 
@@ -51,6 +52,7 @@ SCANS = {
     "set": ("set", "set100", "หุ้นไทย (SET100)"),
     "setall": ("set", "set_all", "หุ้นไทยทั้งหมด (SET + mai)"),
     "us": ("us", "us50", "หุ้นสหรัฐ (US50)"),
+    "asset": ("asset", "assets", "คริปโต / ทองคำ"),
 }
 LIVE_SECONDS = 60       # the chart's live analysis refetches prices at most this often
 MIN_VALUE_THB = float(os.environ.get("TRADEPRO_MIN_VALUE", "1000000"))   # skip illiquid stocks in "setall"
@@ -170,7 +172,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
     @app.context_processor
     def helpers():
         return {"STATUS_TH": STATUS_TH, "ACTION_TH": ACTION_TH, "CONTEXT_TH": CONTEXT_TH, "SETUP_TH": SETUP_TH,
-                "CURRENCY": CURRENCY, "MARKETS": MARKETS}
+                "CURRENCY": CURRENCY, "MARKETS": MARKETS, "MARKET_TH": MARKET_TH, "ASSETS": ASSETS}
 
     def evaluate(h: dict) -> dict:
         row = dict(h)
@@ -203,7 +205,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
     def add_holding():
         f = request.form
         try:
-            market, ticker = f["market"], f["ticker"].strip().upper()
+            market, ticker = normalize_ticker(f["market"], f["ticker"])
             shares, cost = float(f["shares"]), float(f["cost"])
             if market not in MARKETS or not ticker or shares <= 0 or cost <= 0:
                 raise ValueError
@@ -246,7 +248,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
     @app.get("/chart")
     def chart_lookup():
         market = request.args.get("market", "set")
-        ticker = request.args.get("ticker", "").strip().upper()
+        market, ticker = normalize_ticker(market, request.args.get("ticker", ""))
         if market not in MARKETS or not ticker:
             return redirect(url_for("scan_page", market=market if market in MARKETS else "set"))
         return redirect(url_for("chart_page", market=market, ticker=ticker))

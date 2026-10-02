@@ -4,7 +4,8 @@
 
 - **กฎที่ใช้**: [`docs/chaloke_wave3.md`](docs/chaloke_wave3.md) ทุกกฎมีรหัส (เช่น `W3-2`, `EXIT-1`) ที่อ้างในโค้ด
   ปรับตัวเลขได้ใน [`tradepro/config.py`](tradepro/config.py)
-- **ตลาด**: หุ้นไทย SET และหุ้นสหรัฐ (`--market set | us | all`, ค่าเริ่มต้น `set`), daily chart, ข้อมูลจาก Yahoo Finance
+- **ตลาด**: หุ้นไทย SET, หุ้นสหรัฐ และคริปโต / ทองคำ (Bitcoin `BTC-USD`, Ethereum, ทองคำ `GC=F`, แร่เงิน `SI=F`)
+  (`--market set | us | asset | all`, ค่าเริ่มต้น `set`) พิมพ์ BTC, GOLD หรือ ทอง ในช่องค้นหาได้เลย, daily chart, ข้อมูลจาก Yahoo Finance
   รายชื่อหุ้นตั้งต้น SET100 (และ SET50) และ US50 อยู่ใน `tradepro/watchlists.py` หุ้นไทยทั้งหมด (SET + mai) อยู่ใน `tradepro/set_all.csv`
   อัปเดตรายชื่อจากไฟล์ของ SET ด้วย `python -m tradepro.setlist` และสแกนด้วย `python -m tradepro scan --watchlist set_all` ส่วน tick size และค่าคอมแต่ละตลาดอยู่ใน `tradepro/markets.py`
 

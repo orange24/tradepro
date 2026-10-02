@@ -41,3 +41,13 @@ def test_password(tmp_path, monkeypatch):
     c = create_app(db_path=str(tmp_path / "t.db"), source="synthetic", autoscan=False).test_client()
     assert c.get("/").status_code == 401
     assert c.get("/", auth=("boy", "secret")).status_code == 200
+
+
+def test_bitcoin_and_gold(client):
+    r = client.get("/chart?market=set&ticker=btc")
+    assert r.status_code == 302 and r.headers["Location"].endswith("/chart/asset/BTC-USD")
+    assert client.get("/chart?market=us&ticker=ทองคำ").headers["Location"].endswith("/chart/asset/GC=F")
+    d = client.get("/api/chart/asset/BTC-USD").get_json()
+    assert len(d["candles"]) == 250
+    client.post("/holdings", data={"market": "set", "ticker": "gold", "shares": "0.5", "cost": "2000"})
+    assert "/chart/asset/GC=F" in client.get("/").get_data(as_text=True)

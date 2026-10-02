@@ -41,7 +41,7 @@ def main(argv=None):
     for name in ("scan", "backtest", "download"):
         sp = sub.add_parser(name)
         sp.add_argument("tickers", nargs="*", help="e.g. PTT KBANK or AAPL MSFT (default: the market's watchlist)")
-        sp.add_argument("--market", default="set", choices=["set", "us", "all"])
+        sp.add_argument("--market", default="set", choices=["set", "us", "asset", "all"])
         sp.add_argument("--watchlist", default=None, choices=sorted(WATCHLISTS),
                         help="default: set100 for SET, us50 for US")
         sp.add_argument("--source", default="yahoo", help="yahoo | csv | synthetic")

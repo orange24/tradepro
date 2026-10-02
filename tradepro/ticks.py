@@ -28,7 +28,7 @@ def us_tick(price: float) -> float:
 
 
 def tick_size(price: float, market: str = "set") -> float:
-    return us_tick(price) if market == "us" else set_tick(price)
+    return us_tick(price) if market in ("us", "asset") else set_tick(price)
 
 
 def round_to_tick(price: float, up: bool, market: str = "set") -> float:

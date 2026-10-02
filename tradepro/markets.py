@@ -9,13 +9,18 @@ class Market:
     yahoo_suffix: str
     watchlist: str
     cost_pct: float        # round-trip commission + slippage, percent of price
+    label: str = ""
+    currency: str = "$"
+    lot: float = 1         # buy in multiples of this (SET board lot 100; 0 = fractions allowed)
 
 
 MARKETS = {
     # SET: ~0.157% commission each side + VAT, plus slippage
-    "set": Market("set", ".BK", "set100", 0.2),
+    "set": Market("set", ".BK", "set100", 0.2, "หุ้นไทย (SET)", "฿", 100),
     # US: zero-commission brokers; cost is mostly spread/slippage
-    "us": Market("us", "", "us50", 0.05),
+    "us": Market("us", "", "us50", 0.05, "หุ้นสหรัฐ (US)", "$", 1),
+    # Bitcoin, gold and the like (Yahoo symbols BTC-USD, GC=F ...); fractions allowed
+    "asset": Market("asset", "", "assets", 0.1, "คริปโต / ทองคำ", "$", 0),
 }
 
 

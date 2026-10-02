@@ -4,7 +4,7 @@
 <script src="{{ url_for('static', filename='drawing.js') }}"></script>{% endblock %}
 {% block body %}
 {% set UNIT = {'D': 'วัน', 'W': 'สัปดาห์', 'M': 'เดือน', 'Y': 'ปี'}[tf] %}
-<h1>{{ ticker }} <span class="note">{{ 'หุ้นไทย (SET)' if market == 'set' else 'หุ้นสหรัฐ (US)' }}</span></h1>
+<h1>{{ ASSETS[ticker][0] ~ ' · ' if ticker in ASSETS }}{{ ticker }} <span class="note">{{ MARKET_TH[market] }}</span></h1>
 <p class="sub" id="summary">กำลังโหลด…</p>
 
 <section class="card" id="ck-card">
@@ -42,7 +42,7 @@
       {% endfor %}
     </div>
     <a class="note" target="_blank" rel="noopener"
-       href="https://www.tradingview.com/chart/?symbol={{ ('SET:' if market == 'set' else '') ~ ticker|urlencode }}">เปิดใน TradingView ↗</a>
+       href="https://www.tradingview.com/chart/?symbol={{ (ASSETS[ticker][1] if ticker in ASSETS else ('SET:' if market == 'set' else '') ~ ticker)|urlencode }}">เปิดใน TradingView ↗</a>
   </div>
   {% if tf != 'D' %}<p class="note" style="margin:0 0 8px">แต่ละแท่ง = 1 {{ UNIT }} สัญญาณและเส้นต่าง ๆ คำนวณจากแท่ง{{ UNIT }} (คำแนะนำถือ/ขายยังใช้กราฟรายวัน)</p>{% endif %}
   <div class="toggles" id="toggles">
@@ -305,8 +305,8 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
       if (!cap || !pct || !(e > st)) { out.textContent = "ใส่เงินทุนและ % ที่ยอมเสีย (ราคาซื้อต้องสูงกว่า stop)"; return; }
       const damage = cap * pct / 100;
       let shares = damage / (e - st);
-      const lot = {{ 100 if market == 'set' else 1 }};
-      shares = lot > 1 ? Math.floor(shares / lot) * lot : Math.floor(shares * 1000) / 1000;
+      const lot = {{ MARKETS[market].lot }};
+      shares = lot > 1 ? Math.floor(shares / lot) * lot : lot === 1 ? Math.floor(shares) : Math.floor(shares * 10000) / 10000;
       const cost = shares * e;
       out.innerHTML = shares > 0
         ? `ซื้อได้ <b>${shares.toLocaleString()}</b> หุ้น ใช้เงิน ${CUR}${fmt(cost)} (${fmt(cost / cap * 100)}% ของพอร์ต) · ` +
