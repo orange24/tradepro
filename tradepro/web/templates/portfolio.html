@@ -2,8 +2,16 @@
 {% block title %}พอร์ตของฉัน · TradePro{% endblock %}
 {% block body %}
 <h1>พอร์ตของฉัน</h1>
-<p class="sub">ราคาตลาด กำไร/ขาดทุน และคำแนะนำว่าควรถือต่อหรือขาย</p>
+<div class="card-head">
+  <p class="sub" style="margin:0">ราคาตลาด กำไร/ขาดทุน และคำแนะนำว่าควรถือต่อหรือขาย</p>
+  <div class="live">
+    <label><input type="checkbox" id="live-on" checked> อัปเดตอัตโนมัติทุก 1 นาที</label>
+    <button type="button" class="ghost" id="live-now">รีเฟรชตอนนี้</button>
+    <span class="note" id="live-status" data-utc="{{ updated }}"></span>
+  </div>
+</div>
 
+<div id="holdings">
 {% for m, g in groups.items() %}
 {% set cur = CURRENCY[m] %}
 <section class="card">
@@ -58,6 +66,8 @@
 <section class="card"><p class="empty">ยังไม่มีหุ้นในพอร์ต เพิ่มหุ้นตัวแรกด้านล่างได้เลย</p></section>
 {% endfor %}
 
+</div>
+
 <section class="card">
   <h2 style="margin-bottom:12px">เพิ่มหุ้นในพอร์ต</h2>
   <form method="post" action="{{ url_for('add_holding') }}" class="form-row">
@@ -69,4 +79,33 @@
     <button>เพิ่ม</button>
   </form>
 </section>
+<script>
+// Live prices: refetch this page with fresh prices and swap in the holdings tables.
+// Skipped while you are editing a holding so the form does not close under you.
+(function () {
+  const box = document.getElementById("holdings"), status = document.getElementById("live-status");
+  const on = document.getElementById("live-on");
+  try { on.checked = localStorage.getItem("tradepro:live") !== "0"; } catch (e) {}
+  const stamp = iso => { const d = new Date(iso); status.textContent = isNaN(d) ? "" :
+    "ราคาเมื่อ " + d.toLocaleTimeString("th-TH") + " (Yahoo ล่าช้า ~15 นาที)"; };
+  stamp(status.dataset.utc);
+  let busy = false;
+  async function refresh(force) {
+    if (busy || (!force && (!on.checked || document.hidden))) return;
+    if (box.querySelector("details[open]") || box.contains(document.activeElement)) return;
+    busy = true; status.textContent = "กำลังอัปเดตราคา…";
+    try {
+      const html = await (await fetch("{{ url_for('portfolio') }}?fresh=1")).text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const fresh = doc.getElementById("holdings");
+      if (fresh && !box.querySelector("details[open]")) box.innerHTML = fresh.innerHTML;
+      stamp(doc.getElementById("live-status").dataset.utc);
+    } catch (e) { status.textContent = "อัปเดตไม่ได้ จะลองใหม่ใน 1 นาที"; }
+    busy = false;
+  }
+  on.addEventListener("change", () => { try { localStorage.setItem("tradepro:live", on.checked ? "1" : "0"); } catch (e) {} });
+  document.getElementById("live-now").addEventListener("click", () => refresh(true));
+  setInterval(refresh, 60000);
+})();
+</script>
 {% endblock %}

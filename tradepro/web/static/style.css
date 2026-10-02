@@ -104,3 +104,6 @@ table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
 .act-trim { background: var(--amber-bg); color: var(--amber); }
 .act-sell { background: var(--red-bg); color: var(--red); }
 .act-hold { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+.live { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+.live label { flex-direction: row; align-items: center; gap: 5px; }
+.live input { min-width: auto; }

@@ -18,6 +18,8 @@ def test_portfolio_flow(client):
     html = client.get("/").get_data(as_text=True)
     assert "PTT" in html and "AAPL" in html and "จุดขาย" in html
     assert client.post("/holdings", data={"market": "set", "ticker": "X", "shares": "-1", "cost": "1"}).status_code == 400
+    live = client.get("/?fresh=1").get_data(as_text=True)
+    assert 'id="holdings"' in live and "PTT" in live and 'id="live-status"' in live
     client.post("/holdings/1/delete")
     assert "/chart/set/PTT" not in client.get("/").get_data(as_text=True)
 

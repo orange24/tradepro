@@ -175,10 +175,10 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         return {"STATUS_TH": STATUS_TH, "ACTION_TH": ACTION_TH, "CONTEXT_TH": CONTEXT_TH, "SETUP_TH": SETUP_TH,
                 "CURRENCY": CURRENCY, "MARKETS": MARKETS, "MARKET_TH": MARKET_TH, "ASSETS": ASSETS}
 
-    def evaluate(h: dict) -> dict:
+    def evaluate(h: dict, max_age: float | None = None) -> dict:
         row = dict(h)
         try:
-            df = prices.history(h["market"], h["ticker"])
+            df = prices.history(h["market"], h["ticker"], max_age=max_age)
             a = advise(df, market_cfg(h["market"]), cost=h["cost"])
             value, basis = a.price * h["shares"], h["cost"] * h["shares"]
             row.update(advice=a, price=a.price, value=value, basis=basis, pnl=value - basis,
@@ -190,8 +190,10 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
     @app.get("/")
     def portfolio():
         holdings = store.holdings()
+        # ?fresh=1 (the page's live refresh) refetches prices older than a minute
+        max_age = LIVE_SECONDS if request.args.get("fresh") else None
         with ThreadPoolExecutor(max_workers=6) as pool:
-            rows = list(pool.map(evaluate, holdings))
+            rows = list(pool.map(lambda h: evaluate(h, max_age), holdings))
         groups = {}
         for m in MARKETS:
             items = [r for r in rows if r["market"] == m]
@@ -200,7 +202,8 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
                 value, basis = sum(r["value"] for r in ok), sum(r["basis"] for r in ok)
                 groups[m] = {"rows": items, "value": value, "basis": basis, "pnl": value - basis,
                              "pnl_pct": (value / basis - 1) * 100 if basis else 0.0}
-        return render_template("portfolio.html", groups=groups, active="portfolio")
+        return render_template("portfolio.html", groups=groups, active="portfolio",
+                               updated=datetime.now(timezone.utc).isoformat())
 
     @app.post("/holdings")
     def add_holding():
