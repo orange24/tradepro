@@ -24,11 +24,12 @@ class PriceService:
         self._cache: dict[tuple[str, str], tuple[float, pd.DataFrame]] = {}
         self._lock = threading.Lock()
 
-    def history(self, market: str, ticker: str, start: str = "2023-01-01") -> pd.DataFrame:
+    def history(self, market: str, ticker: str, start: str = "2023-01-01", max_age: float | None = None) -> pd.DataFrame:
+        """max_age: refetch if the cached copy is older than this many seconds (default TTL_SECONDS)."""
         key = (market, ticker.upper(), start)
         with self._lock:
             hit = self._cache.get(key)
-        if hit and time.time() - hit[0] < TTL_SECONDS:
+        if hit and time.time() - hit[0] < (TTL_SECONDS if max_age is None else max_age):
             return hit[1]
         df = self.sources[market].get(ticker.upper(), start=start)
         if df.empty:

@@ -7,6 +7,17 @@
 <h1>{{ ticker }} <span class="note">{{ 'หุ้นไทย (SET)' if market == 'set' else 'หุ้นสหรัฐ (US)' }}</span></h1>
 <p class="sub" id="summary">กำลังโหลด…</p>
 
+<section class="card" id="ck-card">
+  <div class="card-head" style="margin-bottom:8px">
+    <h2 style="margin:0">วิเคราะห์ตามแนวลุงโฉลก <span class="note">Wave 3 + CDC Action Zone · กราฟ{{ {'D': 'รายวัน', 'W': 'รายสัปดาห์', 'M': 'รายเดือน', 'Y': 'รายปี'}[tf] }}</span></h2>
+    <span class="note" id="ck-updated">กำลังวิเคราะห์…</span>
+  </div>
+  <div class="ck-status" id="ck-status"></div>
+  <ul class="checklist" id="ck-checks"></ul>
+  <div class="stats" id="ck-levels" style="margin-top:10px"></div>
+  <ul class="checklist" id="ck-extra" style="margin-top:10px"></ul>
+</section>
+
 <section class="card" id="signal-card" hidden>
   <h2 style="margin-bottom:10px">สัญญาณล่าสุด <span class="note" id="signal-title"></span></h2>
   <div class="stats" id="signal-stats"></div>
@@ -223,6 +234,44 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
   const pad = n => String(n).padStart(2, "0");
   const key = t => typeof t === "object" ? `${t.year}-${pad(t.month)}-${pad(t.day)}` : t;
   chart.subscribeCrosshairMove(p => describe(p && p.time ? key(p.time) : last.time));
+
+  // ---- live ChalokeDotCom analysis, refreshed every minute
+  const ckLines = [];
+  const STATUS_TONE = {buy: "hold", late_green: "hold", wait_green: "watch", shallow: "watch", lost_green: "watch",
+                       new_high: "watch", missed: "sell", deep: "sell", broken: "sell", no_wave: "sell"};
+  const loadChaloke = () => fetch("{{ url_for('chaloke_data', market=market, ticker=ticker, tf=tf) }}")
+    .then(r => r.json()).then(k => {
+      const upd = document.getElementById("ck-updated");
+      if (k.error) { upd.textContent = "วิเคราะห์ไม่ได้: " + k.error; return; }
+      upd.textContent = `ราคา ${fmt(k.price)} (${k.date}) · อัปเดต ${new Date(k.checked_at).toLocaleTimeString("th-TH")} · รีเฟรชทุก 1 นาที (Yahoo ล่าช้า ~15 นาที)`;
+      document.getElementById("ck-status").innerHTML =
+        `<span class="badge b-${STATUS_TONE[k.status] || "watch"}">${esc(k.status_text)}</span>`;
+      document.getElementById("ck-checks").innerHTML = k.checks.map(([ok, t]) =>
+        `<li class="${ok ? "ok" : "no"}">${ok ? "✓" : "✗"} ${esc(t)}</li>`).join("") ||
+        `<li class="no">✗ CDC Action Zone: ${esc(k.cdc.name)} (${k.cdc.bars} แท่ง) — ${esc(k.cdc.meaning)}</li>`;
+      const w = k.wave, stat = (key, v, cls = "") => `<div class="stat"><div class="k">${key}</div><div class="v ${cls}">${v}</div></div>`;
+      document.getElementById("ck-levels").innerHTML = w ?
+        stat("โซนซื้อ 78.6–88.7%", `${fmt(w.fib["0.887"])}–${fmt(w.fib["0.786"])}`) +
+        stat("Stop (ปลาย W2)", CUR + fmt(w.stop), "neg") +
+        stat("เป้า 161.8%", CUR + fmt(w.t1), "pos") + stat("261.8%", CUR + fmt(w.t2), "pos") +
+        stat("423.6%", CUR + fmt(w.t3), "pos") : "";
+      document.getElementById("ck-extra").innerHTML =
+        k.confirms.map(t => `<li class="ok">＋ ${esc(t)}</li>`).join("") +
+        k.warnings.map(t => `<li class="no">⚠ ${esc(t)}</li>`).join("");
+      // live: move the last candle, and draw the wave being counted when no W3 signal is on the chart
+      if (k.bar && k.bar.time >= last.time) candles.update(k.bar);
+      ckLines.splice(0).forEach(pl => candles.removePriceLine(pl));
+      if (w && !w3 && show.wave !== false) {
+        const add = (price, title, color = C.wave, style = 1) => { const pl = line(price, color, title, style); if (pl) ckLines.push(pl); };
+        add(w.top, "ยอด W1", C.wave, 2); add(w.base, "ฐาน W1", C.wave, 2);
+        ["0.618", "0.786", "0.887", "0.942"].forEach(r => add(w.fib[r], (r * 100).toFixed(1) + "%"));
+        if (["buy", "late_green", "wait_green"].includes(k.status)) {
+          add(w.t1, "161.8%", C.target); add(w.t2, "261.8%", C.target);
+        }
+      }
+    }).catch(() => { document.getElementById("ck-updated").textContent = "เชื่อมต่อไม่ได้ จะลองใหม่ใน 1 นาที"; });
+  loadChaloke();
+  setInterval(() => { if (!document.hidden) loadChaloke(); }, 60000);
 
   initDrawing({chart, series: candles, el, toolbar: document.getElementById("draw-tools"), candles: d.candles,
                tf: TF, storageKey: "tradepro:draw:{{ market }}:{{ ticker }}"});

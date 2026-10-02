@@ -142,3 +142,19 @@ def test_wave3_after_deep_wave2_and_first_cdc_green():
     assert 0.618 <= s.levels["retrace"] <= 0.942 and s.order == "open"
     assert s.stop < s.levels["w2_low"] and s.target == pytest.approx(s.levels["w2_low"] + 1.618 * (
         s.levels["w1_top"] - s.levels["w1_base"]), abs=0.01)
+
+
+def test_chaloke_live_checklist():
+    from tradepro.chaloke import analyze
+
+    base_w1 = list(np.linspace(100, 101, 30)) + list(np.linspace(101, 130, 20))
+    wave2 = list(np.linspace(130, 107, 18))
+    a = analyze(_bars(base_w1 + wave2, spread=0.3), Config())          # still falling into the zone
+    assert a["status"] == "wait_green" and a["wave"]["top"] > a["wave"]["w2"] > a["wave"]["base"]
+    assert not a["checks"][3][0]                                        # CDC not green yet
+    b = analyze(_bars(base_w1 + wave2 + list(np.linspace(107.5, 118, 16)), spread=0.3), Config())
+    assert b["status"] == "buy" and b["cdc"]["zone"] == "green" and b["wave"]["rr"] >= 2
+    late = analyze(_bars(base_w1 + wave2 + list(np.linspace(107.5, 124, 16)), spread=0.3), Config())
+    assert late["status"] == "missed"                                   # ran away: reward/risk below 1:2
+    c = analyze(_bars(list(np.linspace(130, 80, 80)), spread=0.3), Config())   # endless new lows
+    assert c["status"] == "no_wave" and c["wave"] is None

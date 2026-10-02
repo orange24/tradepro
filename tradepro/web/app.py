@@ -25,6 +25,7 @@ import numpy as np
 from flask import Flask, Response, abort, jsonify, redirect, render_template, request, url_for
 
 from ..advisor import advise
+from ..chaloke import analyze as analyze_chaloke
 from ..config import DEFAULT
 from ..data import TIMEFRAMES, resample
 from ..indicators import add_features
@@ -59,6 +60,7 @@ SCANS = {
     "setall": ("set", "set_all", "หุ้นไทยทั้งหมด (SET + mai)"),
     "us": ("us", "us50", "หุ้นสหรัฐ (US50)"),
 }
+LIVE_SECONDS = 60       # the chart's live analysis refetches prices at most this often
 MIN_VALUE_THB = float(os.environ.get("TRADEPRO_MIN_VALUE", "1000000"))   # skip illiquid stocks in "setall"
 
 
@@ -265,6 +267,22 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if tf not in TIMEFRAMES:
             tf = "D"
         return render_template("chart.html", market=market, ticker=ticker.upper(), tf=tf, active="")
+
+    @app.get("/api/chaloke/<market>/<ticker>")
+    def chaloke_data(market, ticker):
+        """Live ChalokeDotCom checklist; the chart page polls this every minute."""
+        tf = request.args.get("tf", "D")
+        if market not in MARKETS or tf not in TIMEFRAMES:
+            abort(404)
+        try:
+            if tf == "D":
+                df = prices.history(market, ticker, max_age=LIVE_SECONDS)
+            else:
+                df = resample(prices.history(market, ticker, start="2000-01-01", max_age=LIVE_SECONDS), tf)
+            a = analyze_chaloke(df, market_cfg(market))
+        except Exception as e:
+            return jsonify(error=str(e)), 502
+        return jsonify(a | {"checked_at": datetime.now(timezone.utc).isoformat()})
 
     @app.get("/api/chart/<market>/<ticker>")
     def chart_data(market, ticker):

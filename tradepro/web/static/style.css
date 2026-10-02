@@ -91,3 +91,10 @@ table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
   padding: 2px 6px; border-radius: 5px; z-index: 3; pointer-events: none; }
 .tool-hint:empty { display: none; }
 @media (max-width: 640px) { .chart-area { flex-direction: column; } .draw-tools { flex-direction: row; flex-wrap: wrap; } }
+.ck-status { margin-bottom: 8px; }
+.ck-status .badge { font-size: 14px; padding: 5px 10px; white-space: normal; display: inline-block; }
+.checklist { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+.checklist li { padding: 3px 0; }
+.checklist li.ok { color: var(--text); }
+.checklist li.ok::first-letter { color: var(--green); }
+.checklist li.no { color: var(--muted); }

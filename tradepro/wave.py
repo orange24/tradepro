@@ -30,7 +30,14 @@ def cdc_action_zone(df: pd.DataFrame) -> pd.DataFrame:
     fast, slow = ema(ap, 12), ema(ap, 26)
     green = (fast > slow) & (ap > fast)
     red = (fast < slow) & (ap < fast)
-    return pd.DataFrame({"cdc_ap": ap, "cdc_fast": fast, "cdc_slow": slow, "cdc_green": green, "cdc_red": red})
+    bull = fast > slow
+    # the six CDC zones: green / yellow / orange in a bull state, red / light blue / blue in a bear state
+    zone = np.select(
+        [green, bull & (ap < fast) & (ap > slow), bull & (ap <= slow),
+         red, ~bull & (ap > fast) & (ap < slow), ~bull & (ap >= slow)],
+        ["green", "yellow", "orange", "red", "lblue", "blue"], "")
+    return pd.DataFrame({"cdc_ap": ap, "cdc_fast": fast, "cdc_slow": slow, "cdc_green": green, "cdc_red": red,
+                         "cdc_zone": zone}, index=df.index)
 
 
 def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
