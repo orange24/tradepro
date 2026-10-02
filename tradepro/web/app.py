@@ -202,8 +202,16 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
                 value, basis = sum(r["value"] for r in ok), sum(r["basis"] for r in ok)
                 groups[m] = {"rows": items, "value": value, "basis": basis, "pnl": value - basis,
                              "pnl_pct": (value / basis - 1) * 100 if basis else 0.0}
-        return render_template("portfolio.html", groups=groups, active="portfolio",
-                               updated=datetime.now(timezone.utc).isoformat())
+        usd = prices.usd_thb(max_age) if any(MARKETS[m].currency == "$" for m in groups) else None
+        to_thb = {m: (1.0 if MARKETS[m].currency == "฿" else usd) for m in groups}
+        total = None
+        if all(to_thb.values()):
+            basis = sum(g["basis"] * to_thb[m] for m, g in groups.items())
+            value = sum(g["value"] * to_thb[m] for m, g in groups.items())
+            total = {"basis": basis, "value": value, "pnl": value - basis,
+                     "pnl_pct": (value / basis - 1) * 100 if basis else 0.0}
+        return render_template("portfolio.html", groups=groups, active="portfolio", usd_thb=usd,
+                               to_thb=to_thb, total=total, updated=datetime.now(timezone.utc).isoformat())
 
     @app.post("/holdings")
     def add_holding():

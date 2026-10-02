@@ -21,7 +21,9 @@ class PriceService:
     def __init__(self, source: str = "yahoo", cache_dir: str = "data/web-cache"):
         self.sources = {m.name: make_source(source, str(Path(cache_dir) / m.name), m.yahoo_suffix)
                         for m in MARKETS.values()}
+        self.source = source
         self._cache: dict[tuple[str, str], tuple[float, pd.DataFrame]] = {}
+        self._fx: tuple[float, float] | None = None
         self._lock = threading.Lock()
 
     def history(self, market: str, ticker: str, start: str = "2023-01-01", max_age: float | None = None) -> pd.DataFrame:
@@ -37,3 +39,22 @@ class PriceService:
         with self._lock:
             self._cache[key] = (time.time(), df)
         return df
+
+    def usd_thb(self, max_age: float | None = None) -> float | None:
+        """Baht per US dollar from Yahoo (THB=X); None if it cannot be fetched."""
+        with self._lock:
+            hit = self._fx
+        if hit and time.time() - hit[0] < (TTL_SECONDS if max_age is None else max_age):
+            return hit[1]
+        if self.source != "yahoo":
+            rate = 35.0                         # offline sources: a fixed rate so the page still works
+        else:
+            try:
+                import yfinance as yf
+                raw = yf.download("THB=X", period="5d", progress=False, auto_adjust=True, threads=False)
+                rate = float(raw["Close"].dropna().iloc[-1].squeeze())
+            except Exception:
+                return hit[1] if hit else None
+        with self._lock:
+            self._fx = (time.time(), rate)
+        return rate

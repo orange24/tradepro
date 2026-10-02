@@ -12,16 +12,34 @@
 </div>
 
 <div id="holdings">
+{% if total and groups|length > 1 or (total and usd_thb) %}
+<section class="card">
+  <div class="card-head" style="margin:0">
+    <h2>รวมทั้งพอร์ต (เงินบาท)</h2>
+    <div class="stats">
+      <div class="stat"><div class="k">ต้นทุนรวม</div><div class="v">฿{{ '{:,.0f}'.format(total.basis) }}</div></div>
+      <div class="stat"><div class="k">มูลค่าตลาด</div><div class="v">฿{{ '{:,.0f}'.format(total.value) }}</div></div>
+      <div class="stat"><div class="k">กำไร/ขาดทุน</div>
+        <div class="v {{ 'pos' if total.pnl >= 0 else 'neg' }}">{{ '{:+,.0f}'.format(total.pnl) }} ({{ '{:+.2f}'.format(total.pnl_pct) }}%)</div></div>
+    </div>
+  </div>
+  {% if usd_thb %}<p class="note" style="margin:8px 0 0">อัตราแลกเปลี่ยน 1 USD = {{ '{:,.2f}'.format(usd_thb) }} บาท (Yahoo Finance)</p>{% endif %}
+</section>
+{% endif %}
 {% for m, g in groups.items() %}
 {% set cur = CURRENCY[m] %}
+{% set fx = to_thb[m] if cur != '฿' else None %}
 <section class="card">
   <div class="card-head">
     <h2>{{ MARKET_TH[m] }}</h2>
     <div class="stats">
-      <div class="stat"><div class="k">ต้นทุนรวม</div><div class="v">{{ cur }}{{ '{:,.2f}'.format(g.basis) }}</div></div>
-      <div class="stat"><div class="k">มูลค่าตลาด</div><div class="v">{{ cur }}{{ '{:,.2f}'.format(g.value) }}</div></div>
+      <div class="stat"><div class="k">ต้นทุนรวม</div><div class="v">{{ cur }}{{ '{:,.2f}'.format(g.basis) }}</div>
+        {% if fx %}<div class="thb">≈ ฿{{ '{:,.0f}'.format(g.basis * fx) }}</div>{% endif %}</div>
+      <div class="stat"><div class="k">มูลค่าตลาด</div><div class="v">{{ cur }}{{ '{:,.2f}'.format(g.value) }}</div>
+        {% if fx %}<div class="thb">≈ ฿{{ '{:,.0f}'.format(g.value * fx) }}</div>{% endif %}</div>
       <div class="stat"><div class="k">กำไร/ขาดทุน</div>
-        <div class="v {{ 'pos' if g.pnl >= 0 else 'neg' }}">{{ '{:+,.2f}'.format(g.pnl) }} ({{ '{:+.2f}'.format(g.pnl_pct) }}%)</div></div>
+        <div class="v {{ 'pos' if g.pnl >= 0 else 'neg' }}">{{ '{:+,.2f}'.format(g.pnl) }} ({{ '{:+.2f}'.format(g.pnl_pct) }}%)</div>
+        {% if fx %}<div class="thb {{ 'pos' if g.pnl >= 0 else 'neg' }}">≈ {{ '{:+,.0f}'.format(g.pnl * fx) }} บาท</div>{% endif %}</div>
     </div>
   </div>
   <div class="table-wrap"><table>
@@ -33,13 +51,15 @@
         {% if r.note %}<div class="note">{{ r.note }}</div>{% endif %}</td>
       <td class="n">{{ '{:,.0f}'.format(r.shares) if r.shares == r.shares|int else r.shares }}</td>
       <td class="n">{{ '{:,.2f}'.format(r.cost) }}</td>
-      <td class="n">{{ cur }}{{ '{:,.2f}'.format(r.basis) }}</td>
+      <td class="n">{{ cur }}{{ '{:,.2f}'.format(r.basis) }}
+        {% if fx %}<div class="thb">≈ ฿{{ '{:,.0f}'.format(r.basis * fx) }}</div>{% endif %}</td>
       {% if r.error %}
       <td colspan="7" class="neg">ดึงราคาไม่ได้: {{ r.error }}</td>
       {% else %}
       <td class="n">{{ '{:,.2f}'.format(r.price) }}</td>
       <td class="n">{{ cur }}{{ '{:,.2f}'.format(r.value) }}</td>
-      <td class="n {{ 'pos' if r.pnl >= 0 else 'neg' }}">{{ '{:+,.2f}'.format(r.pnl) }}<br>{{ '{:+.2f}'.format(r.pnl_pct) }}%</td>
+      <td class="n {{ 'pos' if r.pnl >= 0 else 'neg' }}">{{ '{:+,.2f}'.format(r.pnl) }}<br>{{ '{:+.2f}'.format(r.pnl_pct) }}%
+        {% if fx %}<div class="thb">≈ {{ '{:+,.0f}'.format(r.pnl * fx) }} บาท</div>{% endif %}</td>
       <td><span class="badge b-{{ r.advice.status }}">{{ STATUS_TH[r.advice.status] }}</span>
         <div class="note">{{ CONTEXT_TH[r.advice.context] }}</div></td>
       <td style="min-width:180px"><span class="badge act-{{ r.advice.action }}">{{ ACTION_TH[r.advice.action] }}</span>
