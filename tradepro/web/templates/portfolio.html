@@ -18,7 +18,7 @@
   </div>
   <div class="table-wrap"><table>
     <tr><th>หุ้น</th><th class="n">จำนวน</th><th class="n">ต้นทุน/หุ้น</th><th class="n">ราคาล่าสุด</th>
-        <th class="n">กำไร/ขาดทุน</th><th>คำแนะนำ</th><th class="n">จุดขาย (stop)</th><th>เหตุผล</th><th></th></tr>
+        <th class="n">กำไร/ขาดทุน</th><th>คำแนะนำ</th><th>ควรทำอะไร</th><th class="n">จุดขาย (stop)</th><th>เหตุผล</th><th></th></tr>
     {% for r in g.rows %}
     <tr>
       <td><a class="tk" href="{{ url_for('chart_page', market=m, ticker=r.ticker) }}">{{ r.ticker }}</a>
@@ -26,15 +26,17 @@
       <td class="n">{{ '{:,.0f}'.format(r.shares) if r.shares == r.shares|int else r.shares }}</td>
       <td class="n">{{ '{:,.2f}'.format(r.cost) }}</td>
       {% if r.error %}
-      <td colspan="5" class="neg">ดึงราคาไม่ได้: {{ r.error }}</td>
+      <td colspan="6" class="neg">ดึงราคาไม่ได้: {{ r.error }}</td>
       {% else %}
       <td class="n">{{ '{:,.2f}'.format(r.price) }}</td>
       <td class="n {{ 'pos' if r.pnl >= 0 else 'neg' }}">{{ '{:+,.2f}'.format(r.pnl) }}<br>{{ '{:+.2f}'.format(r.pnl_pct) }}%</td>
       <td><span class="badge b-{{ r.advice.status }}">{{ STATUS_TH[r.advice.status] }}</span>
         <div class="note">{{ CONTEXT_TH[r.advice.context] }}</div></td>
+      <td style="min-width:180px"><span class="badge act-{{ r.advice.action }}">{{ ACTION_TH[r.advice.action] }}</span>
+        <div class="note">{{ r.advice.action_text }}</div></td>
       <td class="n">{{ '{:,.2f}'.format(r.advice.stop) }}</td>
-      <td><ul class="reasons">{% for x in r.advice.reasons %}<li>{{ x }}</li>{% endfor %}
-        {% if r.advice.buy_signals and r.advice.status != 'sell' %}<li class="pos">มีสัญญาณซื้อเพิ่ม: {{ r.advice.buy_signals|join(', ') }}</li>{% endif %}</ul></td>
+      <td style="min-width:220px"><ul class="reasons">{% for x in r.advice.reasons %}<li>{{ x }}</li>{% endfor %}
+</ul></td>
       {% endif %}
       <td>
         <details><summary>แก้ไข</summary>

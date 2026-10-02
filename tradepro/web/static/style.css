@@ -100,3 +100,7 @@ table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
 .checklist li.no { color: var(--muted); }
 .sizer { margin-top: 12px; }
 .sizer input { width: 130px; }
+.act-add { background: var(--green-bg); color: var(--green); }
+.act-trim { background: var(--amber-bg); color: var(--amber); }
+.act-sell { background: var(--red-bg); color: var(--red); }
+.act-hold { background: transparent; color: var(--muted); border: 1px solid var(--line); }

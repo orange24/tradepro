@@ -121,3 +121,17 @@ def test_w3_three_lots_and_stop_on_close():
     assert t.exit_reason == "target" and t.r == pytest.approx(2.0)     # 1/3 each at +1R, +2R, +3R
     t = backtest.simulate_w3(df, [sig], Config(cost_pct=0, w3_stop_on_close=False))[0]
     assert t.exit_reason == "stop"                                     # the wick to 8.8 stops a touch stop
+
+
+def test_portfolio_action_trim_at_fib_targets():
+    from tradepro.advisor import _action
+    from tradepro.indicators import add_features
+
+    df = _bars(list(np.linspace(10, 16, 40)), spread=0.1)
+    f = add_features(df, Config())
+    s = Signal("X", df.index[5], "W3", "long", entry=10.8, stop=10, target=12, context="green",
+               levels={"t2": 14, "t3": 20})
+    action, text = _action(f, [s], "hold", "green", False, Config())
+    assert action == "trim" and "261.8" in text and "2 ใน 3" in text
+    action, _ = _action(f, [s], "sell", "red", False, Config())
+    assert action == "sell"

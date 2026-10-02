@@ -40,6 +40,7 @@ log = logging.getLogger("tradepro.web")
 
 SETUP_TH = {"W3": "Wave 3 (ลุงโฉลก): Wave 2 ย่อ 61.8–94.2% แล้ว CDC Action Zone เขียวแรก"}
 STATUS_TH = {"hold": "ถือต่อ", "watch": "เฝ้าระวัง", "sell": "ควรขาย"}
+ACTION_TH = {"add": "ซื้อเพิ่มได้", "trim": "ขายรินกำไร", "sell": "ขายทั้งหมด", "hold": "ถือ ยังไม่ต้องทำอะไร"}
 CONTEXT_TH = {k: "CDC " + v[0] for k, v in CDC_TH.items()} | {"": "-"}
 CURRENCY = {"set": "฿", "us": "$"}
 SETUP_ORDER = {"W3": 0}
@@ -168,7 +169,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
 
     @app.context_processor
     def helpers():
-        return {"STATUS_TH": STATUS_TH, "CONTEXT_TH": CONTEXT_TH, "SETUP_TH": SETUP_TH,
+        return {"STATUS_TH": STATUS_TH, "ACTION_TH": ACTION_TH, "CONTEXT_TH": CONTEXT_TH, "SETUP_TH": SETUP_TH,
                 "CURRENCY": CURRENCY, "MARKETS": MARKETS}
 
     def evaluate(h: dict) -> dict:
