@@ -176,7 +176,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         row = dict(h)
         try:
             df = prices.history(h["market"], h["ticker"])
-            a = advise(df, market_cfg(h["market"]))
+            a = advise(df, market_cfg(h["market"]), cost=h["cost"])
             value, basis = a.price * h["shares"], h["cost"] * h["shares"]
             row.update(advice=a, price=a.price, value=value, basis=basis, pnl=value - basis,
                        pnl_pct=(a.price / h["cost"] - 1) * 100 if h["cost"] else 0.0)

@@ -131,7 +131,11 @@ def test_portfolio_action_trim_at_fib_targets():
     f = add_features(df, Config())
     s = Signal("X", df.index[5], "W3", "long", entry=10.8, stop=10, target=12, context="green",
                levels={"t2": 14, "t3": 20})
-    action, text = _action(f, [s], "hold", "green", False, Config())
+    action, text = _action(f, s, "hold", "green", False, Config())
     assert action == "trim" and "261.8" in text and "2 ใน 3" in text
-    action, _ = _action(f, [s], "sell", "red", False, Config())
+    action, _ = _action(f, s, "sell", "red", False, Config())
     assert action == "sell"
+    fresh = Signal("X", df.index[-2], "W3", "long", entry=15.8, stop=15, target=19, context="green")
+    assert _action(f, fresh, "hold", "green", False, Config())[0] == "add"
+    action, text = _action(f, fresh, "hold", "green", False, Config(), cost=17)     # holding is at a loss
+    assert action == "hold" and "ถัวเฉลี่ย" in text
