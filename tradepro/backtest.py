@@ -7,6 +7,9 @@ from dataclasses import dataclass
 import pandas as pd
 
 from .config import DEFAULT, Config
+import numpy as np
+
+from .indicators import atr
 from .setups import Signal, detect
 from .wave import cdc_action_zone
 
@@ -92,6 +95,11 @@ def simulate_w3(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) 
     Exits on a close (stop on close, CDC red, last bar) fill at that close. One position per ticker."""
     o, h, l, c = (df[k].to_numpy() for k in ("open", "high", "low", "close"))
     red = (cdc_action_zone(df)["cdc_zone"] == "red").to_numpy()
+    atr_ = atr(df, cfg.atr_period).to_numpy()
+    piv_low = np.full(len(df), np.nan)          # swing low (3 bars each side), known 3 bars later
+    for q in range(3, len(df) - 3):
+        if l[q] == l[q - 3:q + 4].min():
+            piv_low[q + 3] = l[q]
     dates, n = df.index, len(df)
     pos = {d: i for i, d in enumerate(dates)}
     mode = cfg.w3_exit
@@ -111,6 +119,7 @@ def simulate_w3(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) 
         hold = s.max_hold or cfg.max_hold_bars
         last = n - 1 if not hold else min(n - 1, j + hold)
         parts, left, reason, k = [], 1.0, "open", last          # parts: (fraction, exit price)
+        stop, best = s.stop, fill
 
         def take_targets(k):
             nonlocal left
@@ -123,16 +132,29 @@ def simulate_w3(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) 
                 take_targets(k)                 # a limit order at the target fills during the day
                 if left <= 1e-9:
                     reason = "target"; break
-                if c[k] < s.stop:
-                    parts.append((left, c[k])); left, reason = 0, "stop"; break
+                if c[k] < stop:
+                    parts.append((left, c[k])); left, reason = 0, "stop" if stop == s.stop else "trail"; break
             else:
-                if l[k] <= s.stop:              # touched: assume the stop came first (conservative)
-                    parts.append((left, s.stop if k == j else min(o[k], s.stop))); left, reason = 0, "stop"; break
+                if l[k] <= stop:                # touched: assume the stop came first (conservative)
+                    parts.append((left, stop if k == j else min(o[k], stop)))
+                    left, reason = 0, "stop" if stop == s.stop else "trail"; break
                 take_targets(k)
                 if left <= 1e-9:
                     reason = "target"; break
             if mode in ("cdc_red", "half") and red[k]:
                 parts.append((left, c[k])); left, reason = 0, "cdc_red"; break
+            # after the first target, move the stop up for what is left (answer: breakeven / ATR / previous low)
+            best = max(best, c[k])
+            if left < 1.0 - 1e-9 and cfg.w3_trail != "none":
+                if cfg.w3_trail == "breakeven":
+                    stop = max(stop, fill)
+                elif cfg.w3_trail == "atr":
+                    stop = max(stop, best - cfg.w3_trail_atr * atr_[k])
+                elif cfg.w3_trail == "swing":
+                    recent = piv_low[j:k + 1]
+                    recent = recent[~np.isnan(recent)]
+                    if len(recent):
+                        stop = max(stop, float(recent[-1]))
         if left > 1e-9:
             parts.append((left, c[last]))
             reason = "time" if hold and last == j + hold else reason

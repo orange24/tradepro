@@ -106,6 +106,12 @@ def advise(df: pd.DataFrame, cfg: Config = DEFAULT, recent_bars: int = 3, cost: 
     live = live_wave(f, w3s)
     low_px, low_name = significant_low(df, f, live, cfg)
     stop = round_to_tick(low_px - tick_size(low_px, m), up=False, market=m)                 # EXIT-1
+    if live is not None and cfg.w3_trail == "breakeven":
+        top = f["high"][f.index > live.date]
+        if len(top) and top.max() >= live.target:          # first target reached: stop up to the buy price
+            be = cost if cost else live.entry
+            if be > stop:
+                stop, low_name = be, "เลื่อนมาที่ทุน หลังราคาถึงเป้าแรก 161.8%"
     highs = [h for h in swing_highs(f) if h > price]
     resistance = highs[-1] if highs else None
     sh = swing_highs(f)
