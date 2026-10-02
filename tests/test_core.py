@@ -108,3 +108,16 @@ def test_chaloke_live_checklist():
     assert late["status"] == "missed"                                   # ran away: reward/risk below 1:2
     c = analyze(_bars(list(np.linspace(130, 80, 80)), spread=0.3), Config())   # endless new lows
     assert c["status"] == "no_wave" and c["wave"] is None
+
+
+def test_w3_three_lots_and_stop_on_close():
+    idx = pd.bdate_range("2024-01-01", periods=5)
+    df = pd.DataFrame({"open": [10, 10, 10.5, 11, 11], "high": [10.2, 11.2, 12.1, 11.2, 13.5],
+                       "low": [9.8, 9.5, 10.4, 8.8, 10.9], "close": [10, 10.5, 11.5, 9.5, 13]}, index=idx)
+    sig = Signal("X", idx[0], "W3", "long", entry=10, stop=9, target=11, context="green",
+                 levels={"t2": 12, "t3": 13})
+    cfg = Config(cost_pct=0)
+    t = backtest.simulate_w3(df, [sig], cfg)[0]
+    assert t.exit_reason == "target" and t.r == pytest.approx(2.0)     # 1/3 each at +1R, +2R, +3R
+    t = backtest.simulate_w3(df, [sig], Config(cost_pct=0, w3_stop_on_close=False))[0]
+    assert t.exit_reason == "stop"                                     # the wick to 8.8 stops a touch stop

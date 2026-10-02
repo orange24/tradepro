@@ -16,6 +16,16 @@
   <ul class="checklist" id="ck-checks"></ul>
   <div class="stats" id="ck-levels" style="margin-top:10px"></div>
   <ul class="checklist" id="ck-extra" style="margin-top:10px"></ul>
+  <details class="sizer" id="ck-sizer" hidden>
+    <summary>คำนวณจำนวนหุ้นจาก Maximum Damage (ลุงโฉลก: ยอมเสีย 1–10% ของพอร์ตต่อการเทรด)</summary>
+    <div class="form-row" style="margin-top:8px">
+      <label>เงินทุนในพอร์ต<input type="number" id="sz-capital" min="0" step="any" placeholder="เช่น 100000"></label>
+      <label>ยอมเสียได้ (%)<input type="number" id="sz-risk" min="0.1" max="10" step="0.1" value="2"></label>
+      <label>ราคาซื้อ<input type="number" id="sz-entry" min="0" step="any"></label>
+      <label>Stop (ราคาปิดหลุด)<input type="number" id="sz-stop" min="0" step="any"></label>
+    </div>
+    <p class="note" id="sz-out" style="margin:8px 0 0"></p>
+  </details>
 </section>
 
 <section class="card" id="signal-card" hidden>
@@ -247,8 +257,9 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
       document.getElementById("ck-levels").innerHTML = w ?
         stat("โซนซื้อ 78.6–88.7%", `${fmt(w.fib["0.887"])}–${fmt(w.fib["0.786"])}`) +
         stat("Stop (ปลาย W2)", CUR + fmt(w.stop), "neg") +
-        stat("เป้า 161.8%", CUR + fmt(w.t1), "pos") + stat("261.8%", CUR + fmt(w.t2), "pos") +
-        stat("423.6%", CUR + fmt(w.t3), "pos") : "";
+        stat("ขาย 1/3 ที่ 161.8%", CUR + fmt(w.t1), "pos") + stat("1/3 ที่ 261.8%", CUR + fmt(w.t2), "pos") +
+        stat("1/3 ที่ 423.6%", CUR + fmt(w.t3), "pos") : "";
+      if (w) setupSizer(k.price, w.stop);
       document.getElementById("ck-extra").innerHTML =
         k.confirms.map(t => `<li class="ok">＋ ${esc(t)}</li>`).join("") +
         k.warnings.map(t => `<li class="no">⚠ ${esc(t)}</li>`).join("");
@@ -264,6 +275,36 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
         }
       }
     }).catch(() => { document.getElementById("ck-updated").textContent = "เชื่อมต่อไม่ได้ จะลองใหม่ใน 1 นาที"; });
+  // position size = money you accept to lose / (buy price - stop)   (answer 13)
+  let sizerReady = false;
+  function setupSizer(price, stop) {
+    const box = document.getElementById("ck-sizer"), $ = id => document.getElementById(id);
+    box.hidden = false;
+    if (!sizerReady) {
+      sizerReady = true;
+      try { $("sz-capital").value = localStorage.getItem("tradepro:capital:" + CUR) || "";
+            $("sz-risk").value = localStorage.getItem("tradepro:risk") || 2; } catch (e) { /* storage off */ }
+      $("sz-entry").value = +price.toFixed(2); $("sz-stop").value = stop;
+      ["sz-capital", "sz-risk", "sz-entry", "sz-stop"].forEach(id => $(id).addEventListener("input", calc));
+    }
+    calc();
+    function calc() {
+      const cap = +$("sz-capital").value, pct = +$("sz-risk").value, e = +$("sz-entry").value, st = +$("sz-stop").value;
+      try { localStorage.setItem("tradepro:capital:" + CUR, $("sz-capital").value); localStorage.setItem("tradepro:risk", pct); } catch (err) {}
+      const out = $("sz-out");
+      if (!cap || !pct || !(e > st)) { out.textContent = "ใส่เงินทุนและ % ที่ยอมเสีย (ราคาซื้อต้องสูงกว่า stop)"; return; }
+      const damage = cap * pct / 100;
+      let shares = damage / (e - st);
+      const lot = {{ 100 if market == 'set' else 1 }};
+      shares = lot > 1 ? Math.floor(shares / lot) * lot : Math.floor(shares * 1000) / 1000;
+      const cost = shares * e;
+      out.innerHTML = shares > 0
+        ? `ซื้อได้ <b>${shares.toLocaleString()}</b> หุ้น ใช้เงิน ${CUR}${fmt(cost)} (${fmt(cost / cap * 100)}% ของพอร์ต) · ` +
+          `ถ้าโดน stop เสียราว ${CUR}${fmt(shares * (e - st))} (${fmt(shares * (e - st) / cap * 100)}%)` +
+          (cost > cap ? " · <span class='neg'>เงินไม่พอซื้อจำนวนนี้ ใช้ได้แค่ตามเงินที่มี</span>" : "")
+        : `เงินที่ยอมเสีย ${CUR}${fmt(damage)} น้อยกว่าความเสี่ยงของหุ้น 1 lot ลองเพิ่ม % หรือเลือกหุ้นที่ stop แคบกว่า`;
+    }
+  }
   loadChaloke();
   setInterval(() => { if (!document.hidden) loadChaloke(); }, 60000);
 

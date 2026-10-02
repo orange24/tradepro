@@ -98,3 +98,5 @@ table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
 .checklist li.ok { color: var(--text); }
 .checklist li.ok::first-letter { color: var(--green); }
 .checklist li.no { color: var(--muted); }
+.sizer { margin-top: 12px; }
+.sizer input { width: 130px; }

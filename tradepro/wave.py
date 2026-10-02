@@ -71,7 +71,7 @@ def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
             continue
         h = cand[-1]                                      # most recent confirmed swing high = wave 1 top
         top = hi[h]
-        if h in used or hi[h + 1:i + 1].max(initial=-np.inf) > top:
+        if (h in used and not cfg.w3_reentry) or hi[h + 1:i + 1].max(initial=-np.inf) > top:
             continue                                      # already traded, or price already above wave 1 top
         b0 = max(0, h - cfg.w3_max_wave1_bars)
         b = b0 + int(np.argmin(lo[b0:h + 1]))
@@ -86,7 +86,8 @@ def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
             continue                                      # W3-2
         if i - w2i > cfg.w3_max_bars_after_low:
             continue                                      # green came too long after the wave 2 low
-        stop = round_to_tick(w2 - tick_size(w2, m), up=False, market=m)                     # W3-4
+        ref = base if cfg.w3_stop_ref == "base" else w2
+        stop = round_to_tick(ref - tick_size(ref, m), up=False, market=m)                   # W3-4
         t1, t2, t3 = (w2 + x * w1 for x in (1.618, 2.618, 4.236))                            # W3-5
         rr = (t1 - close[i]) / (close[i] - stop) if close[i] > stop else 0.0
         if rr < cfg.w3_min_rr:

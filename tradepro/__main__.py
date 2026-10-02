@@ -50,7 +50,7 @@ def main(argv=None):
         if name == "scan":
             sp.add_argument("--recent", type=int, default=1, help="look at signals from the last N bars")
         if name == "backtest":
-            sp.add_argument("--hold", type=int, default=DEFAULT.w3_max_hold_bars, help="max bars to hold a trade")
+            sp.add_argument("--hold", type=int, default=DEFAULT.w3_max_hold_bars, help="max bars to hold a trade (0 = no limit)")
             sp.add_argument("--out", default="trades.csv")
     args = p.parse_args(argv)
     if args.tickers and args.market == "all":
