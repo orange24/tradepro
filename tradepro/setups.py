@@ -8,7 +8,7 @@ import pandas as pd
 
 from .config import DEFAULT, Config
 from .indicators import add_features
-from .wave import detect_wave3
+from .wave import detect_running_flat, detect_wave3
 
 
 @dataclass
@@ -42,5 +42,9 @@ class Signal:
 
 
 def detect(df: pd.DataFrame, ticker: str = "", cfg: Config = DEFAULT) -> list[Signal]:
-    """Scan every bar of df and return all W3 setups found (signal bar = the first CDC green bar)."""
-    return detect_wave3(add_features(df, cfg), ticker, cfg, Signal)
+    """Scan every bar of df and return all W3 / RF setups found (signal bar = the first CDC green bar)."""
+    f = add_features(df, cfg)
+    w3 = detect_wave3(f, ticker, cfg, Signal)
+    days = {s.date for s in w3}
+    rf = [s for s in detect_running_flat(f, ticker, cfg, Signal) if s.date not in days] if cfg.running_flat else []
+    return sorted(w3 + rf, key=lambda s: s.date)

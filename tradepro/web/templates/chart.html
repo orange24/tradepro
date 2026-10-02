@@ -122,7 +122,7 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
   const cdcData = d.bars.map(b => ({time: b.time, value: 1, color: CDC_COLOR[b.cdc] || "#8a93a655"}));
   // most recent wave 3 setup, only if it is still recent (old waves are far from today's price)
   const recentFrom = d.candles[Math.max(0, d.candles.length - 60)].time;
-  const w3 = d.signals.filter(x => x.setup === "W3" && x.time >= recentFrom).pop();
+  const w3 = d.signals.filter(x => (x.setup === "W3" || x.setup === "RF") && x.time >= recentFrom).pop();
 
   // Price lines, grouped so each layer can be switched on and off
   const line = (price, color, title, style = 2, width = 1) => price == null ? null :
@@ -231,7 +231,7 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
     const bull = c.close > c.open, bear = c.close < c.open;
     const kind = (bull ? "แท่งเขียว" : bear ? "แท่งแดง" : "แท่งเท่าเดิม") + (b.body >= 0.6 ? (bull ? " (big white)" : bear ? " (big black)" : "") : "");
     const extra = [b.cdc && CONTEXT[b.cdc], ...(swingByTime[t] || []),
-      sigByTime[t] && `เขียวแรก W3 stop ${fmt(sigByTime[t].stop)}`].filter(Boolean);
+      sigByTime[t] && `เขียวแรก ${sigByTime[t].setup} stop ${fmt(sigByTime[t].stop)}`].filter(Boolean);
     hover.innerHTML = `<b>${t}</b> O ${fmt(c.open)} H ${fmt(c.high)} L ${fmt(c.low)} C ${fmt(c.close)}` +
       ` · ATR ${fmt(b.atr)} · ${kind}, body ${pct(b.body)}, ปิดที่ ${pct(b.close_pos)} ของแท่ง` +
       (extra.length ? ` · <b>${extra.join(" · ")}</b>` : "");

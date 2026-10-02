@@ -67,7 +67,7 @@ def main(argv=None):
                 print(f"[{m.name}] {t}: {len(df)} bars")
             continue
 
-        cfg = replace(DEFAULT, market=m.name, cost_pct=m.cost_pct)
+        cfg = replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, running_flat=m.running_flat)
         if args.cmd == "scan":
             res = scan(source, tickers, recent_bars=args.recent, start=args.start or "2023-01-01",
                        cfg=cfg, on_error=_warn)

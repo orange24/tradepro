@@ -38,13 +38,14 @@ from ..watchlists import ASSETS, WATCHLISTS, normalize_ticker
 
 log = logging.getLogger("tradepro.web")
 
-SETUP_TH = {"W3": "Wave 3 (ลุงโฉลก): Wave 2 ย่อ 61.8–94.2% แล้ว CDC Action Zone เขียวแรก"}
+SETUP_TH = {"W3": "Wave 3 (ลุงโฉลก): Wave 2 ย่อ 61.8–94.2% แล้ว CDC Action Zone เขียวแรก",
+            "RF": "Running Flat (ลุงโฉลก): ย่อตื้น, Strong B ทำ high ใหม่, C ไม่หลุดฐาน แล้ว CDC เขียวแรก"}
 STATUS_TH = {"hold": "ถือต่อ", "watch": "เฝ้าระวัง", "sell": "ควรขาย"}
 ACTION_TH = {"add": "ซื้อเพิ่มได้", "trim": "ขายรินกำไร", "sell": "ขายทั้งหมด", "hold": "ถือ ยังไม่ต้องทำอะไร"}
 CONTEXT_TH = {k: "CDC " + v[0] for k, v in CDC_TH.items()} | {"": "-"}
 CURRENCY = {k: m.currency for k, m in MARKETS.items()}
 MARKET_TH = {k: m.label for k, m in MARKETS.items()}
-SETUP_ORDER = {"W3": 0}
+SETUP_ORDER = {"W3": 0, "RF": 1}
 
 
 # Scan universes: id -> (market, watchlist, label)
@@ -72,7 +73,7 @@ def pivots(f, side: int = 3):
 
 def market_cfg(market: str):
     m = MARKETS[market]
-    return replace(DEFAULT, market=m.name, cost_pct=m.cost_pct)
+    return replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, running_flat=m.running_flat)
 
 
 class Scanner:
@@ -115,7 +116,7 @@ class Scanner:
                         continue
                     if s.date == last:
                         rows.append(s.as_dict() | {"last_close": round(px, 4), "days_ago": 0})
-                    elif s.setup == "W3" and s.date in recent and green_now and px > s.stop:
+                    elif s.setup in ("W3", "RF") and s.date in recent and green_now and px > s.stop:
                         # W3 stays buyable for a few days while CDC is still green and the price has not
                         # run away: reward/risk from today's close must still meet w3_min_rr ("ไม่ตกรถ")
                         rr_now = (s.target - px) / (px - s.stop)

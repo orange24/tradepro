@@ -51,7 +51,7 @@ def test_synthetic_end_to_end(tmp_path):
 
     data = {t: SyntheticSource().get(t) for t in SET50[:20]} | {"PTT": again}
     trades = backtest.run(data)
-    assert not trades.empty and set(trades["setup"]) == {"W3"}
+    assert not trades.empty and set(trades["setup"]) <= {"W3", "RF"}
     assert "ALL" in backtest.summarize(trades).index
 
 
@@ -63,7 +63,7 @@ def test_us_ticks_and_market_aware_signals():
     assert round_to_tick(150.004, up=True, market="us") == 150.01
     df = SyntheticSource().get("AAPL")
     for s in detect(df, "AAPL", Config(market="us"))[:50]:
-        assert round(s.entry * 100) == pytest.approx(s.entry * 100, abs=1e-6)
+        assert round(s.stop * 100) == pytest.approx(s.stop * 100, abs=1e-6)       # stops sit on a cent
 
 
 def test_cli_both_markets(tmp_path, capsys):

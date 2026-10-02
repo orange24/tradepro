@@ -33,6 +33,8 @@ class Config:
     w3_trail_atr: float = 3.0
     w3_reentry: bool = True           # allow a new first green on the same wave 1 (after a stop, no new low)
 
+    running_flat: bool = True         # RF-1: also look for 1-A-B-C running flats (Strong B)
+
     max_hold_bars: int = 0            # backtest time exit for signals without their own max_hold (0 = none)
     cost_pct: float = 0.2             # round-trip commission + slippage, percent of price
     market: str = "set"               # "set", "us" or "asset": tick sizes (see markets.py)
