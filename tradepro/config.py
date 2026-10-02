@@ -26,6 +26,8 @@ class Config:
     w3_exit: str = "thirds"           # "thirds": a third each at 161.8 / 261.8 / 423.6% (Chaloke's 3 lots);
                                       # "target": all at 161.8%; "cdc_red": hold until CDC turns red;
                                       # "half": half at 161.8%, the rest until CDC turns red
+                                      # "thirds_red": a third at 161.8 and 261.8%, the last third until CDC red
+    w3_red_after_target: bool = True  # "thirds_red": CDC red only sells once the first target was reached
     w3_trail: str = "breakeven"       # after the first target: "none" | "breakeven" (stop to the buy price) |
                                       # "atr" (highest close - w3_trail_atr x ATR) | "swing" (latest swing low)
     w3_trail_atr: float = 3.0

@@ -115,6 +115,7 @@ def simulate_w3(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) 
             continue
         lv = s.levels or {}
         targets = {"target": [(1.0, s.target)], "half": [(0.5, s.target)], "cdc_red": [],
+                   "thirds_red": [(1 / 3, s.target), (1 / 3, lv.get("t2", s.target))],
                    "thirds": [(1 / 3, s.target), (1 / 3, lv.get("t2", s.target)), (1 / 3, lv.get("t3", s.target))]}[mode]
         hold = s.max_hold or cfg.max_hold_bars
         last = n - 1 if not hold else min(n - 1, j + hold)
@@ -141,7 +142,9 @@ def simulate_w3(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) 
                 take_targets(k)
                 if left <= 1e-9:
                     reason = "target"; break
-            if mode in ("cdc_red", "half") and red[k]:
+            red_exit = mode in ("cdc_red", "half") or (mode == "thirds_red" and (
+                not cfg.w3_red_after_target or left < 1.0 - 1e-9))
+            if red_exit and red[k]:
                 parts.append((left, c[k])); left, reason = 0, "cdc_red"; break
             # after the first target, move the stop up for what is left (answer: breakeven / ATR / previous low)
             best = max(best, c[k])
