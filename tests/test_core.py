@@ -122,7 +122,7 @@ def test_w3_three_lots_and_stop_on_close():
     t = backtest.simulate_w3(df, [sig], Config(cost_pct=0, w3_trail="breakeven"))[0]
     assert t.exit_reason == "trail"                                    # closed at 9.5, under the moved-up stop (10)
     assert t.r == pytest.approx((1 + 2 - 0.5) / 3, abs=1e-3)
-    t = backtest.simulate_w3(df, [sig], Config(cost_pct=0, w3_stop_on_close=False))[0]
+    t = backtest.simulate_w3(df, [sig], Config(cost_pct=0, w3_stop_on_close=False, w3_trail="none"))[0]
     assert t.exit_reason == "stop"                                     # the wick to 8.8 stops a touch stop
 
 
