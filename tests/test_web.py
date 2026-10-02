@@ -30,7 +30,10 @@ def test_scan_and_chart(client):
     assert len(d["candles"]) == 250 and d["advice"]["status"] in ("hold", "watch", "sell")
     assert len(d["bars"]) == 250 and d["swings"]
     lv = d["levels"]
-    assert lv["range_low"] <= lv["range_mid"] <= lv["range_high"]
+    assert lv["cdc_zone"] in ("green", "yellow", "orange", "red", "lblue", "blue")
+    assert len(d["cdc_fast"]) == len(d["cdc_slow"]) == 250
+    k = client.get("/api/chaloke/set/PTT").get_json()
+    assert k["status"] and k["cdc"]["zone"] and isinstance(k["checks"], list)
 
 
 def test_password(tmp_path, monkeypatch):

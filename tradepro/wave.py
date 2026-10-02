@@ -46,7 +46,7 @@ def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
     op, hi, lo, close, atr = (f[k].to_numpy() for k in ("open", "high", "low", "close", "atr"))
     body = f["body_ratio"].to_numpy()
     rng = hi - lo
-    big = (body >= cfg.trend_bar_body) & (rng >= atr)
+    big = (body >= cfg.big_body) & (rng >= atr)
     big_white = big & (close > op)
     big_black = big & (close < op)
     gap_up = np.r_[False, op[1:] > hi[:-1]]
@@ -111,7 +111,7 @@ def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
                 f" · เป้า 261.8% {t2:,.2f} · 423.6% {t3:,.2f}"
                 + (f" · ยืนยัน: {', '.join(conf)}" if conf else ""))
         out.append(signal_cls(ticker, f.index[i], "W3", "long", round(float(close[i]), 4), stop,
-                              round(float(t1), 4), f["context"].iloc[i], note, order="open",
+                              round(float(t1), 4), str(z["cdc_zone"].iloc[i]), note, order="open",
                               max_hold=cfg.w3_max_hold_bars,
                               levels={"w1_base": round(float(base), 4), "w1_top": round(float(top), 4),
                                       "w2_low": round(float(w2), 4), "retrace": round(float(retr), 3),

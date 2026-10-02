@@ -29,7 +29,7 @@ class Trade:
 def simulate(df: pd.DataFrame, signals: list[Signal], cfg: Config = DEFAULT) -> list[Trade]:
     """Rules: the stop order is live only on the bar after the signal bar (cancelled otherwise).
     Gaps fill at the open. If stop and target are both touched in one bar, assume the stop
-    (conservative). Exit at the close after max_hold_bars (RISK-5). One position per ticker."""
+    (conservative). Exit at the close after max_hold bars. One position per ticker."""
     o, h, l, c = (df[k].to_numpy() for k in ("open", "high", "low", "close"))
     dates = df.index
     pos = {d: i for i, d in enumerate(dates)}

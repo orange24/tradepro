@@ -36,7 +36,7 @@ def _load(source, tickers, start):
 
 
 def main(argv=None):
-    p = argparse.ArgumentParser(prog="tradepro", description="Brooks price action scanner")
+    p = argparse.ArgumentParser(prog="tradepro", description="ChalokeDotCom Wave 3 + CDC Action Zone scanner")
     sub = p.add_subparsers(dest="cmd", required=True)
     for name in ("scan", "backtest", "download"):
         sp = sub.add_parser(name)
@@ -47,13 +47,10 @@ def main(argv=None):
         sp.add_argument("--source", default="yahoo", help="yahoo | csv | synthetic")
         sp.add_argument("--csv-dir", default="data/cache", help="per-market subfolders set/ and us/")
         sp.add_argument("--start", default=None, help="first date, e.g. 2015-01-01")
-        if name in ("scan", "backtest"):
-            sp.add_argument("--reward", type=float, default=DEFAULT.reward_r, help="target in R for pullbacks")
-            sp.add_argument("--long-only", action="store_true", help="skip short setups")
         if name == "scan":
             sp.add_argument("--recent", type=int, default=1, help="look at signals from the last N bars")
         if name == "backtest":
-            sp.add_argument("--hold", type=int, default=DEFAULT.max_hold_bars)
+            sp.add_argument("--hold", type=int, default=DEFAULT.w3_max_hold_bars, help="max bars to hold a trade")
             sp.add_argument("--out", default="trades.csv")
     args = p.parse_args(argv)
     if args.tickers and args.market == "all":
@@ -70,14 +67,13 @@ def main(argv=None):
                 print(f"[{m.name}] {t}: {len(df)} bars")
             continue
 
-        cfg = replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, reward_r=args.reward,
-                      long_only=args.long_only)
+        cfg = replace(DEFAULT, market=m.name, cost_pct=m.cost_pct)
         if args.cmd == "scan":
             res = scan(source, tickers, recent_bars=args.recent, start=args.start or "2023-01-01",
                        cfg=cfg, on_error=_warn)
             scans.append(res.assign(market=m.name))
         else:
-            cfg = replace(cfg, max_hold_bars=args.hold)
+            cfg = replace(cfg, max_hold_bars=args.hold, w3_max_hold_bars=args.hold)
             t = backtest.run(_load(source, tickers, args.start or "2015-01-01"), cfg)
             if not t.empty:
                 trades.append(t.assign(market=m.name))

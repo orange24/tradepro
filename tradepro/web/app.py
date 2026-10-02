@@ -25,33 +25,24 @@ import numpy as np
 from flask import Flask, Response, abort, jsonify, redirect, render_template, request, url_for
 
 from ..advisor import advise
-from ..chaloke import analyze as analyze_chaloke
+from ..chaloke import CDC_TH, analyze as analyze_chaloke
 from ..config import DEFAULT
 from ..data import TIMEFRAMES, resample
 from ..indicators import add_features
 from ..markets import MARKETS
 from ..prices import PriceService
-from ..setups import count_highs, detect
+from ..setups import detect
 from ..wave import cdc_action_zone
 from ..store import Store
 from ..watchlists import WATCHLISTS
 
 log = logging.getLogger("tradepro.web")
 
-SETUP_TH = {
-    "H2": "High 2: ย่อตัว 2 ขาในเทรนด์ขาขึ้นแล้วกลับขึ้น",
-    "H1": "High 1: ย่อตัวขาแรกในเทรนด์ขาขึ้นที่แรงมาก",
-    "BO_BULL": "Breakout: แท่งเขียวใหญ่ปิดทะลุกรอบ 20 วัน",
-    "FAILED_BO": "Failed breakout: หลุดขอบล่างกรอบแล้วปิดกลับเข้ากรอบ",
-    "L2": "Low 2: เด้ง 2 ขาในเทรนด์ขาลงแล้วกลับลง",
-    "L1": "Low 1: เด้งขาแรกในเทรนด์ขาลงที่แรงมาก",
-    "BO_BEAR": "Breakout ลง: แท่งแดงใหญ่ปิดหลุดกรอบ 20 วัน",
-    "W3": "Wave 3 (ลุงโฉลก): Wave 2 ย่อ 61.8–94.2% แล้ว CDC Action Zone เขียวแรก",
-}
+SETUP_TH = {"W3": "Wave 3 (ลุงโฉลก): Wave 2 ย่อ 61.8–94.2% แล้ว CDC Action Zone เขียวแรก"}
 STATUS_TH = {"hold": "ถือต่อ", "watch": "เฝ้าระวัง", "sell": "ควรขาย"}
-CONTEXT_TH = {"bull": "ขาขึ้น", "bear": "ขาลง", "range": "ไซด์เวย์"}
+CONTEXT_TH = {k: "CDC " + v[0] for k, v in CDC_TH.items()} | {"": "-"}
 CURRENCY = {"set": "฿", "us": "$"}
-SETUP_ORDER = {"H2": 0, "H1": 1, "BO_BULL": 2, "W3": 3, "FAILED_BO": 4}
+SETUP_ORDER = {"W3": 0}
 
 
 # Scan universes: id -> (market, watchlist, label)
@@ -299,11 +290,9 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
             return jsonify(error=str(e)), 502
         cfg = market_cfg(market)
         full = add_features(df, cfg)
-        hc, _, hpb = count_highs(full["high"].to_numpy())
-        lc, _, lpb = count_highs(-full["low"].to_numpy())
         cdc = cdc_action_zone(full)
         f = full.iloc[-250:] if tf in ("D", "W") else full
-        n0 = len(full) - len(f)
+        z = cdc.loc[f.index]
         day = lambda d: d.strftime("%Y-%m-%d")
         sig_json = lambda s: {"time": day(s.date), "setup": s.setup, "direction": s.direction, "entry": s.entry,
                               "stop": s.stop, "target": s.target, "reward_r": round(s.reward_r, 2),
@@ -312,32 +301,21 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         sigs = [s for s in detect(df.iloc[-300:], ticker, cfg) if s.date >= f.index[0]]
         a = advise(daily, cfg)          # hold / sell advice always comes from the daily chart
         held = [h for h in store.holdings() if h["market"] == market and h["ticker"] == ticker.upper()]
-        L = cfg.range_lookback
-        rng = full.iloc[-L - 1:-1]
-        last = full.iloc[-1]
+        last, zl = full.iloc[-1], cdc.iloc[-1]
         latest = next((s for s in reversed(sigs) if s.date >= full.index[-3]), None)   # live in the last 3 bars
-        bars = []
-        for k, (d, r) in enumerate(zip(f.index, f.itertuples())):
-            i = n0 + k
-            # label the bar that completes a count (the H1 / H2 bar itself)
-            count = (f"H{hc[i]}" if hpb[i] and hc[i] > hc[i - 1] else "") or \
-                    (f"L{lc[i]}" if lpb[i] and lc[i] > lc[i - 1] else "")
-            bars.append({"time": day(d), "ema": num(r.ema), "atr": num(r.atr), "context": r.context,
-                         "body": num(r.body_ratio), "close_pos": num(r.close_pos),
-                         "strong": bool(r.strong), "count": count,
-                         "cdc": "green" if cdc["cdc_green"].iloc[i] else "red" if cdc["cdc_red"].iloc[i] else ""})
+        bars = [{"time": day(d), "atr": num(r.atr), "body": num(r.body_ratio), "close_pos": num(r.close_pos),
+                 "cdc": zone} for d, r, zone in zip(f.index, f.itertuples(), z["cdc_zone"])]
         return jsonify(
             candles=[{"time": day(d), "open": r.open, "high": r.high, "low": r.low, "close": r.close}
                      for d, r in zip(f.index, f.itertuples())],
-            ema=[{"time": day(d), "value": v} for d, v in f["ema"].items()],
+            cdc_fast=[{"time": day(d), "value": v} for d, v in z["cdc_fast"].items()],
+            cdc_slow=[{"time": day(d), "value": v} for d, v in z["cdc_slow"].items()],
             bars=bars,
             swings=[{"time": day(f.index[k]), "kind": kind, "price": num(p)} for k, kind, p in pivots(f)],
             signals=[sig_json(s) for s in sigs],
             latest=None if latest is None else sig_json(latest),
-            levels={"range_high": num(rng["high"].max()), "range_low": num(rng["low"].min()),
-                    "range_mid": num((rng["high"].max() + rng["low"].min()) / 2), "range_bars": L,
-                    "ema": num(last.ema), "atr": num(last.atr), "frac_above": num(last.frac_above),
-                    "ema_slope_atr": num(last.ema_slope_atr), "strong": bool(last.strong)},
+            levels={"atr": num(last.atr), "cdc_zone": str(zl["cdc_zone"]), "cdc_fast": num(zl["cdc_fast"]),
+                    "cdc_slow": num(zl["cdc_slow"])},
             advice={"status": a.status, "stop": a.stop, "resistance": a.resistance,
                     "context": a.context, "reasons": a.reasons},
             last_date=day(daily.index[-1]),

@@ -74,9 +74,10 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
     if zone[-1] in ("red", "orange") and len(ph) >= 2 and hi[ph[-1]] < hi[ph[-2]]:
         warnings.append("Lower high + CDC " + cdc["name"] + ": ขาขึ้นจบแล้ว ถ้าถืออยู่ควรขาย")
     last = f.iloc[-1]
-    if (len(f) > 1 and op[-1] > hi[-2] and close[-1] > op[-1] and last.body_ratio >= cfg.trend_bar_body
-            and np.isfinite(last.atr) and px > last.ema + 2.5 * last.atr):
-        warnings.append("Gap ขึ้น + แท่งเขียวใหญ่ ณ ราคาที่วิ่งไกลจาก EMA ระวังแมงเม่าไล่ราคาที่ยอดดอย")
+    slow = float(z["cdc_slow"].iloc[-1])
+    if (len(f) > 1 and op[-1] > hi[-2] and close[-1] > op[-1] and last.body_ratio >= cfg.big_body
+            and np.isfinite(last.atr) and px > slow + 2.5 * last.atr):
+        warnings.append("Gap ขึ้น + แท่งเขียวใหญ่ ณ ราคาที่วิ่งไกลจากเส้น CDC มาก ระวังแมงเม่าไล่ราคาที่ยอดดอย")
 
     if wave is None:
         status = ("new_high", "ราคาทำ high ใหม่ ไม่มี Wave 2 ให้รอ (อาจอยู่ใน Wave 3 หรือ Wave 1 ใหม่)") \
@@ -109,7 +110,7 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
 
     # confirmations (W3-7), same rules as setups
     body = f["body_ratio"].to_numpy()
-    big = (body >= cfg.trend_bar_body) & ((hi - lo) >= atr)
+    big = (body >= cfg.big_body) & ((hi - lo) >= atr)
     prev_close = np.r_[close[0], close[:-1]]
     tr = np.maximum(hi, prev_close) - np.minimum(lo, prev_close)
     atr_prev = np.r_[atr[0], atr[:-1]]

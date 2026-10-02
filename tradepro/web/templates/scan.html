@@ -3,7 +3,7 @@
 {% block head %}{% if running %}<meta http-equiv="refresh" content="10">{% endif %}{% endblock %}
 {% block body %}
 <h1>สแกนหุ้นน่าซื้อ</h1>
-<p class="sub">หุ้นที่แท่งเทียนวันล่าสุดเป็น signal bar ฝั่งซื้อ วางคำสั่งซื้อแบบ stop ที่ราคาเข้า สำหรับวันทำการถัดไป (W3 ซื้อที่ราคาเปิดวันถัดไป)</p>
+<p class="sub">หุ้นที่เข้าเงื่อนไข Wave 3 ของลุงโฉลก: Wave 2 ย่อ 61.8–94.2% แล้ว CDC Action Zone เขียวแรก ซื้อที่ราคาเปิดวันถัดไป</p>
 <div class="card-head">
   <div class="tabs">
     {% for sid, (m, wl, label) in scans.items() %}
@@ -22,8 +22,8 @@
     {% if running %} · กำลังสแกนใหม่ หน้านี้จะรีเฟรชเอง{% endif %}</p>
   {% if scan.results %}
   <div class="table-wrap"><table>
-    <tr><th>หุ้น</th><th>Setup</th><th class="n">ราคาล่าสุด</th><th class="n">ซื้อเมื่อราคาถึง</th>
-        <th class="n">Stop</th><th class="n">เป้าหมาย</th><th class="n">Reward/Risk</th><th>บริบท</th></tr>
+    <tr><th>หุ้น</th><th>Setup</th><th class="n">ราคาล่าสุด</th><th class="n">ซื้อ</th>
+        <th class="n">Stop</th><th class="n">เป้าหมาย</th><th class="n">Reward/Risk</th><th>CDC</th></tr>
     {% for s in scan.results %}
     <tr>
       <td><a class="tk" href="{{ url_for('chart_page', market=market, ticker=s.ticker) }}">{{ s.ticker }}</a></td>
