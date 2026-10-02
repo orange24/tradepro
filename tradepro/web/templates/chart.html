@@ -148,10 +148,12 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
     time: x.time, position: x.kind === "high" ? "aboveBar" : "belowBar",
     color: C.grey, shape: "circle", size: 0.5, text: fmt(x.price)}));
   const show = {};
+  let waveMarkers = [];          // Elliott labels 0-1-2 of the wave being counted (set by the live analysis)
   const redraw = () => {
     for (const [k, arr] of Object.entries(lineOpts))
       arr.forEach(pl => pl.applyOptions({lineVisible: show[k] !== false, axisLabelVisible: show[k] !== false}));
-    const m = [...(show.markers ? sigMarkers : []), ...(show.swings ? swingMarkers : [])];
+    const m = [...(show.markers ? sigMarkers : []), ...(show.swings ? swingMarkers : []),
+               ...(show.wave ? waveMarkers : [])];
     candles.setMarkers(m.sort((p, q) => p.time < q.time ? -1 : p.time > q.time ? 1 : 0));
     cdcBar.setData(show.cdc ? cdcData : []);
     cdcFast.setData(show.cdclines ? d.cdc_fast : []); cdcSlow.setData(show.cdclines ? d.cdc_slow : []);
@@ -266,6 +268,14 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
       // live: move the last candle, and draw the wave being counted when no W3 signal is on the chart
       if (k.bar && k.bar.time >= last.time) candles.update(k.bar);
       ckLines.splice(0).forEach(pl => candles.removePriceLine(pl));
+      // label the count on the candles: 0 = start of wave 1, 1 = wave 1 top, 2 = wave 2 low, 3 = in wave 3
+      const inChart = t => t && t >= d.candles[0].time;
+      waveMarkers = w ? [
+        [w.base_date, "belowBar", "0"], [w.top_date, "aboveBar", "1"], [w.w2_date, "belowBar", "2"],
+        ...(["buy", "late_green"].includes(k.status) ? [[k.cdc.first_green, "belowBar", "3?"]] : []),
+      ].filter(([t]) => inChart(t)).map(([time, position, text]) =>
+        ({time, position, text, color: C.wave, shape: position === "aboveBar" ? "arrowDown" : "arrowUp"})) : [];
+      redraw();
       if (w && !w3 && show.wave !== false) {
         const add = (price, title, color = C.wave, style = 1) => { const pl = line(price, color, title, style); if (pl) ckLines.push(pl); };
         add(w.top, "ยอด W1", C.wave, 2); add(w.base, "ฐาน W1", C.wave, 2);
