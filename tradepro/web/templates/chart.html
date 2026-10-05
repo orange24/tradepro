@@ -4,7 +4,7 @@
 <script src="{{ url_for('static', filename='drawing.js') }}"></script>{% endblock %}
 {% block body %}
 {% set UNIT = {'D': 'วัน', 'W': 'สัปดาห์', 'M': 'เดือน', 'Y': 'ปี'}[tf] %}
-<h1>{{ ASSETS[ticker][0] ~ ' · ' if ticker in ASSETS }}{{ ticker }} <span class="note">{{ MARKET_TH[market] }}</span></h1>
+<h1>{{ ASSETS[ticker][0] ~ ' · ' if ticker in ASSETS }}{{ ticker }} <span class="note">{{ PROXY_NAME.get(ticker) or MARKET_TH[market] }}</span></h1>
 <p class="sub" id="summary">กำลังโหลด…</p>
 
 <section class="card" id="ck-card">

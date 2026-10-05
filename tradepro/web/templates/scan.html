@@ -16,6 +16,31 @@
   </form>
 </div>
 
+{% if scan and scan.summary and scan.summary.n %}
+{% set ov = scan.summary %}
+<section class="card">
+  <div class="card-head" style="margin-bottom:8px">
+    <h2 style="margin:0">ภาพรวมตลาด <span class="note">แนวโน้มตามแนวลุงโฉลก (CDC Action Zone)</span></h2>
+    <span class="badge {{ {'up': 'b-hold', 'pullback': 'b-watch', 'rebound': 'b-watch', 'mixed': 'b-watch', 'down': 'b-sell'}[ov.verdict[0]] }}">{{ ov.verdict[1] }}</span>
+  </div>
+  {% if ov.index %}
+  <p class="note" style="margin:0 0 6px">ดัชนี: <a href="{{ url_for('chart_page', market=market, ticker=ov.index.ticker) }}">{{ ov.index.name }}</a></p>
+  <ul class="checklist">
+    {% for tf, fr in ov.index.frames.items() %}
+    <li class="{{ 'ok' if fr.zone in ('green', 'yellow') else 'no' }}"><b>{{ fr.label }}</b>: CDC {{ fr.cdc }} ({{ fr.bars }} แท่ง) · {{ fr.status }}
+      <a class="note" href="{{ url_for('chart_page', market=market, ticker=ov.index.ticker, tf=tf) }}">ดูกราฟ</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <div class="breadth" style="margin-top:10px" title="สัดส่วนหุ้นที่สแกนตามสี CDC">
+    {% for z, c in ov.counts.items() if c %}<span class="z-{{ z }}" style="flex:{{ c }}">{{ c }}</span>{% endfor %}
+  </div>
+  <p class="note" style="margin:6px 0 0">หุ้นที่สแกน {{ ov.n }} ตัว: CDC เขียว {{ ov.counts.green }} ({{ ov.green_pct }}%),
+    เหลือง/ส้ม {{ ov.counts.yellow + ov.counts.orange }}, แดง {{ ov.counts.red }}, ฟ้า/น้ำเงิน {{ ov.counts.lblue + ov.counts.blue }}
+    · เพิ่งเขียวใน 5 วัน {{ ov.fresh_green }} ตัว</p>
+</section>
+{% endif %}
+
 <section class="card">
 {% if scan %}
   <p class="note" style="margin-top:0">สแกนล่าสุด: <span data-utc="{{ scan.run_at }}">{{ scan.run_at }}</span>

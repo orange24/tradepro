@@ -34,7 +34,7 @@ from ..prices import PriceService
 from ..setups import detect
 from ..wave import cdc_action_zone
 from ..store import Store
-from ..watchlists import ASSETS, WATCHLISTS, normalize_ticker
+from ..watchlists import ASSETS, INDEX_PROXY, WATCHLISTS, normalize_ticker
 
 log = logging.getLogger("tradepro.web")
 
@@ -98,7 +98,7 @@ class Scanner:
             cfg = market_cfg(market)
             tickers = list(WATCHLISTS[watchlist])
             tickers += [h["ticker"] for h in self.store.holdings() if h["market"] == market and h["ticker"] not in tickers]
-            results, errors = [], []
+            results, errors, zones, fresh_green = [], [], [], 0
 
             def one(t):
                 df = self.prices.history(market, t)
@@ -109,7 +109,10 @@ class Scanner:
                         return []                       # too thin to trade; skip
 
                 recent = list(df.index[-cfg.w3_recent_bars:])
-                green_now = bool(cdc_action_zone(df)["cdc_green"].iloc[-1])
+                cdc = cdc_action_zone(df)
+                green_now = bool(cdc["cdc_green"].iloc[-1])
+                g = cdc["cdc_green"].to_numpy()
+                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all())))
                 rows = []
                 for s in detect(df, t, cfg):
                     if s.direction != "long":
@@ -132,12 +135,48 @@ class Scanner:
                     except Exception as e:  # keep scanning the rest
                         errors.append(f"{t}: {e}")
             results.sort(key=lambda r: (SETUP_ORDER.get(r["setup"], 9), -r["reward_r"]))
-            self.store.save_scan(scan_id, results, errors)
+            self.store.save_scan(scan_id, results, errors, self._overview(market, zones))
         except Exception:
             log.exception("scan %s failed", scan_id)
         finally:
             with self._lock:
                 self.running.discard(scan_id)
+
+    def _overview(self, market: str, zones: list) -> dict:
+        """Market direction: CDC breadth of the scanned stocks + the index (or its proxy) on D / W / M."""
+        n = len(zones)
+        counts = {z: sum(1 for x, _ in zones if x == z) for z in ("green", "yellow", "orange", "red", "lblue", "blue")}
+        out = {"n": n, "counts": counts, "fresh_green": sum(f for _, f in zones),
+               "green_pct": round(counts["green"] / n * 100, 1) if n else 0}
+        proxy = INDEX_PROXY.get(market)
+        if proxy:
+            try:
+                long = self.prices.history(market, proxy[0], start="2005-01-01")
+                cfg = market_cfg(market)
+                out["index"] = {"ticker": proxy[0], "name": proxy[1], "frames": {}}
+                for tf, label in (("D", "รายวัน"), ("W", "รายสัปดาห์"), ("M", "รายเดือน")):
+                    d = long.iloc[-400:] if tf == "D" else resample(long, tf)
+                    a = analyze_chaloke(d, cfg)
+                    out["index"]["frames"][tf] = {"label": label, "zone": a["cdc"]["zone"], "cdc": a["cdc"]["name"],
+                                                  "bars": a["cdc"]["bars"], "status": a["status_text"]}
+            except Exception as e:  # the overview is a bonus; never fail the scan for it
+                log.warning("index overview %s: %s", market, e)
+        fr = out.get("index", {}).get("frames", {})
+        up = lambda tf: fr.get(tf, {}).get("zone") in ("green", "yellow")
+        g = out["green_pct"]
+        if fr and up("W") and up("D") and g >= 50:
+            out["verdict"] = ("up", "ขาขึ้น: ดัชนีเขียวทั้งระยะสั้นและระยะกลาง หุ้นส่วนใหญ่ CDC เขียว")
+        elif fr and up("W") and not up("D"):
+            out["verdict"] = ("pullback", "ขาขึ้นระยะกลาง แต่ระยะสั้นกำลังพักตัว"
+                              + (" หุ้นส่วนใหญ่ยังแดง ระวัง" if g < 35 else ""))
+        elif fr and not up("W") and up("D"):
+            out["verdict"] = ("rebound", "ระยะกลางยังเป็นขาลง ระยะสั้นเริ่มฟื้น รอยืนยัน")
+        elif fr:
+            out["verdict"] = ("down", "ขาลง: ดัชนีแดงทั้งระยะสั้นและระยะกลาง")
+        else:
+            out["verdict"] = ("up" if g >= 50 else "down" if g < 30 else "mixed",
+                              f"หุ้นที่ CDC เขียว {g:.0f}% ของที่สแกน")
+        return out
 
     def autoscan_forever(self, every_hours: float):
         while True:
@@ -173,7 +212,8 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
     @app.context_processor
     def helpers():
         return {"STATUS_TH": STATUS_TH, "ACTION_TH": ACTION_TH, "CONTEXT_TH": CONTEXT_TH, "SETUP_TH": SETUP_TH,
-                "CURRENCY": CURRENCY, "MARKETS": MARKETS, "MARKET_TH": MARKET_TH, "ASSETS": ASSETS}
+                "CURRENCY": CURRENCY, "MARKETS": MARKETS, "MARKET_TH": MARKET_TH, "ASSETS": ASSETS,
+                "PROXY_NAME": {t: name for t, name in INDEX_PROXY.values()}}
 
     def evaluate(h: dict, max_age: float | None = None) -> dict:
         row = dict(h)

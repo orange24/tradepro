@@ -36,9 +36,18 @@ ASSET_ALIASES = {"BTC": "BTC-USD", "BITCOIN": "BTC-USD", "ETH": "ETH-USD", "GOLD
                  "XAUUSD": "GC=F", "ทอง": "GC=F", "ทองคำ": "GC=F", "SILVER": "SI=F", "XAG": "SI=F", "เงิน": "SI=F"}
 
 
+# Yahoo has no history for the SET index itself; TDEX (an ETF that tracks SET50) stands in for it
+INDEX_PROXY = {"set": ("TDEX", "SET50 (ใช้ TDEX กองทุน ETF ที่อิงดัชนี SET50 แทน)"),
+               "us": ("SPY", "S&P 500 (ใช้ SPY กองทุน ETF ที่อิงดัชนี S&P 500)")}
+INDEX_ALIASES = {"SET", "SET50", "SETINDEX", "SET INDEX", "^SET", "^SET.BK", "ดัชนี", "ตลาดหุ้นไทย"}
+
+
 def normalize_ticker(market: str, ticker: str) -> tuple[str, str]:
-    """(market, ticker) with asset nicknames resolved: "BTC" or "ทอง" go to the asset market whatever was picked."""
+    """(market, ticker) with nicknames resolved: "BTC" or "ทอง" go to the asset market and "SET" to the
+    SET50 proxy, whatever market was picked."""
     t = ticker.strip().upper()
+    if t in INDEX_ALIASES or ticker.strip() in INDEX_ALIASES:
+        return "set", INDEX_PROXY["set"][0]
     alias = ASSET_ALIASES.get(t) or ASSET_ALIASES.get(ticker.strip())
     if alias or t in ASSETS:
         return "asset", alias or t

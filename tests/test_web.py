@@ -53,3 +53,11 @@ def test_bitcoin_and_gold(client):
     assert len(d["candles"]) == 250
     client.post("/holdings", data={"market": "set", "ticker": "gold", "shares": "0.5", "cost": "2000"})
     assert "/chart/asset/GC=F" in client.get("/").get_data(as_text=True)
+
+
+def test_set_index_alias_and_overview(client):
+    assert client.get("/chart?market=us&ticker=set").headers["Location"].endswith("/chart/set/TDEX")
+    client.application.config["scanner"]._run("set")
+    ov = client.application.config["store"].latest_scan("set")["summary"]
+    assert ov["n"] > 0 and sum(ov["counts"].values()) == ov["n"] and ov["verdict"][1]
+    assert "ภาพรวมตลาด" in client.get("/scan?market=set").get_data(as_text=True)

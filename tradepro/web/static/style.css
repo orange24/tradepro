@@ -108,3 +108,8 @@ table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
 .live label { flex-direction: row; align-items: center; gap: 5px; }
 .live input { min-width: auto; }
 .thb { font-size: 12px; color: var(--muted); font-weight: 400; }
+.breadth { display: flex; height: 22px; border-radius: 6px; overflow: hidden; font-size: 11px; }
+.breadth span { display: flex; align-items: center; justify-content: center; color: #fff; min-width: 18px; }
+.z-green { background: #0f8a5f; } .z-yellow { background: #d4a72c; } .z-orange { background: #e0731e; }
+.z-red { background: #c8373a; } .z-lblue { background: #5ab0e6; } .z-blue { background: #2458d6; }
+main a { color: var(--accent); }

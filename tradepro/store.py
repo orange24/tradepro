@@ -39,6 +39,9 @@ class Store:
         self._lock = threading.Lock()
         with self._conn() as c:
             c.executescript(SCHEMA)
+            cols = {r["name"] for r in c.execute("PRAGMA table_info(scans)")}
+            if "summary" not in cols:              # market overview, added later
+                c.execute("ALTER TABLE scans ADD COLUMN summary TEXT NOT NULL DEFAULT '{}'")
 
     def _conn(self):
         c = sqlite3.connect(self.path)
@@ -66,10 +69,11 @@ class Store:
             c.execute("DELETE FROM holdings WHERE id=?", (hid,))
 
     # scans
-    def save_scan(self, market: str, results: list[dict], errors: list[str]):
+    def save_scan(self, market: str, results: list[dict], errors: list[str], summary: dict | None = None):
         with self._lock, self._conn() as c:
-            c.execute("INSERT INTO scans (market, run_at, results, errors) VALUES (?, ?, ?, ?)",
-                      (market, now_iso(), json.dumps(results, default=str), json.dumps(errors)))
+            c.execute("INSERT INTO scans (market, run_at, results, errors, summary) VALUES (?, ?, ?, ?, ?)",
+                      (market, now_iso(), json.dumps(results, default=str), json.dumps(errors),
+                       json.dumps(summary or {}, default=str)))
             c.execute("DELETE FROM scans WHERE market=? AND id NOT IN "
                       "(SELECT id FROM scans WHERE market=? ORDER BY id DESC LIMIT 20)", (market, market))
 
@@ -79,4 +83,4 @@ class Store:
         if not r:
             return None
         return {"market": r["market"], "run_at": r["run_at"], "results": json.loads(r["results"]),
-                "errors": json.loads(r["errors"])}
+                "errors": json.loads(r["errors"]), "summary": json.loads(r["summary"] or "{}")}
