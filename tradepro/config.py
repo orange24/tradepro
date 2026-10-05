@@ -11,7 +11,9 @@ class Config:
     # Wave 3 + CDC Action Zone (W3-1..W3-8)
     w3_pivot_bars: int = 5            # swing high = highest of 5 bars each side
     w3_min_atr: float = 3.0           # wave 1 must rise at least this many ATRs
-    w3_max_wave1_bars: int = 60       # look this far back from the wave 1 top for its base
+    w3_base: str = "cut_left"         # how to find the wave 1 base: "window" | "cut_left" (see wave.wave1_start)
+    w3_max_wave1_bars: int = 60       # "window": look this far back from the wave 1 top for its base
+    w3_base_max_bars: int = 750       # "cut_left": never look further back than this
     w3_max_wave2_bars: int = 60       # wave 2 (top to first green) must finish within this many bars
     w3_retrace_min: float = 0.618
     w3_retrace_max: float = 0.942

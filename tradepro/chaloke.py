@@ -13,7 +13,7 @@ import pandas as pd
 from .config import Config
 from .indicators import add_features
 from .ticks import round_to_tick, tick_size
-from .wave import cdc_action_zone
+from .wave import cdc_action_zone, wave1_start
 
 CDC_TH = {
     "green": ("เขียว", "ขาขึ้น ซื้อ / ถือได้"),
@@ -55,7 +55,7 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
             continue
         if hi[h + 1:].max(initial=-np.inf) > hi[h]:
             break                              # price has made a higher high since: no wave 2 in progress
-        b0 = max(0, h - cfg.w3_max_wave1_bars)
+        b0 = wave1_start(hi, h, cfg)
         b = b0 + int(np.argmin(lo[b0:h + 1]))
         top, base = float(hi[h]), float(lo[b])
         w1 = top - base

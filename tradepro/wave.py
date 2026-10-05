@@ -44,6 +44,16 @@ def cdc_action_zone(df: pd.DataFrame) -> pd.DataFrame:
                          "cdc_zone": zone}, index=df.index)
 
 
+def wave1_start(hi: np.ndarray, h: int, cfg: Config) -> int:
+    """First bar to search for the wave 1 base below the top at h.
+    "window": the last w3_max_wave1_bars bars. "cut_left" (Chaloke: ตัดอดีตฝั่งซ้ายมือทิ้ง): everything
+    after the last bar whose high was above the wave 1 top, so the base is the bottom of the whole decline."""
+    if cfg.w3_base == "window":
+        return max(0, h - cfg.w3_max_wave1_bars)
+    above = np.nonzero(hi[:h] > hi[h])[0]
+    return int(above[-1]) + 1 if len(above) else max(0, h - cfg.w3_base_max_bars)
+
+
 def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
     """f: output of indicators.add_features. Returns long signals (setup "W3") entered at the next open."""
     z = cdc_action_zone(f)
@@ -77,7 +87,7 @@ def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
         top = hi[h]
         if (h in used and not cfg.w3_reentry) or hi[h + 1:i + 1].max(initial=-np.inf) > top:
             continue                                      # already traded, or price already above wave 1 top
-        b0 = max(0, h - cfg.w3_max_wave1_bars)
+        b0 = wave1_start(hi, h, cfg)
         b = b0 + int(np.argmin(lo[b0:h + 1]))
         base = lo[b]
         w1 = top - base
@@ -159,7 +169,7 @@ def detect_running_flat(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -
         for h1 in (j for j in range(hb - 1, max(0, hb - cfg.w3_max_wave2_bars), -1) if is_ph[j]):
             if hi[h1] >= hi[hb]:
                 break                                     # B must be a new high above wave 1
-            b0 = max(0, h1 - cfg.w3_max_wave1_bars)
+            b0 = wave1_start(hi, h1, cfg)
             b = b0 + int(np.argmin(lo[b0:h1 + 1]))
             base, top = lo[b], hi[h1]
             w1 = top - base
