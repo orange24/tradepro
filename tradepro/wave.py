@@ -54,6 +54,24 @@ def wave1_start(hi: np.ndarray, h: int, cfg: Config) -> int:
     return int(above[-1]) + 1 if len(above) else max(0, h - cfg.w3_base_max_bars)
 
 
+def wave1_top(hi: np.ndarray, is_ph: np.ndarray, end: int, cfg: Config) -> int | None:
+    """The wave 1 top seen from bar `end`: the highest confirmed swing high in the last w3_max_wave2_bars
+    bars that no later bar (up to end) has exceeded. Lower highs inside wave 2 are skipped."""
+    k = cfg.w3_pivot_bars
+    best = None
+    for j in range(max(0, end - cfg.w3_max_wave2_bars), end - k + 1):
+        if is_ph[j] and hi[j] >= hi[j:end + 1].max() and (best is None or hi[j] > hi[best]):
+            best = j
+    return best
+
+
+def pivot_highs(hi: np.ndarray, k: int) -> np.ndarray:
+    out = np.zeros(len(hi), bool)
+    for j in range(k, len(hi) - k):
+        out[j] = hi[j] == hi[j - k:j + k + 1].max()
+    return out
+
+
 def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
     """f: output of indicators.add_features. Returns long signals (setup "W3") entered at the next open."""
     z = cdc_action_zone(f)
@@ -80,13 +98,10 @@ def detect_wave3(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -> list:
     for i in range(1, n):
         if not green[i] or green[i - 1]:
             continue                                      # W3-3: first green bar only
-        cand = [j for j in range(max(0, i - cfg.w3_max_wave2_bars), i - k + 1) if is_ph[j]]
-        if not cand:
+        h = wave1_top(hi, is_ph, i, cfg)                  # highest unbroken swing high = wave 1 top
+        if h is None or (h in used and not cfg.w3_reentry):
             continue
-        h = cand[-1]                                      # most recent confirmed swing high = wave 1 top
         top = hi[h]
-        if (h in used and not cfg.w3_reentry) or hi[h + 1:i + 1].max(initial=-np.inf) > top:
-            continue                                      # already traded, or price already above wave 1 top
         b0 = wave1_start(hi, h, cfg)
         b = b0 + int(np.argmin(lo[b0:h + 1]))
         base = lo[b]
@@ -155,11 +170,8 @@ def detect_running_flat(f: pd.DataFrame, ticker: str, cfg: Config, signal_cls) -
     for i in range(1, n):
         if not green[i] or green[i - 1]:
             continue
-        cand = [j for j in range(max(0, i - cfg.w3_max_wave2_bars), i - k + 1) if is_ph[j]]
-        if not cand:
-            continue
-        hb = cand[-1]                                     # B top: latest swing high, not exceeded since
-        if hb in used or hi[hb + 1:i + 1].max(initial=-np.inf) > hi[hb]:
+        hb = wave1_top(hi, is_ph, i, cfg)                 # B top: highest unbroken swing high
+        if hb is None or hb in used:
             continue
         ci = hb + int(np.argmin(lo[hb:i + 1]))            # C low
         c = lo[ci]

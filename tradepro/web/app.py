@@ -73,7 +73,8 @@ def pivots(f, side: int = 3):
 
 def market_cfg(market: str):
     m = MARKETS[market]
-    return replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, running_flat=m.running_flat)
+    return replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, running_flat=m.running_flat,
+                   w3_base=m.w3_base)
 
 
 class Scanner:

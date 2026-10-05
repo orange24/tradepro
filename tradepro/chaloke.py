@@ -13,7 +13,7 @@ import pandas as pd
 from .config import Config
 from .indicators import add_features
 from .ticks import round_to_tick, tick_size
-from .wave import cdc_action_zone, wave1_start
+from .wave import cdc_action_zone, pivot_highs, wave1_start, wave1_top
 
 CDC_TH = {
     "green": ("เขียว", "ขาขึ้น ซื้อ / ถือได้"),
@@ -48,13 +48,10 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
            "bars": since, "first_green": f.index[first_green].strftime("%Y-%m-%d") if first_green is not None else None,
            "first_green_ago": n - 1 - first_green if first_green is not None else None}
 
-    # Wave 1: the most recent confirmed swing high that no later bar has exceeded, with a real leg below it
+    # Wave 1: the highest unbroken swing high of the last w3_max_wave2_bars bars, with a real leg below it
     wave = None
-    for h in range(n - 1 - k, k - 1, -1):
-        if hi[h] != hi[h - k:h + k + 1].max():
-            continue
-        if hi[h + 1:].max(initial=-np.inf) > hi[h]:
-            break                              # price has made a higher high since: no wave 2 in progress
+    h = wave1_top(hi, pivot_highs(hi, k), n - 1, cfg)
+    for h in ([h] if h is not None else []):
         b0 = wave1_start(hi, h, cfg)
         b = b0 + int(np.argmin(lo[b0:h + 1]))
         top, base = float(hi[h]), float(lo[b])
