@@ -44,6 +44,11 @@ class YahooSource(DataSource):
         raw = yf.download(symbol, start=start or "2010-01-01", end=end, progress=False,
                           auto_adjust=True, threads=False)
         df = _normalize(raw)
+        if df.empty and not end:
+            # Yahoo sometimes returns nothing when start is before the listing date; ask for all history
+            df = _normalize(yf.download(symbol, period="max", progress=False, auto_adjust=True, threads=False))
+            if start:
+                df = df[df.index >= pd.Timestamp(start)]
         if self.cache_dir is not None and not df.empty:
             self.cache_dir.mkdir(parents=True, exist_ok=True)
             df.to_csv(self.cache_dir / f"{ticker}.csv")
