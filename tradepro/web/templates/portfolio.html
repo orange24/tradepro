@@ -57,7 +57,8 @@
       <td colspan="7" class="neg">ดึงราคาไม่ได้: {{ r.error }}</td>
       {% else %}
       <td class="n">{{ '{:,.2f}'.format(r.price) }}</td>
-      <td class="n">{{ cur }}{{ '{:,.2f}'.format(r.value) }}</td>
+      <td class="n">{{ cur }}{{ '{:,.2f}'.format(r.value) }}
+        {% if fx %}<div class="thb">≈ ฿{{ '{:,.0f}'.format(r.value * fx) }}</div>{% endif %}</td>
       <td class="n {{ 'pos' if r.pnl >= 0 else 'neg' }}">{{ '{:+,.2f}'.format(r.pnl) }}<br>{{ '{:+.2f}'.format(r.pnl_pct) }}%
         {% if fx %}<div class="thb">≈ {{ '{:+,.0f}'.format(r.pnl * fx) }} บาท</div>{% endif %}</td>
       <td><span class="badge b-{{ r.advice.status }}">{{ STATUS_TH[r.advice.status] }}</span>
