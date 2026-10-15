@@ -26,6 +26,7 @@ from flask import Flask, Response, abort, jsonify, redirect, render_template, re
 
 from ..advisor import advise
 from ..chaloke import CDC_TH, analyze as analyze_chaloke
+from ..info import company_info
 from ..config import DEFAULT
 from ..data import TIMEFRAMES, resample
 from ..indicators import add_features
@@ -314,6 +315,12 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if tf not in TIMEFRAMES:
             tf = "D"
         return render_template("chart.html", market=market, ticker=ticker.upper(), tf=tf, active="")
+
+    @app.get("/api/info/<market>/<ticker>")
+    def info_data(market, ticker):
+        if market not in MARKETS:
+            abort(404)
+        return jsonify(company_info(market, ticker.upper(), offline=prices.source != "yahoo"))
 
     @app.get("/api/chaloke/<market>/<ticker>")
     def chaloke_data(market, ticker):

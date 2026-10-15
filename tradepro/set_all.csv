@@ -1,930 +1,931 @@
-symbol,market,industry,sector
-2S,SET,Industrials,Steel and Metal Products
-3BBIF,SET,Technology,Information & Communication Technology
-88TH,mai,Consumer Products,-
-A,SET,Property & Construction,Property Development
-A5,SET,Property & Construction,Property Development
-AAI,SET,Agro & Food Industry,Food & Beverage
-AAV,SET,Services,Transportation & Logistics
-ABM,mai,Resources,-
-ACAP,mai,Financials,-
-ACC,SET,Resources,Energy & Utilities
-ACE,SET,Resources,Energy & Utilities
-ACG,SET,Industrials,Automotive
-ADB,mai,Industrial,-
-ADD,mai,Services,-
-ADVANC,SET,Technology,Information & Communication Technology
-ADVICE,SET,Services,Commerce
-AE,SET,Resources,Energy & Utilities
-AEONTS,SET,Financials,Finance & Securities
-AF,mai,Financials,-
-AFC,SET,Consumer Products,Fashion
-AGE,SET,Resources,Energy & Utilities
-AH,SET,Industrials,Automotive
-AHC,SET,Services,Health Care Services
-AI,SET,Resources,Energy & Utilities
-AIE,SET,Resources,Energy & Utilities
-AIMCG,SET,Property & Construction,Property Fund & REITs
-AIMIRT,SET,Property & Construction,Property Fund & REITs
-AIRA,mai,Financials,-
-AIT,SET,Technology,Information & Communication Technology
-AJ,SET,Industrials,Packaging
-AJA,SET,Consumer Products,Home & Office Products
-AKP,mai,Services,-
-AKR,SET,Industrials,Industrial Materials & Machinery
-AKS,SET,Property & Construction,Property Development
-ALLA,SET,Industrials,Industrial Materials & Machinery
-ALLY,SET,Property & Construction,Property Fund & REITs
-ALPHAX,mai,Resources,-
-ALT,SET,Technology,Information & Communication Technology
-ALUCON,SET,Industrials,Packaging
-AMA,mai,Services,-
-AMANAH,SET,Financials,Finance & Securities
-AMARC,mai,Services,-
-AMARIN,SET,Services,Media & Publishing
-AMATA,SET,Property & Construction,Property Development
-AMATAR,SET,Property & Construction,Property Fund & REITs
-AMATAV,SET,Property & Construction,Property Development
-AMC,SET,Industrials,Steel and Metal Products
-AMR,SET,Technology,Information & Communication Technology
-ANAN,SET,Property & Construction,Property Development
-ANI,SET,Services,Transportation & Logistics
-AOT,SET,Services,Transportation & Logistics
-AP,SET,Property & Construction,Property Development
-APCO,SET,Consumer Products,Personal Products & Pharmaceuticals
-APCS,SET,Property & Construction,Construction Services
-APO,mai,Agro & Food Industry,-
-APP,mai,Technology,-
-APURE,SET,Agro & Food Industry,Food & Beverage
-AQUA,SET,Agro & Food Industry,Food & Beverage
-ARIN,mai,Property & Construction,-
-ARIP,mai,Services,-
-ARROW,mai,Property & Construction,-
-AS,SET,Services,Media & Publishing
-ASAP,SET,Industrials,Automotive
-ASEFA,SET,Industrials,Industrial Materials & Machinery
-ASIA,SET,Services,Tourism & Leisure
-ASIAN,SET,Agro & Food Industry,Food & Beverage
-ASIMAR,SET,Services,Transportation & Logistics
-ASK,SET,Financials,Finance & Securities
-ASN,mai,Financials,-
-ASP,SET,Financials,Finance & Securities
-ASTR,mai,Services,-
-ASW,SET,Property & Construction,Property Development
-ATLAS,SET,Resources,Energy & Utilities
-ATP30,mai,Services,-
-AU,mai,Agro & Food Industry,-
-AUCT,mai,Services,-
-AURA,SET,Consumer Products,Fashion
-AWC,SET,Property & Construction,Property Development
-AXTRART,SET,Property & Construction,Property Fund & REITs
-AYUD,SET,Financials,Insurance
-B,SET,Services,Transportation & Logistics
-B52,SET,Services,Commerce
-BA,SET,Services,Transportation & Logistics
-BAFS,SET,Resources,Energy & Utilities
-BAM,SET,Financials,Finance & Securities
-BANPU,SET,Resources,Energy & Utilities
-BAREIT,SET,Property & Construction,Property Fund & REITs
-BAY,SET,Financials,Banking
-BBGI,SET,Resources,Energy & Utilities
-BBIK,SET,Technology,Information & Communication Technology
-BBL,SET,Financials,Banking
-BC,mai,Property & Construction,-
-BCH,SET,Services,Health Care Services
-BCP,SET,Resources,Energy & Utilities
-BCPG,SET,Resources,Energy & Utilities
-BCT,SET,Industrials,Petrochemicals & Chemicals
-BDMS,SET,Services,Health Care Services
-BE8,mai,Technology,-
-BEAUTY,SET,Services,Commerce
-BEC,SET,Services,Media & Publishing
-BEM,SET,Services,Transportation & Logistics
-BEYOND,SET,Services,Tourism & Leisure
-BGC,SET,Industrials,Packaging
-BGRIM,SET,Resources,Energy & Utilities
-BGT,mai,Consumer Products,-
-BH,SET,Services,Health Care Services
-BIG,SET,Services,Commerce
-BIOTEC,SET,Resources,Energy & Utilities
-BIS,mai,Services,-
-BIZ,SET,Consumer Products,Personal Products & Pharmaceuticals
-BJC,SET,Services,Commerce
-BJCHI,SET,Property & Construction,Construction Services
-BKA,mai,Property & Construction,-
-BKD,SET,Property & Construction,Construction Services
-BKGI,SET,Services,Health Care Services
-BKIH,SET,Financials,Insurance
-BLA,SET,Financials,Insurance
-BLAND,SET,Property & Construction,Property Development
-BLC,SET,Consumer Products,Personal Products & Pharmaceuticals
-BLESS,mai,Property & Construction,-
-BLISS,SET,Technology,Information & Communication Technology
-BM,mai,Industrial,-
-BOFFICE,SET,Property & Construction,Property Fund & REITs
-BOL,mai,Services,-
-BPS,mai,Industrial,-
-BR,SET,Agro & Food Industry,Food & Beverage
-BRI,SET,Property & Construction,Property Development
-BROCK,SET,Property & Construction,Property Development
-BRR,SET,Agro & Food Industry,Food & Beverage
-BRRGIF,SET,Resources,Energy & Utilities
-BSBM,SET,Industrials,Steel and Metal Products
-BSM,mai,Property & Construction,-
-BTC,mai,Financials,-
-BTG,SET,Agro & Food Industry,Food & Beverage
-BTNC,SET,Consumer Products,Fashion
-BTS,SET,Services,Transportation & Logistics
-BTSGIF,SET,Services,Transportation & Logistics
-BTW,mai,Property & Construction,-
-BUI,SET,Financials,Insurance
-BVG,mai,Technology,-
-BWG,SET,Services,Professional Services
-B-WORK,SET,Property & Construction,Property Fund & REITs
-BYD,SET,Financials,Finance & Securities
-CAZ,mai,Property & Construction,-
-CBG,SET,Agro & Food Industry,Food & Beverage
-CCET,SET,Technology,Electronic Components
-CCP,SET,Property & Construction,Construction Materials
-CEN,SET,Industrials,Steel and Metal Products
-CENTEL,SET,Services,Tourism & Leisure
-CEYE,mai,Services,-
-CFARM,mai,Agro & Food Industry,-
-CFRESH,SET,Agro & Food Industry,Food & Beverage
-CGD,SET,Property & Construction,Property Development
-CGH,SET,Financials,Finance & Securities
-CH,SET,Agro & Food Industry,Food & Beverage
-CHAO,SET,Agro & Food Industry,Food & Beverage
-CHARAN,SET,Financials,Insurance
-CHASE,SET,Financials,Finance & Securities
-CHAYO,SET,Financials,Finance & Securities
-CHEWA,mai,Property & Construction,-
-CHG,SET,Services,Health Care Services
-CHIC,mai,Services,-
-CHO,mai,Industrial,-
-CHOTI,SET,Agro & Food Industry,Food & Beverage
-CHOW,mai,Industrial,-
-CI,SET,Property & Construction,Property Development
-CIG,mai,Industrial,-
-CITY,SET,Industrials,Steel and Metal Products
-CIVIL,SET,Property & Construction,Construction Services
-CK,SET,Property & Construction,Construction Services
-CKP,SET,Resources,Energy & Utilities
-CM,SET,Agro & Food Industry,Food & Beverage
-CMAN,SET,Industrials,Petrochemicals & Chemicals
-CMC,SET,Property & Construction,Property Development
-CMO,mai,Services,-
-CMR,SET,Services,Health Care Services
-CNT,SET,Property & Construction,Construction Services
-COCOCO,SET,Agro & Food Industry,Food & Beverage
-COLOUR,mai,Industrial,-
-COM7,SET,Services,Commerce
-COMAN,mai,Technology,-
-CPALL,SET,Services,Commerce
-CPANEL,mai,Property & Construction,-
-CPAXT,SET,Services,Commerce
-CPF,SET,Agro & Food Industry,Food & Beverage
-CPH,SET,Consumer Products,Fashion
-CPI,SET,Agro & Food Industry,Food & Beverage
-CPL,SET,Consumer Products,Fashion
-CPN,SET,Property & Construction,Property Development
-CPNCG,SET,Property & Construction,Property Fund & REITs
-CPNREIT,SET,Property & Construction,Property Fund & REITs
-CPR,mai,Industrial,-
-CPT,SET,Industrials,Industrial Materials & Machinery
-CPTREIT,SET,Property & Construction,Property Fund & REITs
-CPW,SET,Services,Commerce
-CRANE,SET,Industrials,Industrial Materials & Machinery
-CRC,SET,Services,Commerce
-CRD,mai,Property & Construction,-
-CREDIT,SET,Financials,Banking
-CSC,SET,Industrials,Packaging
-CSP,SET,Industrials,Steel and Metal Products
-CSR,SET,Services,Tourism & Leisure
-CSS,SET,Services,Commerce
-CTARAF,SET,Property & Construction,Property Fund & REITs
-CTW,SET,Industrials,Industrial Materials & Machinery
-CV,SET,Resources,Energy & Utilities
-CWT,SET,Industrials,Automotive
-D,mai,Services,-
-DCC,SET,Property & Construction,Construction Materials
-DCON,SET,Property & Construction,Construction Materials
-DDD,SET,Consumer Products,Personal Products & Pharmaceuticals
-DELTA,SET,Technology,Electronic Components
-DEMCO,SET,Property & Construction,Construction Services
-DEXON,mai,Services,-
-DHOUSE,mai,Property & Construction,-
-DIF,SET,Technology,Information & Communication Technology
-DIMET,mai,Property & Construction,-
-DITTO,SET,Technology,Information & Communication Technology
-DMT,SET,Services,Transportation & Logistics
-DOD,mai,Consumer Products,-
-DOHOME,SET,Services,Commerce
-DPAINT,mai,Property & Construction,-
-DREIT,SET,Property & Construction,Property Fund & REITs
-DRT,SET,Property & Construction,Construction Materials
-DTCENT,SET,Technology,Information & Communication Technology
-DTCI,SET,Consumer Products,Home & Office Products
-DUSIT,SET,Services,Tourism & Leisure
-EA,SET,Resources,Energy & Utilities
-EASON,SET,Industrials,Automotive
-EAST,SET,Financials,Finance & Securities
-EASTW,SET,Resources,Energy & Utilities
-ECF,mai,Consumer Products,-
-EFORL,mai,Consumer Products,-
-EGATIF,SET,Resources,Energy & Utilities
-EGCO,SET,Resources,Energy & Utilities
-EKH,SET,Services,Health Care Services
-EMC,SET,Property & Construction,Construction Services
-EMPIRE,mai,Property & Construction,-
-EP,SET,Resources,Energy & Utilities
-EPG,SET,Property & Construction,Construction Materials
-ERW,SET,Services,Tourism & Leisure
-ESTAR,SET,Property & Construction,Property Development
-ETC,SET,Resources,Energy & Utilities
-ETE,mai,Services,-
-ETL,SET,Services,Transportation & Logistics
-EURO,mai,Consumer Products,-
-EVER,SET,Property & Construction,Property Development
-F&D,SET,Agro & Food Industry,Food & Beverage
-FANCY,SET,Consumer Products,Home & Office Products
-FE,SET,Services,Media & Publishing
-FLE,mai,Industrial,-
-FLOYD,mai,Property & Construction,-
-FM,SET,Agro & Food Industry,Food & Beverage
-FMT,SET,Industrials,Industrial Materials & Machinery
-FN,SET,Services,Commerce
-FNS,SET,Financials,Finance & Securities
-FORTH,SET,Technology,Information & Communication Technology
-FPI,mai,Industrial,-
-FPT,SET,Property & Construction,Property Development
-FSMART,mai,Services,-
-FSX,SET,Financials,Finance & Securities
-FTE,SET,Industrials,Industrial Materials & Machinery
-FTI,SET,Consumer Products,Home & Office Products
-FTREIT,SET,Property & Construction,Property Fund & REITs
-FUTURERT,SET,Property & Construction,Property Fund & REITs
-FVC,mai,Services,-
-GABLE,SET,Technology,Information & Communication Technology
-GAHREIT,SET,Property & Construction,Property Fund & REITs
-GBX,SET,Financials,Finance & Securities
-GC,SET,Industrials,Petrochemicals & Chemicals
-GCAP,mai,Financials,-
-GEL,SET,Property & Construction,Construction Materials
-GENCO,SET,Services,Professional Services
-GFC,mai,Services,-
-GFPT,SET,Agro & Food Industry,Agribusiness
-GGC,SET,Industrials,Petrochemicals & Chemicals
-GJS,SET,Industrials,Steel and Metal Products
-GLOBAL,SET,Services,Commerce
-GLORY,mai,Services,-
-GPI,SET,Services,Media & Publishing
-GPSC,SET,Resources,Energy & Utilities
-GRAMMY,SET,Services,Media & Publishing
-GRAND,SET,Services,Tourism & Leisure
-GREEN,SET,Resources,Energy & Utilities
-GROREIT,SET,Property & Construction,Property Fund & REITs
-GST,SET,Technology,Information & Communication Technology
-GSTEEL,SET,Industrials,Steel and Metal Products
-GTB,mai,Industrial,-
-GTV,mai,Resources,-
-GULF,SET,Resources,Energy & Utilities
-GUNKUL,SET,Resources,Energy & Utilities
-GVREIT,SET,Property & Construction,Property Fund & REITs
-GYT,SET,Industrials,Automotive
-HANA,SET,Technology,Electronic Components
-HANN,mai,Services,-
-HARN,mai,Industrial,-
-HENG,SET,Financials,Finance & Securities
-HFT,SET,Industrials,Automotive
-HL,mai,Services,-
-HMPRO,SET,Services,Commerce
-HPF,SET,Property & Construction,Property Fund & REITs
-HPT,mai,Consumer Products,-
-HTC,SET,Agro & Food Industry,Food & Beverage
-HTECH,SET,Industrials,Industrial Materials & Machinery
-HUMAN,SET,Technology,Information & Communication Technology
-HYDRO,mai,Property & Construction,-
-HYDROGEN,SET,Property & Construction,Property Fund & REITs
-I2,mai,Technology,-
-ICC,SET,Services,Commerce
-ICHI,SET,Agro & Food Industry,Food & Beverage
-ICN,SET,Technology,Information & Communication Technology
-IDG,mai,Technology,-
-IFS,SET,Financials,Finance & Securities
-IHL,SET,Consumer Products,Fashion
-IIG,mai,Technology,-
-III,SET,Services,Transportation & Logistics
-ILINK,SET,Technology,Information & Communication Technology
-ILM,SET,Services,Commerce
-IMH,mai,Services,-
-IMPACT,SET,Property & Construction,Property Fund & REITs
-IND,mai,Property & Construction,-
-INET,SET,Technology,Information & Communication Technology
-INETREIT,SET,Property & Construction,Property Fund & REITs
-INGRS,SET,Industrials,Automotive
-INOX,SET,Industrials,Steel and Metal Products
-INSET,SET,Technology,Information & Communication Technology
-INSURE,SET,Financials,Insurance
-IP,SET,Consumer Products,Personal Products & Pharmaceuticals
-IRC,SET,Industrials,Automotive
-IRCP,mai,Technology,-
-IROYAL,mai,Services,-
-IRPC,SET,Resources,Energy & Utilities
-ISSARA,SET,Property & Construction,Property Fund & REITs
-IT,SET,Services,Commerce
-ITC,SET,Agro & Food Industry,Food & Beverage
-ITD,SET,Property & Construction,Construction Services
-ITEL,SET,Technology,Information & Communication Technology
-ITNS,mai,Technology,-
-ITTHI,mai,Consumer Products,-
-IVF,mai,Services,-
-IVL,SET,Industrials,Petrochemicals & Chemicals
-J,SET,Property & Construction,Property Development
-JAK,mai,Property & Construction,-
-JAS,SET,Technology,Information & Communication Technology
-JCK,SET,Property & Construction,Property Development
-JCT,SET,Consumer Products,Personal Products & Pharmaceuticals
-JDF,SET,Agro & Food Industry,Food & Beverage
-JMART,SET,Technology,Information & Communication Technology
-JMT,SET,Financials,Finance & Securities
-JPARK,mai,Services,-
-JR,SET,Property & Construction,Construction Services
-JSP,mai,Consumer Products,-
-JTS,SET,Technology,Information & Communication Technology
-JUBILE,mai,Consumer Products,-
-K,mai,Services,-
-KAMART,SET,Services,Commerce
-KASET,mai,Agro & Food Industry,-
-KBANK,SET,Financials,Banking
-KBS,SET,Agro & Food Industry,Food & Beverage
-KBSPIF,SET,Resources,Energy & Utilities
-KC,SET,Property & Construction,Property Development
-KCAR,SET,Financials,Finance & Securities
-KCC,mai,Financials,-
-KCE,SET,Technology,Electronic Components
-KCG,SET,Agro & Food Industry,Food & Beverage
-KCM,mai,Industrial,-
-KDH,SET,Services,Health Care Services
-KGEN,mai,Services,-
-KGI,SET,Financials,Finance & Securities
-KIAT,SET,Services,Transportation & Logistics
-KISS,SET,Consumer Products,Personal Products & Pharmaceuticals
-KJL,mai,Industrial,-
-KK,mai,Services,-
-KKC,SET,Industrials,Industrial Materials & Machinery
-KKP,SET,Financials,Banking
-KLINIQ,SET,Services,Health Care Services
-KOOL,mai,Services,-
-KPNREIT,SET,Property & Construction,Property Fund & REITs
-KSL,SET,Agro & Food Industry,Food & Beverage
-KTB,SET,Financials,Banking
-KTBSTMR,SET,Property & Construction,Property Fund & REITs
-KTC,SET,Financials,Finance & Securities
-KTIS,SET,Agro & Food Industry,Food & Beverage
-KTMS,mai,Services,-
-KUMWEL,mai,Industrial,-
-KUN,SET,Property & Construction,Property Development
-KWC,SET,Services,Transportation & Logistics
-KWI,SET,Financials,Insurance
-KWM,mai,Industrial,-
-KYE,SET,Consumer Products,Home & Office Products
-L&E,SET,Consumer Products,Home & Office Products
-LALIN,SET,Property & Construction,Property Development
-LANNA,SET,Resources,Energy & Utilities
-LDC,mai,Services,-
-LEE,SET,Agro & Food Industry,Agribusiness
-LEO,mai,Services,-
-LH,SET,Property & Construction,Property Development
-LHFG,SET,Financials,Banking
-LHHOTEL,SET,Property & Construction,Property Fund & REITs
-LHK,SET,Industrials,Steel and Metal Products
-LHRREIT,SET,Property & Construction,Property Fund & REITs
-LHSC,SET,Property & Construction,Property Fund & REITs
-LIT,mai,Financials,-
-LOXLEY,SET,Services,Commerce
-LPH,SET,Services,Health Care Services
-LPN,SET,Property & Construction,Property Development
-LST,SET,Agro & Food Industry,Food & Beverage
-LTMH,mai,Services,-
-LTS,mai,Consumer Products,-
-LUXF,SET,Property & Construction,Property Fund & REITs
-M,SET,Agro & Food Industry,Food & Beverage
-MADAME,SET,Agro & Food Industry,Food & Beverage
-MAGURO,mai,Agro & Food Industry,-
-MAJOR,SET,Services,Media & Publishing
-MALEE,SET,Agro & Food Industry,Food & Beverage
-MANRIN,SET,Services,Tourism & Leisure
-MASTEC,SET,Industrials,Industrial Materials & Machinery
-MASTER,SET,Services,Health Care Services
-MATCH,SET,Services,Media & Publishing
-MATI,SET,Services,Media & Publishing
-MBAX,mai,Industrial,-
-MBK,SET,Property & Construction,Property Development
-MC,SET,Services,Commerce
-MCA,mai,Services,-
-M-CHAI,SET,Services,Health Care Services
-MCOT,SET,Services,Media & Publishing
-MCS,SET,Industrials,Steel and Metal Products
-MDX,SET,Resources,Energy & Utilities
-MEB,mai,Services,-
-MEDEZE,SET,Services,Health Care Services
-MEGA,SET,Services,Commerce
-MENA,SET,Services,Transportation & Logistics
-META,mai,Property & Construction,-
-METCO,SET,Technology,Electronic Components
-MFC,SET,Financials,Finance & Securities
-MFEC,SET,Technology,Information & Communication Technology
-MGC,SET,Industrials,Automotive
-MGI,mai,Consumer Products,-
-MGT,mai,Industrial,-
-MICRO,SET,Financials,Finance & Securities
-MIDA,SET,Services,Commerce
-MII,SET,Property & Construction,Property Fund & REITs
-MILL,SET,Industrials,Steel and Metal Products
-MINT,SET,Services,Tourism & Leisure
-MIPF,SET,Property & Construction,Property Fund & REITs
-MITSIB,mai,Financials,-
-MJD,SET,Property & Construction,Property Development
-MJLF,SET,Property & Construction,Property Fund & REITs
-MK,SET,Property & Construction,Property Development
-ML,SET,Financials,Finance & Securities
-MMM,mai,Property & Construction,-
-MNIT,SET,Property & Construction,Property Fund & REITs
-MNIT2,SET,Property & Construction,Property Fund & REITs
-MNRF,SET,Property & Construction,Property Fund & REITs
-MODERN,SET,Consumer Products,Home & Office Products
-MONO,SET,Services,Media & Publishing
-MOONG,mai,Consumer Products,-
-MORE,mai,Services,-
-MOSHI,SET,Services,Commerce
-MOTHER,mai,Services,-
-M-PAT,SET,Property & Construction,Property Fund & REITs
-MPJ,mai,Services,-
-MRDIYT,SET,Services,Commerce
-MSC,SET,Technology,Information & Communication Technology
-MST,SET,Financials,Finance & Securities
-M-STOR,SET,Property & Construction,Property Fund & REITs
-MTC,SET,Financials,Finance & Securities
-MTI,SET,Financials,Insurance
-MTW,mai,Industrial,-
-MUD,mai,Agro & Food Industry,-
-MVP,mai,Services,-
-NAM,SET,Consumer Products,Personal Products & Pharmaceuticals
-NAT,mai,Technology,-
-NATION,SET,Services,Media & Publishing
-NC,SET,Consumer Products,Fashion
-NCAP,SET,Financials,Finance & Securities
-NCH,SET,Property & Construction,Property Development
-NCL,mai,Services,-
-NCP,mai,Services,-
-NDR,mai,Industrial,-
-NEO,SET,Consumer Products,Personal Products & Pharmaceuticals
-NEP,SET,Consumer Products,Fashion
-NER,SET,Agro & Food Industry,Agribusiness
-NETBAY,mai,Technology,-
-NEW,SET,Services,Health Care Services
-NEX,SET,Industrials,Automotive
-NFC,SET,Industrials,Petrochemicals & Chemicals
-NKI,SET,Financials,Insurance
-NKT,SET,Services,Health Care Services
-NL,SET,Property & Construction,Construction Services
-NNCL,SET,Property & Construction,Property Development
-NOBLE,SET,Property & Construction,Property Development
-NOVA,SET,Resources,Energy & Utilities
-NPK,mai,Consumer Products,-
-NRF,SET,Agro & Food Industry,Food & Beverage
-NSL,SET,Agro & Food Industry,Food & Beverage
-NTF,mai,Agro & Food Industry,-
-NTSC,mai,Agro & Food Industry,-
-NTV,SET,Services,Health Care Services
-NUT,mai,Consumer Products,-
-NV,SET,Consumer Products,Personal Products & Pharmaceuticals
-NVD,SET,Property & Construction,Property Development
-NWR,SET,Property & Construction,Construction Services
-NYT,SET,Services,Transportation & Logistics
-OCC,SET,Consumer Products,Personal Products & Pharmaceuticals
-OGC,SET,Consumer Products,Home & Office Products
-OHTL,SET,Services,Tourism & Leisure
-OKJ,SET,Agro & Food Industry,Food & Beverage
-ONEE,SET,Services,Media & Publishing
-ONSENS,SET,Services,Tourism & Leisure
-OR,SET,Resources,Energy & Utilities
-ORI,SET,Property & Construction,Property Development
-ORN,SET,Property & Construction,Property Development
-OSP,SET,Agro & Food Industry,Food & Beverage
-PACO,mai,Industrial,-
-PAF,SET,Consumer Products,Fashion
-PANEL,mai,Property & Construction,-
-PAP,SET,Industrials,Steel and Metal Products
-PATO,SET,Industrials,Petrochemicals & Chemicals
-PB,SET,Agro & Food Industry,Food & Beverage
-PCC,SET,Industrials,Industrial Materials & Machinery
-PCE,SET,Agro & Food Industry,Agribusiness
-PCSGH,SET,Industrials,Automotive
-PDG,mai,Industrial,-
-PDJ,SET,Consumer Products,Fashion
-PEACE,SET,Property & Construction,Property Development
-PEER,mai,Services,-
-PERM,SET,Industrials,Steel and Metal Products
-PF,SET,Property & Construction,Property Development
-PG,SET,Consumer Products,Fashion
-PHAT,mai,Agro & Food Industry,-
-PHG,SET,Services,Health Care Services
-PHOL,mai,Industrial,-
-PICO,mai,Services,-
-PIMO,mai,Industrial,-
-PIN,SET,Property & Construction,Property Development
-PIS,mai,Technology,-
-PJW,SET,Industrials,Packaging
-PK,SET,Industrials,Industrial Materials & Machinery
-PL,SET,Financials,Finance & Securities
-PLANB,SET,Services,Media & Publishing
-PLANET,mai,Technology,-
-PLAT,SET,Property & Construction,Property Development
-PLE,SET,Property & Construction,Construction Services
-PLT,mai,Services,-
-PLUS,SET,Agro & Food Industry,Food & Beverage
-PM,SET,Agro & Food Industry,Food & Beverage
-PMC,mai,Industrial,-
-PMTA,SET,Industrials,Petrochemicals & Chemicals
-POLY,SET,Industrials,Automotive
-POPF,SET,Property & Construction,Property Fund & REITs
-PORT,SET,Services,Transportation & Logistics
-POWER,mai,Resources,-
-PPM,mai,Industrial,-
-PPP,SET,Property & Construction,Construction Materials
-PPPM,SET,Agro & Food Industry,Agribusiness
-PPS,mai,Property & Construction,-
-PQS,SET,Agro & Food Industry,Food & Beverage
-PR9,SET,Services,Health Care Services
-PRAKIT,SET,Services,Media & Publishing
-PRAPAT,mai,Industrial,-
-PREB,SET,Property & Construction,Construction Services
-PRECHA,SET,Property & Construction,Property Development
-PRG,SET,Agro & Food Industry,Food & Beverage
-PRI,mai,Property & Construction,-
-PRIME,SET,Resources,Energy & Utilities
-PRIN,SET,Property & Construction,Property Development
-PRINC,SET,Services,Health Care Services
-PRM,SET,Services,Transportation & Logistics
-PROEN,mai,Technology,-
-PROS,mai,Property & Construction,-
-PROSPECT,SET,Property & Construction,Property Fund & REITs
-PROUD,SET,Property & Construction,Property Development
-PRTR,SET,Services,Professional Services
-PSGC,mai,Property & Construction,-
-PSH,SET,Property & Construction,Property Development
-PSL,SET,Services,Transportation & Logistics
-PSP,SET,Industrials,Industrial Materials & Machinery
-PT,SET,Technology,Information & Communication Technology
-PTC,mai,Resources,-
-PTG,SET,Resources,Energy & Utilities
-PTL,SET,Industrials,Packaging
-PTT,SET,Resources,Energy & Utilities
-PTTEP,SET,Resources,Energy & Utilities
-PTTGC,SET,Industrials,Petrochemicals & Chemicals
-PYLON,SET,Property & Construction,Construction Services
-Q-CON,SET,Property & Construction,Construction Materials
-QDC,mai,Agro & Food Industry,-
-QH,SET,Property & Construction,Property Development
-QHBREIT,SET,Property & Construction,Property Fund & REITs
-QHHRREIT,SET,Property & Construction,Property Fund & REITs
-QHOP,SET,Property & Construction,Property Fund & REITs
-QLT,mai,Services,-
-QTC,SET,Industrials,Industrial Materials & Machinery
-QTCG,mai,Property & Construction,-
-RABBIT,SET,Property & Construction,Property Development
-RAM,SET,Services,Health Care Services
-RATCH,SET,Resources,Energy & Utilities
-RBF,SET,Agro & Food Industry,Food & Beverage
-RCL,SET,Services,Transportation & Logistics
-READY,mai,Technology,-
-RICHY,SET,Property & Construction,Property Development
-RJH,SET,Services,Health Care Services
-RML,SET,Property & Construction,Property Development
-ROCK,SET,Consumer Products,Home & Office Products
-ROCTEC,SET,Technology,Information & Communication Technology
-ROH,SET,Services,Tourism & Leisure
-ROJNA,SET,Property & Construction,Property Development
-RP,mai,Services,-
-RPC,SET,Resources,Energy & Utilities
-RPH,SET,Services,Health Care Services
-RS,SET,Services,Commerce
-RSP,SET,Services,Commerce
-RT,SET,Property & Construction,Construction Services
-RWI,mai,Industrial,-
-S,SET,Property & Construction,Property Development
-S&J,SET,Consumer Products,Personal Products & Pharmaceuticals
-S11,SET,Financials,Finance & Securities
-SA,SET,Property & Construction,Property Development
-SAAM,mai,Resources,-
-SABINA,SET,Consumer Products,Fashion
-SAF,mai,Industrial,-
-SAFE,SET,Services,Health Care Services
-SAK,SET,Financials,Finance & Securities
-SALEE,mai,Industrial,-
-SAM,SET,Industrials,Steel and Metal Products
-SAMART,SET,Technology,Information & Communication Technology
-SAMCO,SET,Property & Construction,Property Development
-SAMTEL,SET,Technology,Information & Communication Technology
-SANKO,mai,Industrial,-
-SAPPE,SET,Agro & Food Industry,Food & Beverage
-SAT,SET,Industrials,Automotive
-SAUCE,SET,Agro & Food Industry,Food & Beverage
-SAV,SET,Services,Transportation & Logistics
-SAWAD,SET,Financials,Finance & Securities
-SAWANG,SET,Consumer Products,Fashion
-SC,SET,Property & Construction,Property Development
-SCAP,SET,Financials,Finance & Securities
-SCB,SET,Financials,Banking
-SCC,SET,Property & Construction,Construction Materials
-SCCC,SET,Property & Construction,Construction Materials
-SCG,SET,Resources,Energy & Utilities
-SCGD,SET,Property & Construction,Construction Materials
-SCGP,SET,Industrials,Packaging
-SCI,SET,Industrials,Industrial Materials & Machinery
-SCL,mai,Industrial,-
-SCM,SET,Services,Commerce
-SCN,SET,Resources,Energy & Utilities
-SCP,SET,Property & Construction,Construction Materials
-SDC,SET,Technology,Information & Communication Technology
-SE,SET,Industrials,Industrial Materials & Machinery
-SEAFCO,SET,Property & Construction,Construction Services
-SEAOIL,SET,Resources,Energy & Utilities
-SECURE,mai,Technology,-
-SE-ED,SET,Services,Media & Publishing
-SEI,mai,Consumer Products,-
-SELIC,SET,Industrials,Industrial Materials & Machinery
-SENA,SET,Property & Construction,Property Development
-SENX,mai,Property & Construction,-
-SFLEX,SET,Industrials,Packaging
-SFT,mai,Industrial,-
-SGC,SET,Financials,Finance & Securities
-SGF,mai,Financials,-
-SGP,SET,Resources,Energy & Utilities
-SHANG,SET,Services,Tourism & Leisure
-SHR,SET,Services,Tourism & Leisure
-SIAM,SET,Consumer Products,Home & Office Products
-SICT,mai,Technology,-
-SIMAT,mai,Technology,-
-SINGER,SET,Services,Commerce
-SINO,SET,Services,Transportation & Logistics
-SIRI,SET,Property & Construction,Property Development
-SIRIPRT,SET,Property & Construction,Property Fund & REITs
-SIS,SET,Technology,Information & Communication Technology
-SISB,SET,Services,Professional Services
-SITHAI,SET,Industrials,Packaging
-SJWD,SET,Services,Transportation & Logistics
-SK,mai,Property & Construction,-
-SKE,SET,Resources,Energy & Utilities
-SKIN,mai,Consumer Products,-
-SKN,SET,Property & Construction,Construction Materials
-SKR,SET,Services,Health Care Services
-SKY,SET,Technology,Information & Communication Technology
-SLP,SET,Industrials,Packaging
-SMART,mai,Property & Construction,-
-SMD100,mai,Consumer Products,-
-SMIT,SET,Industrials,Steel and Metal Products
-SMO,SET,Agro & Food Industry,Agribusiness
-SMPC,SET,Industrials,Packaging
-SMT,SET,Technology,Electronic Components
-SNC,SET,Industrials,Industrial Materials & Machinery
-SNNP,SET,Agro & Food Industry,Food & Beverage
-SNP,SET,Agro & Food Industry,Food & Beverage
-SNPS,SET,Consumer Products,Personal Products & Pharmaceuticals
-SO,SET,Services,Professional Services
-SOLAR,SET,Property & Construction,Construction Services
-SONIC,mai,Services,-
-SORKON,SET,Agro & Food Industry,Food & Beverage
-SPA,SET,Services,Tourism & Leisure
-SPACK,SET,Industrials,Packaging
-SPALI,SET,Property & Construction,Property Development
-SPC,SET,Services,Commerce
-SPCG,SET,Resources,Energy & Utilities
-SPG,SET,Industrials,Automotive
-SPI,SET,Services,Commerce
-SPRC,SET,Resources,Energy & Utilities
-SPREME,SET,Technology,Information & Communication Technology
-SPRIME,SET,Property & Construction,Property Fund & REITs
-SPTX,mai,Services,-
-SPVI,mai,Technology,-
-SQ,SET,Property & Construction,Construction Services
-SR,mai,Resources,-
-SRICHA,SET,Property & Construction,Construction Services
-SRIPANWA,SET,Property & Construction,Property Fund & REITs
-SRS,mai,Technology,-
-SSF,SET,Agro & Food Industry,Food & Beverage
-SSP,SET,Resources,Energy & Utilities
-SSPF,SET,Property & Construction,Property Fund & REITs
-SSSC,SET,Industrials,Steel and Metal Products
-SST,SET,Agro & Food Industry,Food & Beverage
-SSTRT,SET,Property & Construction,Property Fund & REITs
-STA,SET,Agro & Food Industry,Agribusiness
-STANLY,SET,Industrials,Automotive
-STARM,SET,Financials,Finance & Securities
-STC,mai,Property & Construction,-
-STECH,SET,Property & Construction,Construction Materials
-STECON,SET,Property & Construction,Construction Services
-STELLA,SET,Property & Construction,Property Development
-STGT,SET,Consumer Products,Personal Products & Pharmaceuticals
-STI,SET,Property & Construction,Construction Services
-STOWER,mai,Resources,-
-STP,mai,Industrial,-
-STPI,SET,Property & Construction,Construction Services
-STX,mai,Property & Construction,-
-SUC,SET,Consumer Products,Fashion
-SUN,SET,Agro & Food Industry,Food & Beverage
-SUPER,SET,Resources,Energy & Utilities
-SUPEREIF,SET,Resources,Energy & Utilities
-SUSCO,SET,Resources,Energy & Utilities
-SUTHA,SET,Industrials,Petrochemicals & Chemicals
-SVOA,SET,Technology,Information & Communication Technology
-SVR,mai,Property & Construction,-
-SVT,SET,Services,Commerce
-SWC,mai,Industrial,-
-SYMC,SET,Technology,Information & Communication Technology
-SYNEX,SET,Technology,Information & Communication Technology
-SYNTEC,SET,Property & Construction,Construction Services
-TACC,mai,Agro & Food Industry,-
-TAE,SET,Resources,Energy & Utilities
-TAKUNI,mai,Resources,-
-TAN,SET,Services,Commerce
-TAPAC,mai,Property & Construction,-
-TASCO,SET,Property & Construction,Construction Materials
-TATG,mai,Industrial,-
-TBN,mai,Technology,-
-TBSP,SET,Services,Media & Publishing
-TC,SET,Agro & Food Industry,Food & Beverage
-TCAP,SET,Financials,Banking
-TCC,SET,Resources,Energy & Utilities
-TCJ,SET,Industrials,Industrial Materials & Machinery
-TCMC,SET,Consumer Products,Home & Office Products
-TCOAT,SET,Industrials,Packaging
-TEAM,SET,Technology,Electronic Components
-TEAMG,SET,Property & Construction,Construction Services
-TEGH,SET,Agro & Food Industry,Agribusiness
-TEKA,SET,Property & Construction,Construction Services
-TERA,mai,Technology,-
-TFFIF,SET,Services,Transportation & Logistics
-TFG,SET,Agro & Food Industry,Food & Beverage
-TFI,SET,Industrials,Packaging
-TFM,SET,Agro & Food Industry,Agribusiness
-TFMAMA,SET,Agro & Food Industry,Food & Beverage
-TGE,SET,Resources,Energy & Utilities
-TGH,SET,Financials,Insurance
-TGPRO,SET,Industrials,Steel and Metal Products
-TH,SET,Financials,Finance & Securities
-THAI,SET,Services,Transportation & Logistics
-THANA,mai,Property & Construction,-
-THANI,SET,Financials,Finance & Securities
-THE,SET,Industrials,Steel and Metal Products
-THG,SET,Services,Health Care Services
-THIP,SET,Industrials,Packaging
-THMUI,mai,Services,-
-THRE,SET,Financials,Insurance
-THREL,SET,Financials,Insurance
-TIDLOR,SET,Financials,Finance & Securities
-TIF1,SET,Property & Construction,Property Fund & REITs
-TIGER,mai,Property & Construction,-
-TIPCO,SET,Agro & Food Industry,Food & Beverage
-TIPH,SET,Financials,Insurance
-TISCO,SET,Financials,Banking
-TITLE,SET,Property & Construction,Property Development
-TK,SET,Financials,Finance & Securities
-TKC,SET,Technology,Information & Communication Technology
-TKN,SET,Agro & Food Industry,Food & Beverage
-TKS,SET,Services,Media & Publishing
-TKT,SET,Industrials,Automotive
-TL,SET,Technology,Information & Communication Technology
-TLHPF,SET,Property & Construction,Property Fund & REITs
-TLI,SET,Financials,Insurance
-TM,mai,Consumer Products,-
-TMAN,SET,Consumer Products,Personal Products & Pharmaceuticals
-TMC,mai,Industrial,-
-TMD,SET,Industrials,Packaging
-TMI,mai,Industrial,-
-TMILL,mai,Agro & Food Industry,-
-TMT,SET,Industrials,Steel and Metal Products
-TMW,mai,Industrial,-
-TNDT,mai,Services,-
-TNH,mai,Services,-
-TNITY,SET,Financials,Finance & Securities
-TNL,SET,Financials,Finance & Securities
-TNP,mai,Services,-
-TNPC,SET,Industrials,Automotive
-TNPF,SET,Property & Construction,Property Fund & REITs
-TNR,SET,Consumer Products,Personal Products & Pharmaceuticals
-TOA,SET,Property & Construction,Construction Materials
-TOG,SET,Consumer Products,Personal Products & Pharmaceuticals
-TOP,SET,Resources,Energy & Utilities
-TOPP,SET,Industrials,Packaging
-TPA,SET,Industrials,Petrochemicals & Chemicals
-TPAC,SET,Industrials,Packaging
-TPBI,SET,Industrials,Packaging
-TPCH,mai,Resources,-
-TPCS,SET,Industrials,Industrial Materials & Machinery
-TPIPL,SET,Property & Construction,Construction Materials
-TPIPP,SET,Resources,Energy & Utilities
-TPL,mai,Services,-
-TPLAS,mai,Industrial,-
-TPOLY,SET,Property & Construction,Construction Services
-TPP,SET,Industrials,Packaging
-TPRIME,SET,Property & Construction,Property Fund & REITs
-TPS,mai,Technology,-
-TQM,SET,Financials,Insurance
-TQR,mai,Financials,-
-TR,SET,Consumer Products,Fashion
-TRC,SET,Property & Construction,Construction Services
-TRITN,SET,Property & Construction,Construction Services
-TRP,mai,Services,-
-TRT,mai,Industrial,-
-TRU,SET,Industrials,Automotive
-TRUBB,SET,Agro & Food Industry,Agribusiness
-TRUE,SET,Technology,Information & Communication Technology
-TRV,mai,Industrial,-
-TSC,SET,Industrials,Automotive
-TSE,SET,Resources,Energy & Utilities
-TSI,SET,Financials,Insurance
-TSR,SET,Consumer Products,Home & Office Products
-TSTE,SET,Services,Transportation & Logistics
-TSTH,SET,Industrials,Steel and Metal Products
-TTA,SET,Services,Transportation & Logistics
-TTB,SET,Financials,Banking
-TTCL,SET,Property & Construction,Construction Services
-TTI,SET,Consumer Products,Fashion
-TTLPF,SET,Property & Construction,Property Fund & REITs
-TTT,SET,Consumer Products,Fashion
-TTW,SET,Resources,Energy & Utilities
-TU,SET,Agro & Food Industry,Food & Beverage
-TU-PF,SET,Property & Construction,Property Fund & REITs
-TURBO,SET,Financials,Finance & Securities
-TURTLE,mai,Services,-
-TVDH,mai,Services,-
-TVH,SET,Financials,Insurance
-TVO,SET,Agro & Food Industry,Food & Beverage
-TVT,mai,Services,-
-TWP,SET,Industrials,Steel and Metal Products
-TWPC,SET,Agro & Food Industry,Food & Beverage
-TWZ,SET,Technology,Information & Communication Technology
-TYCN,SET,Industrials,Steel and Metal Products
-UAC,SET,Industrials,Petrochemicals & Chemicals
-UBA,mai,Services,-
-UBE,SET,Resources,Energy & Utilities
-UBIS,mai,Industrial,-
-UEC,mai,Industrial,-
-UKEM,mai,Industrial,-
-UMI,SET,Property & Construction,Construction Materials
-UMS,mai,Resources,-
-UNIQ,SET,Property & Construction,Construction Services
-UNIX,SET,Industrials,Packaging
-UP,SET,Industrials,Petrochemicals & Chemicals
-UPF,SET,Consumer Products,Fashion
-UPOIC,SET,Agro & Food Industry,Agribusiness
-UREKA,mai,Industrial,-
-UTP,SET,Industrials,Paper & Printing Materials
-UV,SET,Property & Construction,Property Development
-UVAN,SET,Agro & Food Industry,Agribusiness
-VARO,SET,Industrials,Industrial Materials & Machinery
-VCOM,mai,Technology,-
-VGI,SET,Services,Media & Publishing
-VIBE,mai,Services,-
-VIBHA,SET,Services,Health Care Services
-VIH,SET,Services,Health Care Services
-VL,mai,Services,-
-VNG,SET,Property & Construction,Construction Materials
-VPO,SET,Agro & Food Industry,Agribusiness
-VRANDA,SET,Services,Tourism & Leisure
-VS,mai,Services,-
-WACOAL,SET,Consumer Products,Fashion
-WARRIX,mai,Consumer Products,-
-WASH,mai,Services,-
-WAVE,SET,Services,Professional Services
-WELL,mai,Property & Construction,-
-WFX,SET,Consumer Products,Fashion
-WGE,SET,Property & Construction,Construction Services
-WHA,SET,Property & Construction,Property Development
-WHABT,SET,Property & Construction,Property Fund & REITs
-WHAIR,SET,Property & Construction,Property Fund & REITs
-WHART,SET,Property & Construction,Property Fund & REITs
-WHAUP,SET,Resources,Energy & Utilities
-WICE,SET,Services,Transportation & Logistics
-WIIK,SET,Property & Construction,Construction Materials
-WIN,SET,Property & Construction,Property Development
-WINDOW,SET,Property & Construction,Construction Materials
-WINMED,mai,Consumer Products,-
-WINNER,mai,Agro & Food Industry,-
-WORK,SET,Services,Media & Publishing
-WP,SET,Resources,Energy & Utilities
-WPH,SET,Services,Health Care Services
-WSOL,SET,Services,Commerce
-XBIO,SET,Agro & Food Industry,Food & Beverage
-XO,mai,Agro & Food Industry,-
-XPG,SET,Financials,Finance & Securities
-XYZ,SET,Technology,Information & Communication Technology
-YGG,mai,Services,-
-YONG,mai,Property & Construction,-
-YUASA,mai,Industrial,-
-ZAA,SET,Services,Media & Publishing
-ZEN,SET,Agro & Food Industry,Food & Beverage
-ZIGA,mai,Industrial,-
+symbol,company,market,industry,sector
+2S,2S METAL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+3BBIF,3BB INTERNET INFRASTRUCTURE FUND,SET,Technology,Information & Communication Technology
+88TH,88(Thailand) Public Company Limited,mai,Consumer Products,-
+A,AREEYA PROPERTY PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+A5,ASSET FIVE GROUP PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+AAI,Asian Alliance International Public Company Limited,SET,Agro & Food Industry,Food & Beverage
+AAV,ASIA AVIATION PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+ABM,ASIA BIOMASS PUBLIC COMPANY LIMITED,mai,Resources,-
+ACAP,ASIA CAPITAL GROUP PUBLIC COMPANY LIMITED,mai,Financials,-
+ACC,ADVANCED CONNECTION CORPORATION PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+ACE,ABSOLUTE CLEAN ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+ACG,AUTOCORP HOLDING PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+ADB,APPLIED DB PUBLIC COMPANY LIMITED,mai,Industrial,-
+ADD,ADDTECH HUB PUBLIC COMPANY LIMITED,mai,Services,-
+ADVANC,ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+ADVICE,Advice IT Infinite Public Company Limited,SET,Services,Commerce
+AE,ALL ENERGY & UTILITIES PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+AEONTS,AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+AF,AIRA FACTORING PUBLIC COMPANY LIMITED,mai,Financials,-
+AFC,ASIA FIBER PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+AGE,ASIA GREEN ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+AH,AAPICO HITECH PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+AHC,AIKCHOL HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+AI,ASIAN INSULATORS PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+AIE,AI ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+AIMCG,AIM COMMERCIAL GROWTH FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+AIMIRT,AIM INDUSTRIAL GROWTH FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+AIRA,AIRA CAPITAL PUBLIC COMPANY LIMITED,mai,Financials,-
+AIT,"ADVANCED INFORMATION TECHNOLOGY PUBLIC CO.,LTD.",SET,Technology,Information & Communication Technology
+AJ,A.J. PLAST PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+AJA,AJ ADVANCE TECHNOLOGY PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+AKP,AKKHIE PRAKARN PUBLIC COMPANY LIMITED,mai,Services,-
+AKR,EKARAT ENGINEERING PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+AKS,AKS CORPORATION PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+ALLA,ALLA PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+ALLY,ALLY FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+ALPHAX,ALPHA DIVISIONS PUBLIC COMPANY LIMITED,mai,Resources,-
+ALT,ALT TELECOM PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+ALUCON,ALUCON PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+AMA,AMA MARINE PUBLIC COMPANY LIMITED,mai,Services,-
+AMANAH,AMANAH LEASING PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+AMARC,ASIA MEDICAL AND AGRICULTURAL LABORATORY AND RESEARCH CENTER PUBLIC COMPANY LIMITED,mai,Services,-
+AMARIN,AMARIN CORPORATIONS PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+AMATA,AMATA CORPORATION PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+AMATAR,AMATA SUMMIT GROWTH FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+AMATAV,AMATA VN PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+AMC,ASIA METAL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+AMR,AMR ASIA PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+ANAN,ANANDA DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+ANI,Asia Network International Public Company Limited,SET,Services,Transportation & Logistics
+AOT,AIRPORTS OF THAILAND PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+AP,AP (THAILAND) PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+APCO,ASIAN PHYTOCEUTICALS PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+APCS,ASIA PRECISION PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+APO,Asian Palm Oil Public Company Limited,mai,Agro & Food Industry,-
+APP,APPLICAD PUBLIC COMPANY LIMITED,mai,Technology,-
+APURE,AGRIPURE HOLDINGS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+AQUA,AQUA CORPORATION PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+ARIN,ARINSIRI LAND PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+ARIP,ARIP PUBLIC COMPANY LIMITED,mai,Services,-
+ARROW,ARROW SYNDICATE PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+AS,ASPHERE INNOVATIONS PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+ASAP,SYNERGETIC AUTO PERFORMANCE PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+ASEFA,ASEFA PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+ASIA,ASIA HOTEL PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+ASIAN,ASIAN SEA CORPORATION PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+ASIMAR,ASIAN MARINE SERVICES PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+ASK,ASIA SERMKIJ LEASING PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+ASN,ASN BROKER PUBLIC COMPANY LIMITED,mai,Financials,-
+ASP,ASIA PLUS GROUP HOLDINGS PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+ASTR,ASTRA ENTERPRISE PUBLIC COMPANY LIMITED,mai,Services,-
+ASW,ASSETWISE PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+ATLAS,Atlas Energy Public Company Limited,SET,Resources,Energy & Utilities
+ATP30,ATP30 PUBLIC COMPANY LIMITED,mai,Services,-
+AU,AFTER YOU PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+AUCT,UNION AUCTION PUBLIC COMPANY LIMITED,mai,Services,-
+AURA,Aurora Design Public Company Limited,SET,Consumer Products,Fashion
+AWC,ASSET WORLD CORP PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+AXTRART,Axtra Future City Freehold and Leasehold Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+AYUD,ALLIANZ AYUDHYA CAPITAL PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+B,BEGISTICS PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+B52,B-52 CAPITAL PUBLIC COMPANY LIMITED,SET,Services,Commerce
+BA,BANGKOK AIRWAYS PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+BAFS,BANGKOK AVIATION FUEL SERVICES PCL.,SET,Resources,Energy & Utilities
+BAM,BANGKOK COMMERCIAL ASSET MANAGEMENT PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+BANPU,BANPU PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+BAREIT,BA Airport Leasehold Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+BAY,BANK OF AYUDHYA PUBLIC COMPANY LIMITED,SET,Financials,Banking
+BBGI,BBGI PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+BBIK,BLUEBIK GROUP PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+BBL,BANGKOK BANK PUBLIC COMPANY LIMITED,SET,Financials,Banking
+BC,BOUTIQUE CORPORATION PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+BCH,BANGKOK CHAIN HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+BCP,BANGCHAK CORPORATION PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+BCPG,BCPG PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+BCT,BIRLA CARBON (THAILAND) PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+BDMS,BANGKOK DUSIT MEDICAL SERVICES PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+BE8,BERYL 8 PLUS PUBLIC COMPANY LIMITED,mai,Technology,-
+BEAUTY,BEAUTY COMMUNITY PUBLIC COMPANY LIMITED,SET,Services,Commerce
+BEC,BEC WORLD PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+BEM,BANGKOK EXPRESSWAY AND METRO  PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+BEYOND,BOUND AND BEYOND PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+BGC,BG CONTAINER GLASS PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+BGRIM,B.GRIMM POWER PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+BGT,BGT CORPORATION PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+BH,BUMRUNGRAD HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+BIG,BIG CAMERA CORPORATION PUBLIC COMPANY LIMITED,SET,Services,Commerce
+BIOTEC,BIO GREEN ENERGY TECH PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+BIS,Bioscience Animal Health Public Company Limited,mai,Services,-
+BIZ,BUSINESS ALIGNMENT PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+BJC,BERLI JUCKER PUBLIC COMPANY LIMITED,SET,Services,Commerce
+BJCHI,BJC HEAVY INDUSTRIES PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+BKA,Bangkok Asset Intergroup Public Company Limited,mai,Property & Construction,-
+BKD,BANGKOK DEC-CON PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+BKGI,Bangkok Genomics Innovation Public Company Limited,SET,Services,Health Care Services
+BKIH,BKI HOLDINGS PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+BLA,BANGKOK LIFE ASSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+BLAND,BANGKOK LAND PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+BLC,Bangkok Lab and Cosmetic Public Company Limited,SET,Consumer Products,Personal Products & Pharmaceuticals
+BLESS,BLESS ASSET GROUP PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+BLISS,BLISS INTELLIGENCE PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+BM,BANGKOK SHEET METAL PUBLIC COMPANY LIMITED,mai,Industrial,-
+BOFFICE,BHIRAJ OFFICE LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+BOL,BUSINESS ONLINE PUBLIC COMPANY LIMITED,mai,Services,-
+BPS,BPS Technology Public Company Limited,mai,Industrial,-
+BR,BANGKOK RANCH PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+BRI,BRITANIA PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+BROCK,BAAN ROCK GARDEN PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+BRR,BURIRAM SUGAR PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+BRRGIF,BURIRAM SUGAR GROUP POWER PLANT INFRASTRUCTURE FUND,SET,Resources,Energy & Utilities
+BSBM,BANGSAPHAN BARMILL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+BSM,BUILDERSMART PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+BTC,THE BROOKER GROUP PUBLIC COMPANY LIMITED,mai,Financials,-
+BTG,BETAGRO PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+BTNC,BOUTIQUE NEWCITY PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+BTS,BTS GROUP HOLDINGS PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+BTSGIF,BTS RAIL MASS TRANSIT GROWTH INFRASTRUCTURE FUND,SET,Services,Transportation & Logistics
+BTW,BT WEALTH INDUSTRIES PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+BUI,BANGKOK UNION INSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+BVG,BlueVenture Group Public Company Limited,mai,Technology,-
+BWG,BETTER WORLD GREEN PUBLIC COMPANY LIMITED,SET,Services,Professional Services
+B-WORK,BUALUANG OFFICE LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+BYD,BEYOND SECURITIES PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+CAZ,CAZ (THAILAND) PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+CBG,CARABAO GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+CCET,"CAL-COMP ELECTRONICS (THAILAND) PUBLIC CO., LTD.",SET,Technology,Electronic Components
+CCP,CHONBURI CONCRETE PRODUCT PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+CEN,CAPITAL ENGINEERING NETWORK PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+CENTEL,CENTRAL PLAZA HOTEL PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+CEYE,Chamni's Eye Public Company Limited,mai,Services,-
+CFARM,CHUWIT FARM (2019) PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+CFRESH,SEAFRESH INDUSTRY PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+CGD,COUNTRY GROUP DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+CGH,COUNTRY GROUP HOLDINGS PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+CH,Chin Huay Public Company Limited,SET,Agro & Food Industry,Food & Beverage
+CHAO,CHAOSUA FOODS INDUSTRY PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+CHARAN,CHARAN INSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+CHASE,Chase Asia Public Company Limited,SET,Financials,Finance & Securities
+CHAYO,CHAYO GROUP PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+CHEWA,CHEWATHAI PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+CHG,CHULARAT HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+CHIC,CHIC REPUBLIC PUBLIC COMPANY LIMITED,mai,Services,-
+CHO,CHO THAVEE PUBLIC COMPANY LIMITED,mai,Industrial,-
+CHOTI,"KIANG HUAT SEA GULL TRADING FROZEN FOOD PUBLIC CO., LTD.",SET,Agro & Food Industry,Food & Beverage
+CHOW,CHOW BRIGHT VENTURES HOLDINGS PUBLIC COMPANY LIMITED,mai,Industrial,-
+CI,CHARN ISSARA DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+CIG,C.I.GROUP PUBLIC COMPANY LIMITED,mai,Industrial,-
+CITY,CITY STEEL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+CIVIL,CIVIL ENGINEERING PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+CK,CH. KARNCHANG PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+CKP,CK POWER PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+CM,CHIANGMAI FROZEN FOODS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+CMAN,CHEMEMAN PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+CMC,CHAOPRAYAMAHANAKORN PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+CMO,CMO PUBLIC COMPANY LIMITED,mai,Services,-
+CMR,CHIANG MAI RAM MEDICAL BUSINESS PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+CNT,CHRISTIANI & NIELSEN (THAI) PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+COCOCO,Thai Coconut Public Company Limited,SET,Agro & Food Industry,Food & Beverage
+COLOUR,SALEE COLOUR PUBLIC COMPANY LIMITED,mai,Industrial,-
+COM7,COM7 PUBLIC COMPANY LIMITED,SET,Services,Commerce
+COMAN,COMANCHE INTERNATIONAL PUBLIC COMPANY LIMITED,mai,Technology,-
+CPALL,CP ALL PUBLIC COMPANY LIMITED,SET,Services,Commerce
+CPANEL,CPANEL PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+CPAXT,CP AXTRA PUBLIC COMPANY LIMITED,SET,Services,Commerce
+CPF,CHAROEN POKPHAND FOODS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+CPH,CASTLE PEAK HOLDINGS PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+CPI,CHUMPORN PALM OIL INDUSTRY PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+CPL,CPL GROUP PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+CPN,CENTRAL PATTANA PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+CPNCG,CPN COMMERCIAL GROWTH LEASEHOLD PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+CPNREIT,CPN RETAIL GROWTH LEASEHOLD REIT,SET,Property & Construction,Property Fund & REITs
+CPR,CPR GOMU INDUSTRIAL PUBLIC COMPANY LIMITED,mai,Industrial,-
+CPT,CPT DRIVES AND POWER PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+CPTREIT,C.P. Tower Leasehold Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+CPW,COPPERWIRED PUBLIC COMPANY LIMITED,SET,Services,Commerce
+CRANE,CHU KAI PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+CRC,CENTRAL RETAIL CORPORATION PUBLIC COMPANY LIMITED,SET,Services,Commerce
+CRD,CHIANGMAI RIMDOI PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+CREDIT,THAI CREDIT BANK PUBLIC COMPANY LIMITED,SET,Financials,Banking
+CSC,CROWN SEAL PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+CSP,CSP STEEL CENTER PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+CSR,CITY SPORTS AND RECREATION PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+CSS,COMMUNICATION AND SYSTEM SOLUTION PUBLIC COMPANY LIMITED,SET,Services,Commerce
+CTARAF,CENTARA HOTELS & RESORTS LEASEHOLD PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+CTW,CHAROONG THAI WIRE & CABLE PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+CV,CLOVER POWER PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+CWT,CHAI WATANA TANNERY GROUP PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+D,DENTAL CORPORATION PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+DCC,DYNASTY CERAMIC PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+DCON,DCON PRODUCTS PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+DDD,DO DAY DREAM PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+DELTA,DELTA ELECTRONICS (THAILAND) PUBLIC COMPANY LIMITED,SET,Technology,Electronic Components
+DEMCO,DEMCO PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+DEXON,DEXON Technology Public Company Limited,mai,Services,-
+DHOUSE,DHOUSE PATTANA PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+DIF,DIGITAL TELECOMMUNICATIONS INFRASTRUCTURE FUND,SET,Technology,Information & Communication Technology
+DIMET,DIMET (SIAM) PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+DITTO,DITTO (THAILAND) PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+DMT,DON MUANG TOLLWAY PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+DOD,DOD BIOTECH PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+DOHOME,DOHOME PUBLIC COMPANY LIMITED,SET,Services,Commerce
+DPAINT,DELTA PAINT PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+DREIT,DUSIT THANI FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+DRT,DIAMOND BUILDING PRODUCTS PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+DTCENT,D.T.C. Enterprise Public Company Limited,SET,Technology,Information & Communication Technology
+DTCI,D.T.C. INDUSTRIES PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+DUSIT,DUSIT THANI PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+EA,ENERGY ABSOLUTE PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+EASON,EASON & CO PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+EAST,EASTERN COMMERCIAL LEASING PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+EASTW,EASTERN WATER RESOURCES DEVELOPMENT AND MANAGEMENT PCL.,SET,Resources,Energy & Utilities
+ECF,EAST COAST FURNITECH PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+EFORL,E FOR L AIM PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+EGATIF,"NORTH BANGKOK POWER PLANT BLOCK 1 INFRASTRUCTURE FUND, ELECTRICITY GENERATING AUTHORITY OF THAILAND",SET,Resources,Energy & Utilities
+EGCO,ELECTRICITY GENERATING PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+EKH,EKACHAI MEDICAL CARE PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+EMC,EMC PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+EMPIRE,ORIGIN GLOBAL EMPIRE PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+EP,EASTERN POWER GROUP PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+EPG,EASTERN POLYMER GROUP PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+ERW,THE ERAWAN GROUP PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+ESTAR,EASTERN STAR REAL ESTATE PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+ETC,EARTH TECH ENVIRONMENT PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+ETE,EASTERN TECHNICAL ENGINEERING PUBLIC COMPANY LIMITED,mai,Services,-
+ETL,Euroasia Total Logistics Public Company Limited,SET,Services,Transportation & Logistics
+EURO,Euro Creations Public Company Limited,mai,Consumer Products,-
+EVER,EVERLAND PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+F&D,FOOD AND DRINKS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+FANCY,FANCY WOOD INDUSTRIES PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+FE,FAR EAST FAME LINE PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+FLE,Frontline Engineering Public Company Limited,mai,Industrial,-
+FLOYD,FLOYD PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+FM,FOOD MOMENTS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+FMT,FINE METAL TECHNOLOGIES PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+FN,FN FACTORY OUTLET PUBLIC COMPANY LIMITED,SET,Services,Commerce
+FNS,FNS HOLDINGS PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+FORTH,FORTH CORPORATION PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+FPI,FORTUNE PARTS INDUSTRY PUBLIC COMPANY LIMITED,mai,Industrial,-
+FPT,FRASERS PROPERTY (THAILAND) PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+FSMART,FORTH SMART SERVICE PUBLIC COMPANY LIMITED,mai,Services,-
+FSX,FINANSIA X PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+FTE,FIRETRADE ENGINEERING PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+FTI,Function International Public Company Limited,SET,Consumer Products,Home & Office Products
+FTREIT,FRASERS PROPERTY THAILAND INDUSTRIAL FREEHOLD & LEASEHOLD REIT,SET,Property & Construction,Property Fund & REITs
+FUTURERT,Future City Leasehold Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+FVC,FILTER VISION PUBLIC COMPANY LIMITED,mai,Services,-
+GABLE,G-Able Public Company Limited,SET,Technology,Information & Communication Technology
+GAHREIT,GRANDE HOSPITALITY REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+GBX,GLOBLEX HOLDING MANAGEMENT PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+GC,GLOBAL CONNECTIONS PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+GCAP,G CAPITAL PUBLIC COMPANY LIMITED,mai,Financials,-
+GEL,GENERAL ENGINEERING PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+GENCO,"GENERAL ENVIRONMENTAL CONSERVATION PUBLIC CO., LTD.",SET,Services,Professional Services
+GFC,Genesis Fertility Center Public Company Limited,mai,Services,-
+GFPT,GFPT PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+GGC,GLOBAL GREEN CHEMICALS PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+GJS,G J STEEL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+GLOBAL,SIAM GLOBAL HOUSE PUBLIC COMPANY LIMITED,SET,Services,Commerce
+GLORY,GLORY FOREVER PUBLIC COMPANY LIMITED,mai,Services,-
+GPI,GRAND PRIX INTERNATIONAL PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+GPSC,GLOBAL POWER SYNERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+GRAMMY,GMM GRAMMY PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+GRAND,GRANDE ASSET HOTELS AND PROPERTY PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+GREEN,GREEN RESOURCES PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+GROREIT,GRANDE ROYAL ORCHID HOSPITALITY REAL ESTATE INVESTMENT TRUST WITH BUY-BACK CONDITION,SET,Property & Construction,Property Fund & REITs
+GST,GULF SPACE TECHNOLOGY PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+GSTEEL,G STEEL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+GTB,GETABEC PUBLIC COMPANY LIMITED,mai,Industrial,-
+GTV,GREEN TECH VENTURES PUBLIC COMPANY LIMITED,mai,Resources,-
+GULF,GULF DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+GUNKUL,GUNKUL ENGINEERING PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+GVREIT,GOLDEN VENTURES LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+GYT,GOODYEAR (THAILAND) PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+HANA,HANA MICROELECTRONICS PUBLIC COMPANY LIMITED,SET,Technology,Electronic Components
+HANN,MUKDAHAN INTERNATIONAL HOSPITAL PUBLIC COMPANY LIMITED,mai,Services,-
+HARN,HARN ENGINEERING SOLUTIONS PUBLIC COMPANY LIMITED,mai,Industrial,-
+HENG,HENG LEASING AND CAPITAL PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+HFT,HWA FONG RUBBER (THAILAND) PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+HL,HEALTHLEAD PUBLIC COMPANY LIMITED,mai,Services,-
+HMPRO,HOME PRODUCT CENTER PUBLIC COMPANY LIMITED,SET,Services,Commerce
+HPF,HEMARAJ INDUSTRIAL PROPERTY AND LEASEHOLD FUND,SET,Property & Construction,Property Fund & REITs
+HPT,HOME POTTERY PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+HTC,HAAD THIP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+HTECH,HALCYON TECHNOLOGY PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+HUMAN,HUMANICA PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+HYDRO,HYDROTEK PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+HYDROGEN,Hydrogen Freehold and Leasehold Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+I2,I2 Enterprise Public Company Limited,mai,Technology,-
+ICC,I.C.C. INTERNATIONAL PUBLIC COMPANY LIMITED,SET,Services,Commerce
+ICHI,ICHITAN GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+ICN,INFORMATION AND COMMUNICATION NETWORKS PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+IDG,INDIGY PUBLIC COMPANY LIMITED,mai,Technology,-
+IFS,IFS CAPITAL (THAILAND) PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+IHL,INTERHIDES PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+IIG,I&I GROUP PUBLIC COMPANY LIMITED,mai,Technology,-
+III,TRIPLE I LOGISTICS PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+ILINK,INTERLINK COMMUNICATION PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+ILM,INDEX LIVING MALL PUBLIC COMPANY LIMITED,SET,Services,Commerce
+IMH,INTERMEDICAL CARE AND LAB HOSPITAL PUBLIC COMPANY LIMITED,mai,Services,-
+IMPACT,IMPACT GROWTH REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+IND,INDEX INTERNATIONAL GROUP PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+INET,INTERNET THAILAND PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+INETREIT,INET FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+INGRS,INGRESS INDUSTRIAL (THAILAND) PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+INOX,POSCO-THAINOX PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+INSET,INFRASET PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+INSURE,INDARA INSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+IP,INTER PHARMA PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+IRC,INOUE RUBBER (THAILAND) PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+IRCP,"INTERNATIONAL RESEARCH CORPORATION PUBLIC CO., LTD.",mai,Technology,-
+IROYAL,Interroyal Engineering Public Company Limited,mai,Services,-
+IRPC,IRPC PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+ISSARA,ISSARA REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+IT,IT CITY PUBLIC COMPANY LIMITED,SET,Services,Commerce
+ITC,i-Tail Corporation Public Company Limited,SET,Agro & Food Industry,Food & Beverage
+ITD,ITALIAN-THAI DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+ITEL,INTERLINK TELECOM PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+ITNS,INTERNATIONAL NETWORK SYSTEM PUBLIC COMPANY LIMITED,mai,Technology,-
+ITTHI,ITTHIRIT NICE CORPORATION PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+IVF,INSPIRE IVF Public Company Limited,mai,Services,-
+IVL,INDORAMA VENTURES PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+J,JAS ASSET PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+JAK,JAKPAISAN ESTATE PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+JAS,JASMINE INTERNATIONAL PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+JCK,JCK INTERNATIONAL PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+JCT,JACK CHIA INDUSTRIES (THAILAND) PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+JDF,JD Food Public Company Limited,SET,Agro & Food Industry,Food & Beverage
+JMART,JAYMART GROUP HOLDINGS PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+JMT,JMT NETWORK SERVICES PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+JPARK,JENKONGKLAI PUBLIC COMPANY LIMITED,mai,Services,-
+JR,J.R.W. UTILITY PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+JSP,JSP PHARMACEUTICAL MANUFACTURING (THAILAND) PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+JTS,JASMINE TECHNOLOGY SOLUTION PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+JUBILE,JUBILEE ENTERPRISE PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+K,KINGSMEN C.M.T.I. PUBLIC COMPANY LIMITED,mai,Services,-
+KAMART,KARMARTS PUBLIC COMPANY LIMITED,SET,Services,Commerce
+KASET,THAI HA PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+KBANK,KASIKORNBANK PUBLIC COMPANY LIMITED,SET,Financials,Banking
+KBS,KHONBURI SUGAR PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+KBSPIF,KHONBURI SUGAR POWER PLANT INFRASTRUCTURE FUND,SET,Resources,Energy & Utilities
+KC,K.C. PROPERTY PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+KCAR,KRUNGTHAI CAR RENT AND LEASE PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+KCC,Knight Club Capital Holding Public Company Limited,mai,Financials,-
+KCE,KCE ELECTRONICS PUBLIC COMPANY LIMITED,SET,Technology,Electronic Components
+KCG,KCG CORPORATION PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+KCM,K.C. METALSHEET PUBLIC COMPANY LIMITED,mai,Industrial,-
+KDH,THONBURI MEDICAL CENTRE PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+KGEN,KING GEN PUBLIC COMPANY LIMITED,mai,Services,-
+KGI,KGI SECURITIES (THAILAND) PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+KIAT,KIATTANA TRANSPORT PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+KISS,ROJUKISS INTERNATIONAL PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+KJL,KIJCHAROEN ENGINEERING ELECTRIC PUBLIC COMPANY LIMITED,mai,Industrial,-
+KK,K&K SUPERSTORE SOUTHERN PUBLIC COMPANY LIMITED,mai,Services,-
+KKC,KULTHORN KIRBY PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+KKP,KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED,SET,Financials,Banking
+KLINIQ,The Klinique Medical Clinic Public Company Limited,SET,Services,Health Care Services
+KOOL,CL VENTURE PUBLIC COMPANY LIMITED,mai,Services,-
+KPNREIT,KPN FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+KSL,KHON KAEN SUGAR INDUSTRY PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+KTB,KRUNG THAI BANK PUBLIC COMPANY LIMITED,SET,Financials,Banking
+KTBSTMR,KTBST MIXED FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+KTC,KRUNGTHAI CARD PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+KTIS,KASET THAI INTERNATIONAL SUGAR CORPORATION PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+KTMS,KT Medical Service Public Company Limited,mai,Services,-
+KUMWEL,KUMWELL CORPORATION PUBLIC COMPANY LIMITED,mai,Industrial,-
+KUN,VILLA KUNALAI PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+KWC,KRUNGDHEP SOPHON PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+KWI,KWI PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+KWM,K. W. METAL WORK PUBLIC COMPANY LIMITED,mai,Industrial,-
+KYE,KANG YONG ELECTRIC PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+L&E,LIGHTING & EQUIPMENT PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+LALIN,LALIN PROPERTY PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+LANNA,THE LANNA RESOURCES PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+LDC,LDC DENTAL PUBLIC COMPANY LIMITED,mai,Services,-
+LEE,LEE FEED MILL PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+LEO,LEO GLOBAL LOGISTICS PUBLIC COMPANY LIMITED,mai,Services,-
+LH,LAND AND HOUSES PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+LHFG,LH FINANCIAL GROUP PUBLIC COMPANY LIMITED,SET,Financials,Banking
+LHHOTEL,LH HOTEL LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+LHK,LOHAKIT METAL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+LHRREIT,Land and Houses Residential FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+LHSC,LH SHOPPING CENTERS LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+LIT,LEASE IT PUBLIC COMPANY LIMITED,mai,Financials,-
+LOXLEY,LOXLEY PUBLIC COMPANY LIMITED,SET,Services,Commerce
+LPH,LADPRAO GENERAL HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+LPN,L.P.N. DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+LST,LAM SOON (THAILAND) PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+LTMH,LTMH Public Company Limited,mai,Services,-
+LTS,Light Up Total Solution Public Company Limited,mai,Consumer Products,-
+LUXF,LUXURY REAL ESTATE INVESTMENT FUND,SET,Property & Construction,Property Fund & REITs
+M,MK RESTAURANT GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+MADAME,MADAME BIOSCIENCE PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+MAGURO,Maguro Group Public Company Limited,mai,Agro & Food Industry,-
+MAJOR,MAJOR CINEPLEX GROUP PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+MALEE,MALEE GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+MANRIN,THE MANDARIN HOTEL PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+MASTEC,Masstec Link Public Company Limited,SET,Industrials,Industrial Materials & Machinery
+MASTER,Master Style Public Company Limited,SET,Services,Health Care Services
+MATCH,MATCHING MAXIMIZE SOLUTION PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+MATI,MATICHON PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+MBAX,MULTIBAX PUBLIC COMPANY LIMITED,mai,Industrial,-
+MBK,MBK PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+MC,MC GROUP PUBLIC COMPANY LIMITED,SET,Services,Commerce
+MCA,Market Connections Asia Public Company Limited,mai,Services,-
+M-CHAI,MAHACHAI HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+MCOT,MCOT PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+MCS,M.C.S.STEEL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+MDX,M.D.X. PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+MEB,MEB Corporation Public Company Limited,mai,Services,-
+MEDEZE,Medeze Group Public Company Limited,SET,Services,Health Care Services
+MEGA,MEGA LIFESCIENCES PUBLIC COMPANY LIMITED,SET,Services,Commerce
+MENA,MENA TRANSPORT PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+META,META CORPORATION PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+METCO,MURAMOTO ELECTRON (THAILAND) PUBLIC COMPANY LIMITED,SET,Technology,Electronic Components
+MFC,MFC ASSET MANAGEMENT PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+MFEC,MFEC PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+MGC,Millennium Group Corporation (Asia) Public Company Limited,SET,Industrials,Automotive
+MGI,Miss Grand International Public Company Limited,mai,Consumer Products,-
+MGT,MEGACHEM (THAILAND) PUBLIC COMPANY LIMITED,mai,Industrial,-
+MICRO,MICRO LEASING PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+MIDA,MIDA ASSETS PUBLIC COMPANY LIMITED,SET,Services,Commerce
+MII,MFC Industrial Investment Freehold and Leasehold Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+MILL,MILLCON STEEL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+MINT,MINOR INTERNATIONAL PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+MIPF,MILLIONAIRE PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+MITSIB,MITSIB LEASING PUBLIC COMPANY LIMITED,mai,Financials,-
+MJD,MAJOR DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+MJLF,MAJOR CINEPLEX LIFESTYLE LEASEHOLD PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+MK,M.K. REAL ESTATE DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+ML,"MIDA LEASING PUBLIC CO., LTD.",SET,Financials,Finance & Securities
+MMM,MMM Capital Public Company Limited,mai,Property & Construction,-
+MNIT,MFC-NICHADA THANI PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+MNIT2,NICHADA THANI PROPERTY FUND 2,SET,Property & Construction,Property Fund & REITs
+MNRF,MULTI-NATIONAL RESIDENCE FUND,SET,Property & Construction,Property Fund & REITs
+MODERN,MODERNFORM GROUP PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+MONO,MONO NEXT PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+MOONG,MOONG PATTANA INTERNATIONAL PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+MORE,MORE RETURN PUBLIC COMPANY LIMITED,mai,Services,-
+MOSHI,Moshi Moshi Retail Corporation Public Company Limited,SET,Services,Commerce
+MOTHER,Mother Marketing Public Company Limited,mai,Services,-
+M-PAT,MFC PATONG HERITAGE PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+MPJ,MPJ Logistics Public Company Limited,mai,Services,-
+MRDIYT,MR. D.I.Y. HOLDING (THAILAND) PUBLIC COMPANY LIMITED,SET,Services,Commerce
+MSC,METRO SYSTEMS CORPORATION PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+MST,MAYBANK SECURITIES (THAILAND) PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+M-STOR,MFC-STRATEGIC STORAGE FUND,SET,Property & Construction,Property Fund & REITs
+MTC,MUANGTHAI CAPITAL PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+MTI,MUANG THAI INSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+MTW,MAKE TO WIN HOLDING PUBLIC COMPANY LIMITED,mai,Industrial,-
+MUD,MUD & HOUND PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+MVP,M VISION PUBLIC COMPANY LIMITED,mai,Services,-
+NAM,NAMWIWAT MEDICAL CORPORATION PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+NAT,NAT ABSOLUTE TECHNOLOGIES PUBLIC COMPANY LIMITED,mai,Technology,-
+NATION,NATION GROUP (THAILAND) PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+NC,NEWCITY (BANGKOK) PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+NCAP,NEXT CAPITAL PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+NCH,N. C. HOUSING PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+NCL,NCL INTERNATIONAL LOGISTICS PUBLIC COMPANY LIMITED,mai,Services,-
+NCP,Nice Call Public Company Limited,mai,Services,-
+NDR,N.D. RUBBER PUBLIC COMPANY LIMITED,mai,Industrial,-
+NEO,Neo Corporate Public Company Limited,SET,Consumer Products,Personal Products & Pharmaceuticals
+NEP,NEP REALTY AND INDUSTRY PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+NER,NORTH EAST RUBBER PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+NETBAY,NETBAY PUBLIC COMPANY LIMITED,mai,Technology,-
+NEW,WATTANA KARNPAET PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+NEX,NEX POINT PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+NFC,NFC PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+NKI,THE NAVAKIJ INSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+NKT,Nakornthon Hospital Public Company Limited,SET,Services,Health Care Services
+NL,NL Development Public Company Limited,SET,Property & Construction,Construction Services
+NNCL,NAVANAKORN PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+NOBLE,NOBLE DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+NOVA,NOVA EMPIRE PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+NPK,NEW PLUS KNITTING PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+NRF,NR INSTANT PRODUCE PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+NSL,NSL FOODS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+NTF,NTF INTERGROUP (THAILAND) PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+NTSC,Nutrition SC Public Company Limited,mai,Agro & Food Industry,-
+NTV,NONTHAVEJ HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+NUT,NUTRITION PROFESS PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+NV,NOVA ORGANIC PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+NVD,NIRVANA DEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+NWR,NAWARAT PATANAKARN PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+NYT,NAMYONG TERMINAL PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+OCC,O.C.C. PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+OGC,OCEAN GLASS PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+OHTL,OHTL PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+OKJ,Pluk Phak Praw Rak Mae Public Company Limited,SET,Agro & Food Industry,Food & Beverage
+ONEE,THE ONE ENTERPRISE PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+ONSENS,Onsen Retreat and Spa Group Public Company Limited,SET,Services,Tourism & Leisure
+OR,PTT OIL AND RETAIL BUSINESS PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+ORI,ORIGIN PROPERTY PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+ORN,ORNSIRIN HOLDING PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+OSP,OSOTSPA PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+PACO,PRESIDENT AUTOMOBILE INDUSTRIES PUBLIC COMPANY LIMITED,mai,Industrial,-
+PAF,PAN ASIA FOOTWEAR PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+PANEL,PanelesMatic Solutions Public Company Limited,mai,Property & Construction,-
+PAP,PACIFIC PIPE PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+PATO,PATO CHEMICAL INDUSTRY PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+PB,PRESIDENT BAKERY PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+PCC,Precise Corporation Public Company Limited,SET,Industrials,Industrial Materials & Machinery
+PCE,PETCHSRIVICHAI ENTERPRISE PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+PCSGH,P.C.S. MACHINE GROUP HOLDING PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+PDG,PRODIGY PUBLIC COMPANY LIMITED,mai,Industrial,-
+PDJ,PRANDA JEWELRY PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+PEACE,PEACE & LIVING PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+PEER,PEER FOR YOU PUBLIC COMPANY LIMITED,mai,Services,-
+PERM,PERMSIN STEEL WORKS PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+PF,PROPERTY PERFECT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+PG,PEOPLE'S GARMENT PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+PHAT,Phatra Group Public Company Limited,mai,Agro & Food Industry,-
+PHG,Patrangsit Healthcare Group Public Company Limited,SET,Services,Health Care Services
+PHOL,PHOL DHANYA PUBLIC COMPANY LIMITED,mai,Industrial,-
+PICO,PICO (THAILAND) PUBLIC COMPANY LIMITED,mai,Services,-
+PIMO,PIONEER MOTOR PUBLIC COMPANY LIMITED,mai,Industrial,-
+PIN,PINTHONG INDUSTRIAL PARK PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+PIS,Pro Inside Public Company Limited,mai,Technology,-
+PJW,PANJAWATTANA PLASTIC PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+PK,PATKOL PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+PL,PHATRA LEASING PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+PLANB,PLAN B MEDIA PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+PLANET,PLANET COMMUNICATIONS ASIA PUBLIC COMPANY LIMITED,mai,Technology,-
+PLAT,THE PLATINUM GROUP PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+PLE,POWER LINE ENGINEERING PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+PLT,Pilatus Marine Public Company Limited,mai,Services,-
+PLUS,Royal Plus Public Company Limited,SET,Agro & Food Industry,Food & Beverage
+PM,PREMIER MARKETING PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+PMC,PMC Label Materials Public Company Limited,mai,Industrial,-
+PMTA,PM THORESEN ASIA HOLDINGS PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+POLY,Polynet Public Company Limited,SET,Industrials,Automotive
+POPF,PRIME OFFICE LEASEHOLD PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+PORT,SAHATHAI TERMINAL PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+POWER,POWER SOLUTION TECHNOLOGIES PUBLIC COMPANY LIMITED,mai,Resources,-
+PPM,PORN PROM METAL PUBLIC COMPANY LIMITED,mai,Industrial,-
+PPP,PREMIER PRODUCTS PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+PPPM,PP PRIME PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+PPS,PROJECT PLANNING SERVICE PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+PQS,Premier Quality Starch Public Company Limited,SET,Agro & Food Industry,Food & Beverage
+PR9,PRARAM 9 HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+PRAKIT,PRAKIT HOLDINGS PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+PRAPAT,PEERAPAT TECHNOLOGY PUBLIC COMPANY LIMITED,mai,Industrial,-
+PREB,PRE-BUILT PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+PRECHA,PREECHA GROUP PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+PRG,PRG CORPORATION PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+PRI,Primo Service Solutions Public Company Limited,mai,Property & Construction,-
+PRIME,PRIME ROAD POWER PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+PRIN,PRINSIRI PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+PRINC,PRINCIPAL CAPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+PRM,PRIMA MARINE PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+PROEN,PROEN CORP PUBLIC COMPANY LIMITED,mai,Technology,-
+PROS,PROSPER ENGINEERING PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+PROSPECT,PROSPECT LOGISTICS AND INDUSTRIAL FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+PROUD,PROUD REAL ESTATE PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+PRTR,PRTR Group Public Company Limited,SET,Services,Professional Services
+PSGC,PSG CORPORATION PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+PSH,PRUKSA HOLDING PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+PSL,PRECIOUS SHIPPING PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+PSP,P.S.P.Specialties Public Company Limited,SET,Industrials,Industrial Materials & Machinery
+PT,PREMIER TECHNOLOGY PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+PTC,PREMIER TANK CORPORATION PUBLIC COMPANY LIMITED,mai,Resources,-
+PTG,PTG ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+PTL,POLYPLEX (THAILAND) PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+PTT,PTT PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+PTTEP,PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+PTTGC,PTT GLOBAL CHEMICAL PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+PYLON,PYLON PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+Q-CON,QUALITY CONSTRUCTION PRODUCTS PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+QDC,QUANTUM D C PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+QH,QUALITY HOUSES PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+QHBREIT,Quality Houses Business Complex Leasehold Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+QHHRREIT,Quality Houses Hotel and Residence Freehold and Leasehold Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+QHOP,QUALITY HOSPITALITY LEASEHOLD PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+QLT,QUALITECH PUBLIC COMPANY LIMITED,mai,Services,-
+QTC,QTC ENERGY PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+QTCG,QTCG PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+RABBIT,RABBIT HOLDINGS PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+RAM,RAMKHAMHAENG HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+RATCH,RATCH GROUP PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+RBF,R&B FOOD SUPPLY PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+RCL,REGIONAL CONTAINER LINES PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+READY,READYPLANET PUBLIC COMPANY LIMITED,mai,Technology,-
+RICHY,RICHY PLACE 2002 PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+RJH,RAJTHANEE HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+RML,RAIMON LAND PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+ROCK,ROCKWORTH PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+ROCTEC,ROCTEC GLOBAL PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+ROH,ROYAL ORCHID HOTEL (THAILAND) PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+ROJNA,ROJANA INDUSTRIAL PARK PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+RP,RAJA FERRY PORT PUBLIC COMPANY LIMITED,mai,Services,-
+RPC,RPCG PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+RPH,RATCHAPHRUEK HOSPITAL PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+RS,RS PUBLIC COMPANY LIMITED,SET,Services,Commerce
+RSP,RICH SPORT PUBLIC COMPANY LIMITED,SET,Services,Commerce
+RT,RIGHT TUNNELLING PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+RWI,RAYONG WIRE INDUSTRIES PUBLIC COMPANY LIMITED,mai,Industrial,-
+S,SINGHA ESTATE PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+S&J,S & J INTERNATIONAL ENTERPRISES PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+S11,S 11 GROUP PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+SA,SIAMESE ASSET PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+SAAM,SAAM DEVELOPMENT PUBLIC COMPANY LIMITED,mai,Resources,-
+SABINA,SABINA PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+SAF,S.A.F. SPECIAL STEEL PUBLIC COMPANY LIMITED,mai,Industrial,-
+SAFE,Safe Fertility Group Public Company Limited,SET,Services,Health Care Services
+SAK,SAKSIAM LEASING PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+SALEE,SALEE INDUSTRY PUBLIC COMPANY LIMITED,mai,Industrial,-
+SAM,SAMCHAI STEEL INDUSTRIES PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+SAMART,SAMART CORPORATION PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+SAMCO,SAMMAKORN PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+SAMTEL,SAMART TELCOMS PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+SANKO,SANKO DIECASTING (THAILAND) PUBLIC COMPANY LIMITED,mai,Industrial,-
+SAPPE,SAPPE PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+SAT,SOMBOON ADVANCE TECHNOLOGY PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+SAUCE,THAITHEPAROS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+SAV,Samart Aviation Solutions Public Company Limited,SET,Services,Transportation & Logistics
+SAWAD,SRISAWAD CORPORATION PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+SAWANG,SAWANG EXPORT PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+SC,SC ASSET CORPORATION PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+SCAP,SRISAWAD CAPITAL 1969 PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+SCB,SCB X PUBLIC COMPANY LIMITED,SET,Financials,Banking
+SCC,THE SIAM CEMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+SCCC,SIAM CITY CEMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+SCG,RATCH PATHANA ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SCGD,SCG DECOR PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+SCGP,SCG PACKAGING PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+SCI,SCI ELECTRIC PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+SCL,S.C.L. Motor Part Public Company Limited,mai,Industrial,-
+SCM,SUCCESSMORE BEING PUBLIC COMPANY LIMITED,SET,Services,Commerce
+SCN,SCAN INTER PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SCP,SOUTHERN CONCRETE PILE PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+SDC,SAMART DIGITAL PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+SE,SIAMEAST SOLUTIONS PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+SEAFCO,SEAFCO PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+SEAOIL,SEA OIL PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SECURE,NFORCE SECURE PUBLIC COMPANY LIMITED,mai,Technology,-
+SE-ED,SE-EDUCATION PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+SEI,"SEI MEDICAL PUBLIC CO., LTD.",mai,Consumer Products,-
+SELIC,SELIC CORP PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+SENA,SENADEVELOPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+SENX,SEN X PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+SFLEX,STARFLEX PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+SFT,SHRINKFLEX (THAILAND) PUBLIC COMPANY LIMITED,mai,Industrial,-
+SGC,SG Capital Public Company Limited,SET,Financials,Finance & Securities
+SGF,SGF CAPITAL PUBLIC COMPANY LIMITED,mai,Financials,-
+SGP,SIAMGAS AND PETROCHEMICALS PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SHANG,SHANGRI-LA HOTEL PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+SHR,S HOTELS AND RESORTS PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+SIAM,SIAM STEEL INTERNATIONAL PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+SICT,SILICON CRAFT TECHNOLOGY PUBLIC COMPANY LIMITED,mai,Technology,-
+SIMAT,SIMAT TECHNOLOGIES PUBLIC COMPANY LIMITED,mai,Technology,-
+SINGER,SINGER THAILAND PUBLIC COMPANY LIMITED,SET,Services,Commerce
+SINO,Sino Logistics Corporation Public Company Limited,SET,Services,Transportation & Logistics
+SIRI,SANSIRI PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+SIRIPRT,Siripinyo Real Estate Investment Trust,SET,Property & Construction,Property Fund & REITs
+SIS,SIS DISTRIBUTION (THAILAND) PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+SISB,SISB PUBLIC COMPANY LIMITED,SET,Services,Professional Services
+SITHAI,SRITHAI SUPERWARE PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+SJWD,SCGJWD LOGISTICS PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+SK,SIRAKORN PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+SKE,SAKOL ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SKIN,SKIN LABORATORY PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+SKN,S.KIJCHAI ENTERPRISE PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+SKR,SIKARIN PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+SKY,SKY ICT PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+SLP,SALEE PRINTING PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+SMART,SMART CONCRETE PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+SMD100,SMD RISE PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+SMIT,SAHAMIT MACHINERY PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+SMO,SMOTHONG GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+SMPC,SAHAMITR PRESSURE CONTAINER PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+SMT,STARS MICROELECTRONICS (THAILAND) PUBLIC COMPANY LIMITED,SET,Technology,Electronic Components
+SNC,SNC FORMER PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+SNNP,SRINANAPORN MARKETING PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+SNP,S & P SYNDICATE PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+SNPS,Specialty Natural Products Public Company Limited,SET,Consumer Products,Personal Products & Pharmaceuticals
+SO,SIAMRAJATHANEE PUBLIC COMPANY LIMITED,SET,Services,Professional Services
+SOLAR,SOLARTRON PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+SONIC,SONIC INTERFREIGHT PUBLIC COMPANY LIMITED,mai,Services,-
+SORKON,S. KHONKAEN FOODS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+SPA,SIAM WELLNESS GROUP PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+SPACK,S. PACK & PRINT PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+SPALI,SUPALAI PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+SPC,SAHA PATHANAPIBUL PUBLIC COMPANY LIMITED,SET,Services,Commerce
+SPCG,SPCG PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SPG,THE SIAM PAN GROUP PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+SPI,SAHA PATHANA INTER-HOLDING PUBLIC COMPANY LIMITED,SET,Services,Commerce
+SPRC,STAR PETROLEUM REFINING PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SPREME,Supreme Distribution Public Company Limited,SET,Technology,Information & Communication Technology
+SPRIME,S PRIME GROWTH LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+SPTX,SPT X PUBLIC COMPANY LIMITED,mai,Services,-
+SPVI,S P V I PUBLIC COMPANY LIMITED,mai,Technology,-
+SQ,SAHAKOL EQUIPMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+SR,SIAMRAJ PUBLIC COMPANY LIMITED,mai,Resources,-
+SRICHA,SRIRACHA CONSTRUCTION PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+SRIPANWA,SRI PANWA HOSPITALITY REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+SRS,SIRISOFT PUBLIC COMPANY LIMITED,mai,Technology,-
+SSF,SURAPON FOODS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+SSP,SERMSANG POWER CORPORATION PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SSPF,SALA @ SATHORN PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+SSSC,SIAM STEEL SERVICE CENTER PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+SST,SUB SRI THAI PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+SSTRT,SUB SRI THAI REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+STA,SRI TRANG AGRO-INDUSTRY PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+STANLY,THAI STANLEY ELECTRIC PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+STARM,STAR MONEY PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+STC,STC CONCRETE PRODUCT PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+STECH,SIAM TECHNIC CONCRETE PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+STECON,STECON GROUP PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+STELLA,STELLA X PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+STGT,SRI TRANG GLOVES (THAILAND) PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+STI,STONEHENGE INTER PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+STOWER,SKY TOWER PUBLIC COMPANY LIMITED,mai,Resources,-
+STP,SAHATHAI PRINTING & PACKAGING PUBLIC COMPANY LIMITED,mai,Industrial,-
+STPI,STP&I PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+STX,Stone One Public Company Limited,mai,Property & Construction,-
+SUC,SAHA-UNION PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+SUN,SUNSWEET PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+SUPER,SUPER ENERGY CORPORATION PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SUPEREIF,SUPER ENERGY POWER PLANT INFRASTRUCTURE FUND,SET,Resources,Energy & Utilities
+SUSCO,SUSCO PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+SUTHA,GOLDEN LIME PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+SVOA,SVOA PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+SVR,SIVAROM REAL ESTATE PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+SVT,SUN VENDING TECHNOLOGY PUBLIC COMPANY LIMITED,SET,Services,Commerce
+SWC,SHERWOOD CORPORATION (THAILAND) PUBLIC COMPANY LIMITED,mai,Industrial,-
+SYMC,SYMPHONY COMMUNICATION PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+SYNEX,SYNNEX (THAILAND) PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+SYNTEC,SYNTEC CONSTRUCTION PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+TACC,T.A.C. CONSUMER PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+TAE,THAI AGRO ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+TAKUNI,TAKUNI GROUP PUBLIC COMPANY LIMITED,mai,Resources,-
+TAN,Tanachira Retail Corporation Public Company Limited,SET,Services,Commerce
+TAPAC,TAPACO PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+TASCO,TIPCO ASPHALT PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+TATG,THAI AUTO TOOLS AND DIE PUBLIC COMPANY LIMITED,mai,Industrial,-
+TBN,TBN Corporation Public Company Limited,mai,Technology,-
+TBSP,TBSP PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+TC,TROPICAL CANNING (THAILAND) PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+TCAP,THANACHART CAPITAL PUBLIC COMPANY LIMITED,SET,Financials,Banking
+TCC,THAI CAPITAL CORPORATION PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+TCJ,T.C.J. ASIA PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+TCMC,TCM CORPORATION PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+TCOAT,THAI COATING INDUSTRIAL PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+TEAM,TEAM PRECISION PUBLIC COMPANY LIMITED,SET,Technology,Electronic Components
+TEAMG,TEAM CONSULTING ENGINEERING AND MANAGEMENT PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+TEGH,Thai Eastern Group Holdings Public Company Limited,SET,Agro & Food Industry,Agribusiness
+TEKA,TEKA CONSTRUCTION PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+TERA,Terabyte Plus Public Company Limited,mai,Technology,-
+TFFIF,THAILAND FUTURE FUND,SET,Services,Transportation & Logistics
+TFG,THAIFOODS GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+TFI,THAI FUTURE INCORPORATION PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+TFM,THAI UNION FEEDMILL PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+TFMAMA,THAI PRESIDENT FOODS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+TGE,THACHANG GREEN ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+TGH,THAI GROUP HOLDINGS PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+TGPRO,THAI-GERMAN PRODUCTS PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+TH,TONG HUA HOLDING PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+THAI,THAI AIRWAYS INTERNATIONAL PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+THANA,THANASIRI GROUP PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+THANI,RATCHTHANI LEASING PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+THE,THE STEEL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+THG,THONBURI HEALTHCARE GROUP PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+THIP,THANTAWAN INDUSTRY PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+THMUI,THAI MUI CORPORATION PUBLIC COMPANY LIMITED,mai,Services,-
+THRE,THAI REINSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+THREL,THAIRE LIFE ASSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+TIDLOR,TIDLOR HOLDINGS PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+TIF1,THAI INDUSTRIAL FUND 1,SET,Property & Construction,Property Fund & REITs
+TIGER,THAI ENGER HOLDING PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+TIPAK,THAI PACKAGING INDUSTRY PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+TIPCO,TIPCO FOODS PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+TIPH,DHIPAYA GROUP HOLDINGS PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+TISCO,TISCO FINANCIAL GROUP PUBLIC COMPANY LIMITED,SET,Financials,Banking
+TITLE,RHOM BHO PROPERTY PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+TK,THITIKORN PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+TKC,TURNKEY COMMUNICATION SERVICES PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+TKN,TAOKAENOI FOOD & MARKETING PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+TKS,T.K.S. TECHNOLOGIES PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+TKT,T.KRUNGTHAI INDUSTRIES PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+TL,TECHLEAD NEXT PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+TLHPF,THAILAND HOSPITALITY PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+TLI,THAI LIFE INSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+TM,TECHNO MEDICAL PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+TMAN,T.Man Pharmaceutical Public Company Limited,SET,Consumer Products,Personal Products & Pharmaceuticals
+TMC,T.M.C. INDUSTRIAL PUBLIC COMPANY LIMITED,mai,Industrial,-
+TMD,THAI METAL DRUM MANUFACTURING PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+TMI,TEERA-MONGKOL INDUSTRY PUBLIC COMPANY LIMITED,mai,Industrial,-
+TMILL,T S FLOUR MILL PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+TMT,TMT STEEL PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+TMW,THAI MITSUWA PUBLIC COMPANY LIMITED,mai,Industrial,-
+TNDT,THAI NONDESTRUCTIVE TESTING PUBLIC COMPANY LIMITED,mai,Services,-
+TNH,THAI NAKARIN HOSPITAL PUBLIC COMPANY LIMITED,mai,Services,-
+TNITY,TRINITY WATTHANA PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+TNL,THANULUX PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+TNP,THANAPIRIYA PUBLIC COMPANY LIMITED,mai,Services,-
+TNPC,THAI NAM PLASTIC PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+TNPF,TRINITY FREEHOLD AND LEASEHOLD PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+TNR,THAI NIPPON RUBBER INDUSTRY PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+TOA,TOA PAINT (THAILAND) PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+TOG,THAI OPTICAL GROUP PUBLIC COMPANY LIMITED,SET,Consumer Products,Personal Products & Pharmaceuticals
+TOP,THAI OIL PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+TOPP,THAI O.P.P. PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+TPA,THAI POLY ACRYLIC PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+TPAC,THAI PLASPAC PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+TPBI,TPBI PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+TPCH,TPC POWER HOLDING PUBLIC COMPANY LIMITED,mai,Resources,-
+TPCS,TPCS PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+TPIPL,TPI POLENE PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+TPIPP,TPI POLENE POWER PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+TPL,Thai Parcels Public Company Limited,mai,Services,-
+TPLAS,THAI PLASTIC INDUSTRIAL (1994) PUBLIC COMPANY LIMITED,mai,Industrial,-
+TPOLY,THAI POLYCONS PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+TPP,THAI PACKAGING & PRINTING PUBLIC COMPANY LIMITED,SET,Industrials,Packaging
+TPRIME,THAILAND PRIME PROPERTY FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+TPS,THE PRACTICAL SOLUTION PUBLIC COMPANY LIMITED,mai,Technology,-
+TQM,TQM ALPHA PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+TQR,TQR PUBLIC COMPANY LIMITED,mai,Financials,-
+TR,THAI RAYON PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+TRC,TRC CONSTRUCTION PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+TRITN,TRITON HOLDING PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+TRP,Aesthetic Connect Public Company Limited,mai,Services,-
+TRT,TIRATHAI PUBLIC COMPANY LIMITED,mai,Industrial,-
+TRU,THAI RUNG UNION CAR PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+TRUBB,THAI RUBBER LATEX GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+TRUE,TRUE CORPORATION PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+TRV,T.R.V. RUBBER PRODUCTS PUBLIC COMPANY LIMITED,mai,Industrial,-
+TSC,THAI STEEL CABLE PUBLIC COMPANY LIMITED,SET,Industrials,Automotive
+TSE,THAI SOLAR ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+TSI,THE THAI SETAKIJ INSURANCE PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+TSR,TSR LIVING SOLUTION PUBLIC COMPANY LIMITED,SET,Consumer Products,Home & Office Products
+TSTE,TSTE PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+TSTH,TATA STEEL (THAILAND) PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+TTA,THORESEN THAI AGENCIES PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+TTB,TMBTHANACHART BANK PUBLIC COMPANY LIMITED,SET,Financials,Banking
+TTCL,TTCL PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+TTI,THAI TEXTILE INDUSTRY PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+TTLPF,TALAAD THAI LEASEHOLD PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+TTT,TORAY TEXTILES (THAILAND) PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+TTW,TTW PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+TU,THAI UNION GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+TU-PF,T.U. DOME RESIDENTIAL COMPLEX LEASEHOLD PROPERTY FUND,SET,Property & Construction,Property Fund & REITs
+TURBO,Ngernturbo Public Company Limited,SET,Financials,Finance & Securities
+TURTLE,SUPER TURTLE PUBLIC COMPANY LIMITED,mai,Services,-
+TVDH,TVD HOLDINGS PUBLIC COMPANY LIMITED,mai,Services,-
+TVH,THAIVIVAT HOLDINGS PUBLIC COMPANY LIMITED,SET,Financials,Insurance
+TVO,THAI VEGETABLE OIL PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+TVT,TV THUNDER PUBLIC COMPANY LIMITED,mai,Services,-
+TWP,THAI WIRE PRODUCTS PUBLIC COMPANY LIMITED,SET,Industrials,Steel and Metal Products
+TWPC,THAI WAH PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+TWZ,TWZ CORPORATION PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+TYCN,"TYCOONS WORLDWIDE GROUP (THAILAND) PUBLIC CO.,LTD.",SET,Industrials,Steel and Metal Products
+UAC,UAC GLOBAL PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+UBA,Utility Business Alliance Public Company Limited,mai,Services,-
+UBE,UBON BIO ETHANOL PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+UBIS,UBIS (ASIA) PUBLIC COMPANY LIMITED,mai,Industrial,-
+UEC,UNIMIT ENGINEERING PUBLIC COMPANY LIMITED,mai,Industrial,-
+UKEM,UNION PETROCHEMICAL PUBLIC COMPANY LIMITED,mai,Industrial,-
+UMI,THE UNION MOSAIC INDUSTRY PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+UMS,UNIQUE MINING SERVICES PUBLIC COMPANY LIMITED,mai,Resources,-
+UNIQ,UNIQUE ENGINEERING AND CONSTRUCTION PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+UNIX,Unique Plastic Industry Public Company Limited,SET,Industrials,Packaging
+UP,UNION PLASTIC PUBLIC COMPANY LIMITED,SET,Industrials,Petrochemicals & Chemicals
+UPF,UNION PIONEER PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+UPOIC,UNITED PALM OIL INDUSTRY PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+UREKA,EUREKA DESIGN PUBLIC COMPANY LIMITED,mai,Industrial,-
+UTP,UNITED PAPER PUBLIC COMPANY LIMITED,SET,Industrials,Paper & Printing Materials
+UV,UNIVENTURES PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+UVAN,UNIVANICH PALM OIL PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+VARO,VAROPAKORN PUBLIC COMPANY LIMITED,SET,Industrials,Industrial Materials & Machinery
+VCOM,VINTCOM TECHNOLOGY PUBLIC COMPANY LIMITED,mai,Technology,-
+VGI,VGI PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+VIBE,VIBE SYNERGY GROUP PUBLIC COMPANY LIMITED,mai,Services,-
+VIBHA,VIBHAVADI MEDICAL CENTER PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+VIH,SRIVICHAIVEJVIVAT PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+VL,V.L. ENTERPRISE PUBLIC COMPANY LIMITED,mai,Services,-
+VNG,VANACHAI GROUP PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+VPO,VICHITBHAN PALMOIL PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Agribusiness
+VRANDA,VERANDA RESORT PUBLIC COMPANY LIMITED,SET,Services,Tourism & Leisure
+VS,VISERVE ENTERPRISE PUBLIC COMPANY LIMITED,mai,Services,-
+WACOAL,THAI WACOAL PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+WARRIX,Warrix Sport Public Company Limited,mai,Consumer Products,-
+WASH,Laundry You Public Company Limited,mai,Services,-
+WAVE,WAVE EXPONENTIAL PUBLIC COMPANY LIMITED,SET,Services,Professional Services
+WELL,WELL MANAGEMENT CORPORATION PUBLIC COMPANY LIMITED,mai,Property & Construction,-
+WFX,WORLD FLEX PUBLIC COMPANY LIMITED,SET,Consumer Products,Fashion
+WGE,WELL GRADED ENGINEERING PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Services
+WHA,WHA CORPORATION PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+WHABT,WHA BUSINESS COMPLEX FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+WHAIR,WHA INDUSTRIAL LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+WHART,WHA PREMIUM GROWTH FREEHOLD AND LEASEHOLD REAL ESTATE INVESTMENT TRUST,SET,Property & Construction,Property Fund & REITs
+WHAUP,WHA UTILITIES AND POWER PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+WICE,WICE LOGISTICS PUBLIC COMPANY LIMITED,SET,Services,Transportation & Logistics
+WIIK,WIIK PUBLIC COMPANY LIMITED,SET,Property & Construction,Construction Materials
+WIN,WYNCOAST INDUSTRIAL PARK PUBLIC COMPANY LIMITED,SET,Property & Construction,Property Development
+WINDOW,Window Asia Public Company Limited,SET,Property & Construction,Construction Materials
+WINMED,WINNERGY MEDICAL PUBLIC COMPANY LIMITED,mai,Consumer Products,-
+WINNER,WINNER GROUP ENTERPRISE PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+WORK,WORKPOINT ENTERTAINMENT PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+WP,WP ENERGY PUBLIC COMPANY LIMITED,SET,Resources,Energy & Utilities
+WPH,WATTANAPAT HOSPITAL TRANG PUBLIC COMPANY LIMITED,SET,Services,Health Care Services
+WSOL,WSOL PUBLIC COMPANY LIMITED,SET,Services,Commerce
+XBIO,X BIOSCIENCE PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+XO,EXOTIC FOOD PUBLIC COMPANY LIMITED,mai,Agro & Food Industry,-
+XPG,XSPRING CAPITAL PUBLIC COMPANY LIMITED,SET,Financials,Finance & Securities
+XYZ,RSXYZ PUBLIC COMPANY LIMITED,SET,Technology,Information & Communication Technology
+YGG,YGGDRAZIL GROUP PUBLIC COMPANY LIMITED,mai,Services,-
+YONG,Yong Concrete Public Company Limited,mai,Property & Construction,-
+YUASA,YUASA BATTERY (THAILAND) PUBLIC COMPANY LIMITED,mai,Industrial,-
+ZAA,ZALEKTA PUBLIC COMPANY LIMITED,SET,Services,Media & Publishing
+ZEN,ZEN CORPORATION GROUP PUBLIC COMPANY LIMITED,SET,Agro & Food Industry,Food & Beverage
+ZIGA,ZIGA INNOVATION PUBLIC COMPANY LIMITED,mai,Industrial,-

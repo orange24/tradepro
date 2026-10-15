@@ -7,6 +7,14 @@
 <h1>{{ ASSETS[ticker][0] ~ ' · ' if ticker in ASSETS }}{{ ticker }} <span class="note">{{ PROXY_NAME.get(ticker) or MARKET_TH[market] }}</span></h1>
 <p class="sub" id="summary">กำลังโหลด…</p>
 
+<section class="card" id="about" hidden>
+  <h2 style="margin:0 0 6px" id="about-name"></h2>
+  <p class="note" style="margin:0 0 8px" id="about-tags"></p>
+  <p style="margin:0;font-size:14px;line-height:1.55" id="about-th"></p>
+  <details id="about-more" hidden><summary>รายละเอียดธุรกิจ (ภาษาอังกฤษ จาก Yahoo Finance)</summary>
+    <p style="margin:8px 0 0;font-size:14px;line-height:1.55" id="about-summary"></p></details>
+</section>
+
 <section class="card" id="ck-card">
   <div class="card-head" style="margin-bottom:8px">
     <h2 style="margin:0">วิเคราะห์ตามแนวลุงโฉลก <span class="note">Wave 3 + CDC Action Zone · กราฟ{{ {'D': 'รายวัน', 'W': 'รายสัปดาห์', 'M': 'รายเดือน', 'Y': 'รายปี'}[tf] }}</span></h2>
@@ -113,6 +121,21 @@ const cdcBar = chart.addHistogramSeries({priceScaleId: "cdc", priceLineVisible: 
 chart.priceScale("cdc").applyOptions({scaleMargins: {top: 0.96, bottom: 0}, visible: false});
 
 const UNIT = {{ UNIT|tojson }}, TF = {{ tf|tojson }};
+// what the company does (cached on the server for a week)
+fetch("{{ url_for('info_data', market=market, ticker=ticker) }}").then(r => r.json()).then(i => {
+  if (!i.name && !i.summary && !i.about_th) return;
+  const $ = id => document.getElementById(id);
+  $("about").hidden = false;
+  $("about-name").textContent = i.name || "{{ ticker }}";
+  $("about-tags").textContent = [i.kind, i.board && ("ตลาด " + i.board), i.industry_th && ("กลุ่ม" + i.industry_th),
+    i.sector_th && ("หมวด" + i.sector_th), !i.industry_th && i.sector && i.sector, !i.sector_th && i.industry && i.industry,
+    i.country, i.employees && `พนักงาน ${Number(i.employees).toLocaleString()} คน`].filter(Boolean).join(" · ");
+  if (i.about_th) $("about-th").textContent = i.about_th; else $("about-th").hidden = true;
+  if (i.summary) { $("about-more").hidden = false; $("about-summary").textContent = i.summary;
+                   if (!i.about_th) $("about-more").open = true; }
+  if (i.website) { const a = document.createElement("a"); a.href = i.website; a.target = "_blank"; a.rel = "noopener";
+                   a.textContent = " เว็บไซต์บริษัท ↗"; $("about-tags").appendChild(a); }
+}).catch(() => {});
 const NEXT = TF === "D" ? "วันทำการถัดไป" : `${UNIT}ถัดไป`;
 fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r => r.json()).then(d => {
   if (d.error) { document.getElementById("summary").textContent = "ดึงราคาไม่ได้: " + d.error; return; }
