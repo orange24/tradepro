@@ -113,3 +113,7 @@ table.kv td.num { font-weight: 700; white-space: nowrap; width: 110px; }
 .z-green { background: #0f8a5f; } .z-yellow { background: #d4a72c; } .z-orange { background: #e0731e; }
 .z-red { background: #c8373a; } .z-lblue { background: #5ab0e6; } .z-blue { background: #2458d6; }
 main a { color: var(--accent); }
+.funnel { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.funnel div { display: flex; flex-direction: column; align-items: center; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; }
+.funnel b { font-size: 20px; } .funnel span { font-size: 12px; color: var(--muted); }
+.funnel i { color: var(--muted); font-style: normal; }

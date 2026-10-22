@@ -74,7 +74,7 @@ def test_cli_both_markets(tmp_path, capsys):
     text = capsys.readouterr().out
     assert "=== SET ===" in text and "=== US ===" in text
     assert {"set", "us"} <= set(pd.read_csv(out)["market"])
-    main(["scan", "--market", "all", "--source", "synthetic", "--recent", "3"])
+    main(["scan", "--market", "all", "--source", "synthetic", "--recent", "250"])
     assert "No setups" not in capsys.readouterr().out
 
 

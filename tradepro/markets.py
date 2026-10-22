@@ -14,12 +14,12 @@ class Market:
     lot: float = 1         # buy in multiples of this (SET board lot 100; 0 = fractions allowed)
     running_flat: bool = True   # RF-1 setup on
     w3_base: str = "cut_left"   # how to find the wave 1 base (Config.w3_base); SET50 tests better with "window"
-    htf_filter: str = "W"       # only take signals while weekly CDC is green (Config.htf_filter)
+    htf_filter: str = "WM"      # only take signals while weekly and monthly CDC are green (Config.htf_filter)
 
 
 MARKETS = {
     # SET: ~0.157% commission each side + VAT, plus slippage
-    "set": Market("set", ".BK", "set100", 0.2, "หุ้นไทย (SET)", "฿", 100, True, "window", "W"),
+    "set": Market("set", ".BK", "set100", 0.2, "หุ้นไทย (SET)", "฿", 100, True, "window", "WM"),
     # US: zero-commission brokers; cost is mostly spread/slippage
     "us": Market("us", "", "us50", 0.05, "หุ้นสหรัฐ (US)", "$", 1),
     # Bitcoin, gold and the like (Yahoo symbols BTC-USD, GC=F ...); fractions allowed
