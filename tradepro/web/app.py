@@ -75,7 +75,7 @@ def pivots(f, side: int = 3):
 def market_cfg(market: str):
     m = MARKETS[market]
     return replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, running_flat=m.running_flat,
-                   w3_base=m.w3_base)
+                   w3_base=m.w3_base, htf_filter=m.htf_filter)
 
 
 class Scanner:
@@ -154,7 +154,7 @@ class Scanner:
         if proxy:
             try:
                 long = self.prices.history(market, proxy[0], start="2005-01-01")
-                cfg = market_cfg(market)
+                cfg = replace(market_cfg(market), htf_filter="")
                 out["index"] = {"ticker": proxy[0], "name": proxy[1], "frames": {}}
                 for tf, label in (("D", "รายวัน"), ("W", "รายสัปดาห์"), ("M", "รายเดือน")):
                     d = long.iloc[-400:] if tf == "D" else resample(long, tf)
@@ -333,7 +333,8 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
                 df = prices.history(market, ticker, max_age=LIVE_SECONDS)
             else:
                 df = resample(prices.history(market, ticker, start="2000-01-01", max_age=LIVE_SECONDS), tf)
-            a = analyze_chaloke(df, market_cfg(market))
+            # the weekly / monthly filter only makes sense on daily bars
+            a = analyze_chaloke(df, market_cfg(market) if tf == "D" else replace(market_cfg(market), htf_filter=""))
         except Exception as e:
             return jsonify(error=str(e)), 502
         return jsonify(a | {"checked_at": datetime.now(timezone.utc).isoformat()})
@@ -351,7 +352,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
             df = daily if tf == "D" else resample(prices.history(market, ticker, start="2000-01-01"), tf)
         except Exception as e:
             return jsonify(error=str(e)), 502
-        cfg = market_cfg(market)
+        cfg = market_cfg(market) if tf == "D" else replace(market_cfg(market), htf_filter="")
         full = add_features(df, cfg)
         cdc = cdc_action_zone(full)
         f = full.iloc[-250:] if tf in ("D", "W") else full

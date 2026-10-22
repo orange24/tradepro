@@ -266,7 +266,7 @@ fetch("{{ url_for('chart_data', market=market, ticker=ticker, tf=tf) }}").then(r
 
   // ---- live ChalokeDotCom analysis, refreshed every minute
   const ckLines = [];
-  const STATUS_TONE = {buy: "hold", late_green: "hold", wait_green: "watch", shallow: "watch", lost_green: "watch",
+  const STATUS_TONE = {buy: "hold", late_green: "hold", wait_green: "watch", wait_htf: "watch", shallow: "watch", lost_green: "watch",
                        new_high: "watch", missed: "sell", deep: "sell", broken: "sell", no_wave: "sell"};
   const loadChaloke = () => fetch("{{ url_for('chaloke_data', market=market, ticker=ticker, tf=tf) }}")
     .then(r => r.json()).then(k => {

@@ -8,7 +8,7 @@ import pandas as pd
 
 from .config import DEFAULT, Config
 from .indicators import add_features
-from .wave import detect_running_flat, detect_wave3
+from .wave import detect_running_flat, detect_wave3, higher_tf_zone
 
 
 @dataclass
@@ -47,4 +47,8 @@ def detect(df: pd.DataFrame, ticker: str = "", cfg: Config = DEFAULT) -> list[Si
     w3 = detect_wave3(f, ticker, cfg, Signal)
     days = {s.date for s in w3}
     rf = [s for s in detect_running_flat(f, ticker, cfg, Signal) if s.date not in days] if cfg.running_flat else []
-    return sorted(w3 + rf, key=lambda s: s.date)
+    out = sorted(w3 + rf, key=lambda s: s.date)
+    for tf in cfg.htf_filter:                                   # HTF-1: bigger timeframe must be green
+        z = higher_tf_zone(df, tf)
+        out = [s for s in out if z.get(s.date) == "green"]
+    return out

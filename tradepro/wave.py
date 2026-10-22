@@ -44,6 +44,14 @@ def cdc_action_zone(df: pd.DataFrame) -> pd.DataFrame:
                          "cdc_zone": zone}, index=df.index)
 
 
+def higher_tf_zone(df: pd.DataFrame, tf: str) -> pd.Series:
+    """CDC zone of the last *completed* weekly ("W") / monthly ("M") bar, aligned to each daily bar."""
+    from .data import resample
+
+    z = cdc_action_zone(resample(df, tf))["cdc_zone"].shift(1)   # a bar is only known once the next starts
+    return z.reindex(df.index, method="ffill")
+
+
 def wave1_start(hi: np.ndarray, h: int, cfg: Config) -> int:
     """First bar to search for the wave 1 base below the top at h.
     "window": the last w3_max_wave1_bars bars. "cut_left" (Chaloke: ตัดอดีตฝั่งซ้ายมือทิ้ง): everything

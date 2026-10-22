@@ -68,7 +68,7 @@ def main(argv=None):
             continue
 
         cfg = replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, running_flat=m.running_flat,
-                      w3_base=m.w3_base)
+                      w3_base=m.w3_base, htf_filter=m.htf_filter)
         if args.cmd == "scan":
             res = scan(source, tickers, recent_bars=args.recent, start=args.start or "2023-01-01",
                        cfg=cfg, on_error=_warn)

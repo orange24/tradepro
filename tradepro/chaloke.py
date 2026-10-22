@@ -13,7 +13,7 @@ import pandas as pd
 from .config import Config
 from .indicators import add_features
 from .ticks import round_to_tick, tick_size
-from .wave import cdc_action_zone, pivot_highs, wave1_start, wave1_top
+from .wave import cdc_action_zone, higher_tf_zone, pivot_highs, wave1_start, wave1_top
 
 CDC_TH = {
     "green": ("เขียว", "ขาขึ้น ซื้อ / ถือได้"),
@@ -104,6 +104,14 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
                       " · ยังไม่ถึง 61.8%" if retr < cfg.w3_retrace_min else " · ลึกเกิน 94.2%")))
     checks.append((cdc["zone"] == "green", f"CDC Action Zone: {cdc['name']} ({cdc['bars']} แท่ง) — {cdc['meaning']}"))
     checks.append((rr >= cfg.w3_min_rr, f"ถ้าซื้อที่ราคานี้ R/R = 1:{rr:.1f} (ต้อง ≥ 1:{cfg.w3_min_rr:g})"))
+    htf_ok = True
+    for tf, label in (("W", "รายสัปดาห์"), ("M", "รายเดือน")):
+        if tf in cfg.htf_filter:
+            z = higher_tf_zone(df, tf).iloc[-1]
+            ok = z == "green"
+            htf_ok &= ok
+            checks.append((ok, f"CDC {label} (แท่งที่ปิดแล้ว): {CDC_TH.get(z, ('-',))[0]}"
+                               + ("" if ok else " ยังไม่เขียว ระบบจะยังไม่ให้สัญญาณซื้อ")))
 
     # confirmations (W3-7), same rules as setups
     body = f["body_ratio"].to_numpy()
@@ -135,6 +143,8 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
         status = ("missed", f"เขียวแรกไปแล้วเมื่อ {cdc['first_green']} ราคาวิ่งไปไกล R/R เหลือ 1:{rr:.1f} ตกรถ ไม่ควรตาม")
     elif zone[-1] != "green":
         status = ("lost_green", f"เขียวแรกเมื่อ {cdc['first_green']} แต่ตอนนี้ CDC เป็น{cdc['name']}แล้ว รอเขียวใหม่")
+    elif fresh and not htf_ok:
+        status = ("wait_htf", "เขียวแรกรายวันแล้ว แต่ CDC timeframe ใหญ่ยังไม่เขียว รอให้เขียวก่อน")
     elif fresh:
         status = ("buy", f"เขียวแรกเมื่อ {cdc['first_green']} ({cdc['first_green_ago']} แท่งก่อน) "
                          "เข้าซื้อได้ที่ราคาเปิดแท่งถัดไป")
