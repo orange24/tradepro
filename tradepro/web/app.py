@@ -29,7 +29,7 @@ from ..chaloke import CDC_TH, analyze as analyze_chaloke
 from ..info import company_info
 from ..wave import higher_tf_zone
 from ..config import DEFAULT
-from ..data import TIMEFRAMES, resample
+from ..data import TIMEFRAMES, completed_weeks, resample
 from ..indicators import add_features
 from ..markets import MARKETS
 from ..prices import PriceService
@@ -56,7 +56,15 @@ SCANS = {
     "setall": ("set", "set_all", "หุ้นไทยทั้งหมด (SET + mai)"),
     "us": ("us", "us50", "หุ้นสหรัฐ (US50)"),
     "asset": ("asset", "assets", "คริปโต / ทองคำ"),
+    "set_w": ("set", "set100", "หุ้นไทย W3 รายสัปดาห์"),
+    "us_w": ("us", "us50", "หุ้นสหรัฐ W3 รายสัปดาห์"),
 }
+
+
+def scan_tf(scan_id: str) -> str:
+    """"W" for scans that look for W3 / RF on weekly bars alone, "D" otherwise."""
+    return "W" if scan_id.endswith("_w") else "D"
+
 LIVE_SECONDS = 60       # the chart's live analysis refetches prices at most this often
 MIN_VALUE_THB = float(os.environ.get("TRADEPRO_MIN_VALUE", "1000000"))   # skip illiquid stocks in "setall"
 
@@ -98,26 +106,33 @@ class Scanner:
     def _run(self, scan_id: str):
         market, watchlist, _ = SCANS[scan_id]
         try:
+            tf = scan_tf(scan_id)
             cfg = market_cfg(market)
+            if tf == "W":   # weekly W3 / RF on its own: no higher-timeframe filter, keep a signal 1 week
+                cfg = replace(cfg, htf_filter="", w3_recent_bars=2)
             tickers = list(WATCHLISTS[watchlist])
             tickers += [h["ticker"] for h in self.store.holdings() if h["market"] == market and h["ticker"] not in tickers]
             results, errors, zones, fresh_green = [], [], [], 0
 
             def one(t):
-                df = self.prices.history(market, t)
-                last, px = df.index[-1], float(df["close"].iloc[-1])
+                df = self.prices.history(market, t, **({"start": "2015-01-01"} if tf == "W" else {}))
                 if scan_id == "setall":
                     value = float((df["close"] * df["volume"]).iloc[-20:].mean())
                     if not value >= MIN_VALUE_THB:
                         return []                       # too thin to trade; skip
 
-                recent = list(df.index[-cfg.w3_recent_bars:])
                 cdc = cdc_action_zone(df)
-                green_now = bool(cdc["cdc_green"].iloc[-1])
                 g = cdc["cdc_green"].to_numpy()
                 # top-down: CDC of the last completed weekly bar, then daily
                 wz = higher_tf_zone(df, "W").iloc[-1]
                 zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all()), t, wz))
+                px = float(df["close"].iloc[-1])           # today's price, also in weekly mode
+                if tf == "W":
+                    df = completed_weeks(df)
+                    cdc = cdc_action_zone(df)
+                last = df.index[-1]
+                recent = list(df.index[-cfg.w3_recent_bars:])
+                green_now = bool(cdc["cdc_green"].iloc[-1])
                 rows = []
                 for s in detect(df, t, cfg):
                     if s.direction != "long":
@@ -140,7 +155,10 @@ class Scanner:
                     except Exception as e:  # keep scanning the rest
                         errors.append(f"{t}: {e}")
             results.sort(key=lambda r: (SETUP_ORDER.get(r["setup"], 9), -r["reward_r"]))
-            self.store.save_scan(scan_id, results, errors, self._overview(market, zones))
+            summary = self._overview(market, zones)
+            if tf == "W":
+                summary.pop("funnel", None)     # the Weekly -> Daily funnel is for the daily scans
+            self.store.save_scan(scan_id, results, errors, summary | {"tf": tf})
         except Exception:
             log.exception("scan %s failed", scan_id)
         finally:
@@ -294,7 +312,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if scan_id not in SCANS:
             abort(404)
         market, watchlist, _ = SCANS[scan_id]
-        return render_template("scan.html", market=market, scan_id=scan_id, scans=SCANS,
+        return render_template("scan.html", market=market, scan_id=scan_id, scans=SCANS, tf=scan_tf(scan_id),
                                scan=store.latest_scan(scan_id), watchlist=WATCHLISTS[watchlist],
                                running=scan_id in scanner.running, active="scan")
 

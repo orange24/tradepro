@@ -3,7 +3,8 @@
 {% block head %}{% if running %}<meta http-equiv="refresh" content="10">{% endif %}{% endblock %}
 {% block body %}
 <h1>สแกนหุ้นน่าซื้อ</h1>
-<p class="sub">หุ้นที่เข้าเงื่อนไข Wave 3 ของลุงโฉลก: Wave 2 ย่อ 61.8–94.2% (W3) หรือ Running Flat (RF) แล้ว CDC Action Zone เขียวแรก ซื้อที่ราคาเปิดวันถัดไป</p>
+<p class="sub">หุ้นที่เข้าเงื่อนไข Wave 3 ของลุงโฉลก: Wave 2 ย่อ 61.8–94.2% (W3) หรือ Running Flat (RF) แล้ว CDC Action Zone เขียวแรก ซื้อที่ราคาเปิด{{ 'สัปดาห์' if tf == 'W' else 'วัน' }}ถัดไป</p>
+{% if tf == 'W' %}<p class="note">โหมดรายสัปดาห์: หา W3 / RF จากแท่ง Weekly ที่ปิดแล้วอย่างเดียว ไม่ดู Daily (stop และเป้าคิดจากโครงสร้างเวฟรายสัปดาห์ จึงกว้างกว่ารายวัน)</p>{% endif %}
 <div class="card-head">
   <div class="tabs">
     {% for sid, (m, wl, label) in scans.items() %}
@@ -71,7 +72,7 @@
       <td><a class="tk" href="{{ url_for('chart_page', market=market, ticker=s.ticker) }}">{{ s.ticker }}</a></td>
       <td><b>{{ s.setup }}</b><div class="note">{{ SETUP_TH.get(s.setup, '') }}{% if s.note %} · {{ s.note }}{% endif %}</div></td>
       <td class="n">{{ '{:,.2f}'.format(s.last_close) }}</td>
-      <td class="n">{% if s.order == 'open' %}<b>ราคาเปิด</b><div class="note">วันถัดไป{% if s.days_ago %} · เขียวแรกเมื่อ {{ s.days_ago }} วันก่อน ยังไม่ตกรถ{% endif %}</div>{% else %}<b>{{ '{:,.2f}'.format(s.entry) }}</b>{% endif %}</td>
+      <td class="n">{% if s.order == 'open' %}<b>ราคาเปิด</b>{% set unit = 'สัปดาห์' if tf == 'W' else 'วัน' %}<div class="note">{{ unit }}ถัดไป{% if s.days_ago %} · เขียวแรกเมื่อ {{ s.days_ago }} {{ unit }}ก่อน ยังไม่ตกรถ{% endif %}</div>{% else %}<b>{{ '{:,.2f}'.format(s.entry) }}</b>{% endif %}</td>
       <td class="n neg">{{ '{:,.2f}'.format(s.stop) }}</td>
       <td class="n pos">{{ '{:,.2f}'.format(s.target) }}</td>
       <td class="n">{{ '{:.1f}'.format(s.reward_r) }}R</td>
