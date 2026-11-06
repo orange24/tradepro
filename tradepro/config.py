@@ -36,6 +36,8 @@ class Config:
     w3_reentry: bool = True           # allow a new first green on the same wave 1 (after a stop, no new low)
 
     htf_filter: str = ""              # HTF-1: "W" / "M" / "WM" = only signals while weekly / monthly CDC is green
+                                      # HTF-2: "S" = only while the weekly wave count is in the wave 2 buy zone
+                                      #        or wave 3 (chaloke.WEEKLY_OK)
     running_flat: bool = True         # RF-1: also look for 1-A-B-C running flats (Strong B)
 
     max_hold_bars: int = 0            # backtest time exit for signals without their own max_hold (0 = none)

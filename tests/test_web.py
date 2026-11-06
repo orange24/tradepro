@@ -62,10 +62,8 @@ def test_set_index_alias_and_overview(client):
     assert ov["n"] > 0 and sum(ov["counts"].values()) == ov["n"] and ov["verdict"][1]
     html = client.get("/scan?market=set").get_data(as_text=True)
     assert "ภาพรวมตลาด" in html
-    # top-down funnel is Weekly -> Daily only (no Monthly step)
-    fn = ov["funnel"]
-    assert set(fn) == {"w", "wd"} and set(fn["wd"]) <= set(fn["w"])
-    assert "Weekly เขียว" in html and "Monthly เขียว" not in html
+    # Chaloke's way: no bigger-timeframe filter, so no Weekly -> Daily funnel
+    assert "funnel" not in ov and "Weekly เขียว" not in html
 
 
 def test_company_info(client):
@@ -78,6 +76,6 @@ def test_company_info(client):
 def test_weekly_w3_scan(client):
     client.application.config["scanner"]._run("set_w")
     scan = client.application.config["store"].latest_scan("set_w")
-    assert scan["summary"]["tf"] == "W" and "funnel" not in scan["summary"]
+    assert scan["summary"]["tf"] == "W"
     html = client.get("/scan?market=set_w").get_data(as_text=True)
     assert "โหมดรายสัปดาห์" in html and "ราคาเปิดสัปดาห์ถัดไป" in html

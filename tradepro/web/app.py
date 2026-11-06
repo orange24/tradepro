@@ -27,7 +27,6 @@ from flask import Flask, Response, abort, jsonify, redirect, render_template, re
 from ..advisor import advise
 from ..chaloke import CDC_TH, analyze as analyze_chaloke
 from ..info import company_info
-from ..wave import higher_tf_zone
 from ..config import DEFAULT
 from ..data import TIMEFRAMES, completed_weeks, resample
 from ..indicators import add_features
@@ -115,7 +114,9 @@ class Scanner:
             results, errors, zones, fresh_green = [], [], [], 0
 
             def one(t):
-                df = self.prices.history(market, t, **({"start": "2015-01-01"} if tf == "W" else {}))
+                # weekly scans and the weekly-structure filter need years of history
+                long = tf == "W" or "S" in cfg.htf_filter
+                df = self.prices.history(market, t, **({"start": "2015-01-01"} if long else {}))
                 if scan_id == "setall":
                     value = float((df["close"] * df["volume"]).iloc[-20:].mean())
                     if not value >= MIN_VALUE_THB:
@@ -123,9 +124,7 @@ class Scanner:
 
                 cdc = cdc_action_zone(df)
                 g = cdc["cdc_green"].to_numpy()
-                # top-down: CDC of the last completed weekly bar, then daily
-                wz = higher_tf_zone(df, "W").iloc[-1]
-                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all()), t, wz))
+                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all())))
                 px = float(df["close"].iloc[-1])           # today's price, also in weekly mode
                 if tf == "W":
                     df = completed_weeks(df)
@@ -155,10 +154,7 @@ class Scanner:
                     except Exception as e:  # keep scanning the rest
                         errors.append(f"{t}: {e}")
             results.sort(key=lambda r: (SETUP_ORDER.get(r["setup"], 9), -r["reward_r"]))
-            summary = self._overview(market, zones)
-            if tf == "W":
-                summary.pop("funnel", None)     # the Weekly -> Daily funnel is for the daily scans
-            self.store.save_scan(scan_id, results, errors, summary | {"tf": tf})
+            self.store.save_scan(scan_id, results, errors, self._overview(market, zones) | {"tf": tf})
         except Exception:
             log.exception("scan %s failed", scan_id)
         finally:
@@ -169,10 +165,7 @@ class Scanner:
         """Market direction: CDC breadth of the scanned stocks + the index (or its proxy) on D / W / M."""
         n = len(zones)
         counts = {z: sum(1 for x, *_ in zones if x == z) for z in ("green", "yellow", "orange", "red", "lblue", "blue")}
-        w_green = sorted(t for _, _, t, wz in zones if wz == "green")
-        wd = sorted(t for _, f, t, wz in zones if wz == "green" and f)
         out = {"n": n, "counts": counts, "fresh_green": sum(f for _, f, *_ in zones),
-               "funnel": {"w": w_green, "wd": wd},
                "green_pct": round(counts["green"] / n * 100, 1) if n else 0}
         proxy = INDEX_PROXY.get(market)
         if proxy:
