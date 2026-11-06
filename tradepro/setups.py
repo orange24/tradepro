@@ -48,7 +48,16 @@ def detect(df: pd.DataFrame, ticker: str = "", cfg: Config = DEFAULT) -> list[Si
     days = {s.date for s in w3}
     rf = [s for s in detect_running_flat(f, ticker, cfg, Signal) if s.date not in days] if cfg.running_flat else []
     out = sorted(w3 + rf, key=lambda s: s.date)
-    for tf in cfg.htf_filter:                                   # HTF-1: bigger timeframe must be green
+    for tf in cfg.htf_filter.replace("S", ""):                  # HTF-1: bigger timeframe must be green
         z = higher_tf_zone(df, tf)
         out = [s for s in out if z.get(s.date) == "green"]
+    if "S" in cfg.htf_filter:                                   # HTF-2: weekly wave structure first (Chaloke)
+        from .chaloke import WEEKLY_OK, weekly_structure
+        kept = []
+        for s in out:
+            st = weekly_structure(df, s.date, cfg)
+            if st in WEEKLY_OK:
+                s.note = (s.note + " · " if s.note else "") + "Weekly: " + WEEKLY_OK[st]
+                kept.append(s)
+        out = kept
     return out
