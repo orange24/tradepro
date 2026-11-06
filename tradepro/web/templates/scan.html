@@ -41,21 +41,20 @@
 </section>
 {% endif %}
 
-{% if scan and scan.summary and scan.summary.funnel %}
+{% if scan and scan.summary and scan.summary.funnel and scan.summary.funnel.w is defined %}
 {% set fn = scan.summary.funnel %}
 <section class="card">
-  <h2 style="margin-bottom:6px">ไล่จาก timeframe ใหญ่ไปเล็ก <span class="note">Monthly → Weekly → Daily (CDC ของแท่งที่ปิดแล้ว)</span></h2>
+  <h2 style="margin-bottom:6px">ดู Weekly ก่อน แล้วดู Daily <span class="note">Weekly → Daily (CDC ของแท่งรายสัปดาห์ที่ปิดแล้ว)</span></h2>
   <div class="funnel">
     <div><b>{{ scan.summary.n }}</b><span>หุ้นที่สแกน</span></div><i>→</i>
-    <div><b>{{ fn.m|length }}</b><span>Monthly เขียว</span></div><i>→</i>
-    <div><b>{{ fn.mw|length }}</b><span>+ Weekly เขียว</span></div><i>→</i>
-    <div><b>{{ fn.mwd|length }}</b><span>+ Daily เพิ่งเขียวใน 5 วัน</span></div><i>→</i>
+    <div><b>{{ fn.w|length }}</b><span>Weekly เขียว</span></div><i>→</i>
+    <div><b>{{ fn.wd|length }}</b><span>+ Daily เพิ่งเขียวใน 5 วัน</span></div><i>→</i>
     <div><b>{{ scan.results|length }}</b><span>เข้าเงื่อนไข W3 / RF</span></div>
   </div>
-  {% if fn.mwd %}<p class="note" style="margin:10px 0 4px">Monthly + Weekly เขียว และ Daily เพิ่งเขียว (ดูโครงสร้างเวฟต่อในกราฟ):</p>
-  <div class="chips">{% for t in fn.mwd %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}">{{ t }}</a>{% endfor %}</div>{% endif %}
-  {% if fn.mw %}<details style="margin-top:10px"><summary>Monthly + Weekly เขียว ทั้งหมด {{ fn.mw|length }} ตัว (watchlist รอจังหวะ Daily)</summary>
-  <div class="chips" style="margin-top:8px">{% for t in fn.mw %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}">{{ t }}</a>{% endfor %}</div></details>{% endif %}
+  {% if fn.wd %}<p class="note" style="margin:10px 0 4px">Weekly เขียว และ Daily เพิ่งเขียว (ดูโครงสร้างเวฟต่อในกราฟ):</p>
+  <div class="chips">{% for t in fn.wd %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}">{{ t }}</a>{% endfor %}</div>{% endif %}
+  {% if fn.w %}<details style="margin-top:10px"><summary>Weekly เขียว ทั้งหมด {{ fn.w|length }} ตัว (watchlist รอจังหวะ Daily)</summary>
+  <div class="chips" style="margin-top:8px">{% for t in fn.w %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}">{{ t }}</a>{% endfor %}</div></details>{% endif %}
 </section>
 {% endif %}
 

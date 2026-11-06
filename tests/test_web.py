@@ -60,7 +60,12 @@ def test_set_index_alias_and_overview(client):
     client.application.config["scanner"]._run("set")
     ov = client.application.config["store"].latest_scan("set")["summary"]
     assert ov["n"] > 0 and sum(ov["counts"].values()) == ov["n"] and ov["verdict"][1]
-    assert "ภาพรวมตลาด" in client.get("/scan?market=set").get_data(as_text=True)
+    html = client.get("/scan?market=set").get_data(as_text=True)
+    assert "ภาพรวมตลาด" in html
+    # top-down funnel is Weekly -> Daily only (no Monthly step)
+    fn = ov["funnel"]
+    assert set(fn) == {"w", "wd"} and set(fn["wd"]) <= set(fn["w"])
+    assert "Weekly เขียว" in html and "Monthly เขียว" not in html
 
 
 def test_company_info(client):

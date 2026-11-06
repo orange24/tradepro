@@ -115,9 +115,9 @@ class Scanner:
                 cdc = cdc_action_zone(df)
                 green_now = bool(cdc["cdc_green"].iloc[-1])
                 g = cdc["cdc_green"].to_numpy()
-                # top-down: CDC of the last completed monthly and weekly bars
-                mz, wz = higher_tf_zone(df, "M").iloc[-1], higher_tf_zone(df, "W").iloc[-1]
-                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all()), t, mz, wz))
+                # top-down: CDC of the last completed weekly bar, then daily
+                wz = higher_tf_zone(df, "W").iloc[-1]
+                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all()), t, wz))
                 rows = []
                 for s in detect(df, t, cfg):
                     if s.direction != "long":
@@ -151,11 +151,10 @@ class Scanner:
         """Market direction: CDC breadth of the scanned stocks + the index (or its proxy) on D / W / M."""
         n = len(zones)
         counts = {z: sum(1 for x, *_ in zones if x == z) for z in ("green", "yellow", "orange", "red", "lblue", "blue")}
-        m_green = sorted(t for _, _, t, mz, _ in zones if mz == "green")
-        mw_green = sorted(t for _, _, t, mz, wz in zones if mz == "green" and wz == "green")
-        mwd = sorted(t for x, f, t, mz, wz in zones if mz == "green" and wz == "green" and f)
+        w_green = sorted(t for _, _, t, wz in zones if wz == "green")
+        wd = sorted(t for _, f, t, wz in zones if wz == "green" and f)
         out = {"n": n, "counts": counts, "fresh_green": sum(f for _, f, *_ in zones),
-               "funnel": {"m": m_green, "mw": mw_green, "mwd": mwd},
+               "funnel": {"w": w_green, "wd": wd},
                "green_pct": round(counts["green"] / n * 100, 1) if n else 0}
         proxy = INDEX_PROXY.get(market)
         if proxy:
