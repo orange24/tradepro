@@ -45,6 +45,15 @@ def test_password(tmp_path, monkeypatch):
     assert c.get("/", auth=("boy", "secret")).status_code == 200
 
 
+def test_thai_password(tmp_path, monkeypatch):
+    import base64
+    monkeypatch.setenv("TRADEPRO_PASSWORD", "รหัสของคุณ")
+    c = create_app(db_path=str(tmp_path / "t.db"), source="synthetic", autoscan=False).test_client()
+    basic = lambda pw: {"Authorization": "Basic " + base64.b64encode(f"boy:{pw}".encode()).decode()}
+    assert c.get("/", headers=basic("รหัสของคุณ")).status_code == 200
+    assert c.get("/", headers=basic("wrong")).status_code == 401
+
+
 def test_bitcoin_and_gold(client):
     r = client.get("/chart?market=set&ticker=btc")
     assert r.status_code == 302 and r.headers["Location"].endswith("/chart/asset/BTC-USD")

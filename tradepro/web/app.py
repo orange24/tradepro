@@ -224,7 +224,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if not password or request.endpoint == "static":
             return None
         auth = request.authorization
-        if auth and hmac.compare_digest(auth.password or "", password):
+        if auth and hmac.compare_digest((auth.password or "").encode(), password.encode()):   # bytes: Thai passwords work
             return None
         return Response("ต้องใส่รหัสผ่าน", 401, {"WWW-Authenticate": 'Basic realm="TradePro"'})
 
