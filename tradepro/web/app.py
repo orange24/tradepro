@@ -22,10 +22,11 @@ from dataclasses import replace
 from datetime import datetime, timezone
 
 import numpy as np
+import pandas as pd
 from flask import Flask, Response, abort, jsonify, redirect, render_template, request, url_for
 
 from ..advisor import advise
-from ..chaloke import CDC_TH, analyze as analyze_chaloke
+from ..chaloke import CDC_TH, WEEKLY_OK, analyze as analyze_chaloke, weekly_structure
 from ..info import company_info
 from ..config import DEFAULT
 from ..data import TIMEFRAMES, completed_weeks, resample
@@ -124,7 +125,9 @@ class Scanner:
 
                 cdc = cdc_action_zone(df)
                 g = cdc["cdc_green"].to_numpy()
-                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all())))
+                # top-down, the Chaloke way: weekly wave structure (completed weeks), then the daily first green
+                wst = weekly_structure(df, df.index[-1] + pd.Timedelta(days=1), cfg)
+                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all()), t, wst))
                 px = float(df["close"].iloc[-1])           # today's price, also in weekly mode
                 if tf == "W":
                     df = completed_weeks(df)
@@ -154,7 +157,11 @@ class Scanner:
                     except Exception as e:  # keep scanning the rest
                         errors.append(f"{t}: {e}")
             results.sort(key=lambda r: (SETUP_ORDER.get(r["setup"], 9), -r["reward_r"]))
-            self.store.save_scan(scan_id, results, errors, self._overview(market, zones) | {"tf": tf})
+            summary = self._overview(market, zones) | {"tf": tf}
+            w_ok = sorted((t, WEEKLY_OK[st]) for _, _, t, st in zones if st in WEEKLY_OK)
+            summary["funnel"] = {"w": w_ok, "wd": [x for x in w_ok if x[0] in
+                                                   {t for _, f, t, _ in zones if f}] if tf == "D" else []}
+            self.store.save_scan(scan_id, results, errors, summary)
         except Exception:
             log.exception("scan %s failed", scan_id)
         finally:

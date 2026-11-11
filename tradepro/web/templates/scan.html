@@ -43,6 +43,23 @@
 </section>
 {% endif %}
 
+{% if scan and scan.summary and scan.summary.funnel %}
+{% set fn = scan.summary.funnel %}
+<section class="card">
+  <h2 style="margin-bottom:6px">ไล่จาก timeframe ใหญ่ไปเล็ก <span class="note">Weekly → Daily (โครงสร้างเวฟของแท่ง Weekly ที่ปิดแล้ว)</span></h2>
+  <div class="funnel">
+    <div><b>{{ scan.summary.n }}</b><span>หุ้นที่สแกน</span></div><i>→</i>
+    <div><b>{{ fn.w|length }}</b><span>Weekly: W2 ถึงโซนซื้อ / อยู่ใน W3</span></div><i>→</i>
+    {% if tf == 'D' %}<div><b>{{ fn.wd|length }}</b><span>+ Daily เพิ่งเขียวใน 5 วัน</span></div><i>→</i>{% endif %}
+    <div><b>{{ scan.results|length }}</b><span>เข้าเงื่อนไข W3 / RF</span></div>
+  </div>
+  {% if fn.wd %}<p class="note" style="margin:10px 0 4px">โครงสร้าง Weekly ผ่าน และ Daily เพิ่งเขียว (ดูเวฟรายวันต่อในกราฟ):</p>
+  <div class="chips">{% for t, why in fn.wd %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}" title="Weekly: {{ why }}">{{ t }}</a>{% endfor %}</div>{% endif %}
+  {% if fn.w %}<details style="margin-top:10px"><summary>โครงสร้าง Weekly ผ่าน ทั้งหมด {{ fn.w|length }} ตัว (watchlist รอจังหวะ{{ ' Daily' if tf == 'D' else 'เขียวแรกรายสัปดาห์' }})</summary>
+  <div class="chips" style="margin-top:8px">{% for t, why in fn.w %}<a href="{{ url_for('chart_page', market=market, ticker=t) }}" title="Weekly: {{ why }}">{{ t }}</a>{% endfor %}</div></details>{% endif %}
+</section>
+{% endif %}
+
 <section class="card">
 {% if scan %}
   <p class="note" style="margin-top:0">สแกนล่าสุด: <span data-utc="{{ scan.run_at }}">{{ scan.run_at }}</span>

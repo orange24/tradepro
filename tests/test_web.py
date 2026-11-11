@@ -62,8 +62,10 @@ def test_set_index_alias_and_overview(client):
     assert ov["n"] > 0 and sum(ov["counts"].values()) == ov["n"] and ov["verdict"][1]
     html = client.get("/scan?market=set").get_data(as_text=True)
     assert "ภาพรวมตลาด" in html
-    # Chaloke's way: no bigger-timeframe filter, so no Weekly -> Daily funnel
-    assert "funnel" not in ov and "Weekly เขียว" not in html
+    # Chaloke's way: the funnel starts at the weekly wave structure, no monthly step
+    fn = ov["funnel"]
+    assert {t for t, _ in fn["wd"]} <= {t for t, _ in fn["w"]}
+    assert "Weekly → Daily" in html and "Monthly" not in html
 
 
 def test_company_info(client):
