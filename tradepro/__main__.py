@@ -10,8 +10,8 @@ from pathlib import Path
 import pandas as pd
 
 from . import backtest
-from .config import DEFAULT
-from .data import make_source
+from .config import DEFAULT, for_timeframe
+from .data import completed_weeks, make_source
 from .markets import markets_for
 from .scanner import scan
 from .watchlists import WATCHLISTS
@@ -47,6 +47,8 @@ def main(argv=None):
         sp.add_argument("--source", default="yahoo", help="yahoo | csv | synthetic")
         sp.add_argument("--csv-dir", default="data/cache", help="per-market subfolders set/ and us/")
         sp.add_argument("--start", default=None, help="first date, e.g. 2015-01-01")
+        sp.add_argument("--tf", default="D", choices=["D", "W"],
+                        help="W = find W3 / RF on completed weekly bars alone (no higher-timeframe filter)")
         if name == "scan":
             sp.add_argument("--recent", type=int, default=1, help="look at signals from the last N bars")
         if name == "backtest":
@@ -69,13 +71,18 @@ def main(argv=None):
 
         cfg = replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, running_flat=m.running_flat,
                       w3_base=m.w3_base, htf_filter=m.htf_filter)
+        cfg = for_timeframe(cfg, args.tf)
         if args.cmd == "scan":
-            res = scan(source, tickers, recent_bars=args.recent, start=args.start or "2023-01-01",
-                       cfg=cfg, on_error=_warn)
+            res = scan(source, tickers, recent_bars=args.recent,
+                       start=args.start or ("2023-01-01" if args.tf == "D" else "2015-01-01"),
+                       cfg=cfg, on_error=_warn, tf=args.tf)
             scans.append(res.assign(market=m.name))
         else:
             cfg = replace(cfg, max_hold_bars=args.hold, w3_max_hold_bars=args.hold)
-            t = backtest.run(_load(source, tickers, args.start or "2015-01-01"), cfg)
+            data = _load(source, tickers, args.start or "2015-01-01")
+            if args.tf == "W":
+                data = {k: completed_weeks(v) for k, v in data.items()}
+            t = backtest.run(data, cfg)
             if not t.empty:
                 trades.append(t.assign(market=m.name))
 
