@@ -1,6 +1,6 @@
 """Tunable parameters for the ChalokeDotCom rules (W3-* in docs/chaloke_wave3.md)."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 
 @dataclass
@@ -46,3 +46,20 @@ class Config:
 
 
 DEFAULT = Config()
+
+
+BARS_PER = {"D": 1, "W": 5, "M": 21, "Y": 252}   # trading days per bar
+
+
+def for_timeframe(cfg: Config, tf: str) -> Config:
+    """The rules on weekly / monthly bars: the same time spans as on daily bars (e.g. the "cut_left" base
+    never looks back more than ~3 years), and no higher-timeframe filter. Without this a weekly wave 1
+    would start at the lowest low of 15 years of history."""
+    if tf == "D":
+        return cfg
+    k = BARS_PER[tf]
+    floor = 2 * cfg.w3_pivot_bars          # wave 1 top is searched within the wave 2 window
+    sc = lambda n, lo=2: max(lo, round(n / k))
+    return replace(cfg, htf_filter="", w3_max_wave1_bars=sc(cfg.w3_max_wave1_bars, floor),
+                   w3_base_max_bars=sc(cfg.w3_base_max_bars, floor), w3_max_wave2_bars=sc(cfg.w3_max_wave2_bars, floor),
+                   w3_max_bars_after_low=sc(cfg.w3_max_bars_after_low))

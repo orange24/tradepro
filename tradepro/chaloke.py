@@ -37,12 +37,12 @@ WEEKLY_NOT = {"shallow": "Wave 2 ยังย่อไม่ถึงโซน�
 def weekly_structure(df: pd.DataFrame, before: pd.Timestamp, cfg: Config) -> str:
     """Status of the weekly wave count (analyze() on weekly bars) using only weeks completed before
     the week that contains `before`."""
-    from dataclasses import replace
+    from .config import for_timeframe
     from .data import resample
     w = resample(df[df.index < before - pd.Timedelta(days=before.weekday())], "W")
     if len(w) < 60:
         return "no_data"
-    return analyze(w, replace(cfg, htf_filter=""))["status"]
+    return analyze(w, for_timeframe(cfg, "W"))["status"]
 
 
 def analyze(df: pd.DataFrame, cfg: Config) -> dict:

@@ -27,7 +27,7 @@ from flask import Flask, Response, abort, jsonify, redirect, render_template, re
 from ..advisor import advise
 from ..chaloke import CDC_TH, analyze as analyze_chaloke
 from ..info import company_info
-from ..config import DEFAULT
+from ..config import DEFAULT, for_timeframe
 from ..data import TIMEFRAMES, completed_weeks, resample
 from ..indicators import add_features
 from ..markets import MARKETS
@@ -108,7 +108,7 @@ class Scanner:
             tf = scan_tf(scan_id)
             cfg = market_cfg(market)
             if tf == "W":   # weekly W3 / RF on its own: no higher-timeframe filter, keep a signal 1 week
-                cfg = replace(cfg, htf_filter="", w3_recent_bars=2)
+                cfg = replace(for_timeframe(cfg, "W"), w3_recent_bars=2)
             tickers = list(WATCHLISTS[watchlist])
             tickers += [h["ticker"] for h in self.store.holdings() if h["market"] == market and h["ticker"] not in tickers]
             results, errors, zones, fresh_green = [], [], [], 0
@@ -171,11 +171,11 @@ class Scanner:
         if proxy:
             try:
                 long = self.prices.history(market, proxy[0], start="2005-01-01")
-                cfg = replace(market_cfg(market), htf_filter="")
+                base_cfg = market_cfg(market)
                 out["index"] = {"ticker": proxy[0], "name": proxy[1], "frames": {}}
                 for tf, label in (("D", "รายวัน"), ("W", "รายสัปดาห์"), ("M", "รายเดือน")):
                     d = long.iloc[-400:] if tf == "D" else resample(long, tf)
-                    a = analyze_chaloke(d, cfg)
+                    a = analyze_chaloke(d, for_timeframe(replace(base_cfg, htf_filter=""), tf))
                     out["index"]["frames"][tf] = {"label": label, "zone": a["cdc"]["zone"], "cdc": a["cdc"]["name"],
                                                   "bars": a["cdc"]["bars"], "status": a["status_text"]}
             except Exception as e:  # the overview is a bonus; never fail the scan for it
@@ -351,7 +351,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
             else:
                 df = resample(prices.history(market, ticker, start="2000-01-01", max_age=LIVE_SECONDS), tf)
             # the weekly / monthly filter only makes sense on daily bars
-            a = analyze_chaloke(df, market_cfg(market) if tf == "D" else replace(market_cfg(market), htf_filter=""))
+            a = analyze_chaloke(df, for_timeframe(market_cfg(market), tf))
         except Exception as e:
             return jsonify(error=str(e)), 502
         return jsonify(a | {"checked_at": datetime.now(timezone.utc).isoformat()})
@@ -369,7 +369,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
             df = daily if tf == "D" else resample(prices.history(market, ticker, start="2000-01-01"), tf)
         except Exception as e:
             return jsonify(error=str(e)), 502
-        cfg = market_cfg(market) if tf == "D" else replace(market_cfg(market), htf_filter="")
+        cfg = for_timeframe(market_cfg(market), tf)
         full = add_features(df, cfg)
         cdc = cdc_action_zone(full)
         f = full.iloc[-250:] if tf in ("D", "W") else full

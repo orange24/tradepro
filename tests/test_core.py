@@ -152,3 +152,10 @@ def test_weekly_cli_and_completed_weeks(capsys):
     assert list(completed_weeks(df).index) == [pd.Timestamp("2026-01-05"), pd.Timestamp("2026-01-12")]
     main(["scan", "--market", "us", "--source", "synthetic", "--tf", "W", "--recent", "30"])
     assert "No setups" not in capsys.readouterr().out
+
+
+def test_for_timeframe_keeps_daily_time_spans():
+    from tradepro.config import DEFAULT, for_timeframe
+    w = for_timeframe(Config(htf_filter="S"), "W")
+    assert w.htf_filter == "" and w.w3_base_max_bars == DEFAULT.w3_base_max_bars // 5
+    assert w.w3_max_wave2_bars >= 2 * w.w3_pivot_bars and for_timeframe(DEFAULT, "D") is DEFAULT
