@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 from . import backtest
-from .config import DEFAULT
+from .config import DEFAULT, for_timeframe
 from .data import completed_weeks, make_source
 from .markets import markets_for
 from .scanner import scan
@@ -70,7 +70,8 @@ def main(argv=None):
             continue
 
         cfg = replace(DEFAULT, market=m.name, cost_pct=m.cost_pct, running_flat=m.running_flat,
-                      w3_base=m.w3_base, htf_filter=m.htf_filter if args.tf == "D" else "")
+                      w3_base=m.w3_base, htf_filter=m.htf_filter)
+        cfg = for_timeframe(cfg, args.tf)
         if args.cmd == "scan":
             res = scan(source, tickers, recent_bars=args.recent,
                        start=args.start or ("2023-01-01" if args.tf == "D" else "2015-01-01"),
