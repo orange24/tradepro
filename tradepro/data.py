@@ -120,3 +120,11 @@ def resample(df: pd.DataFrame, tf: str) -> pd.DataFrame:
                 volume=("volume", "sum"), first_day=("first_day", "first")).dropna(subset=["close"])
     out.index = pd.DatetimeIndex(out.pop("first_day"), name="date")
     return out
+
+
+def completed_weeks(df: pd.DataFrame) -> pd.DataFrame:
+    """Daily bars -> weekly bars, dropping the current week until its Friday close is in."""
+    w = resample(df, "W")
+    if len(w) and df.index[-1].weekday() < 4:
+        w = w.iloc[:-1]
+    return w

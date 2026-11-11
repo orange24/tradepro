@@ -22,14 +22,14 @@ from dataclasses import replace
 from datetime import datetime, timezone
 
 import numpy as np
+import pandas as pd
 from flask import Flask, Response, abort, jsonify, redirect, render_template, request, url_for
 
 from ..advisor import advise
-from ..chaloke import CDC_TH, analyze as analyze_chaloke
+from ..chaloke import CDC_TH, WEEKLY_OK, analyze as analyze_chaloke, weekly_structure
 from ..info import company_info
-from ..wave import higher_tf_zone
-from ..config import DEFAULT
-from ..data import TIMEFRAMES, resample
+from ..config import DEFAULT, for_timeframe
+from ..data import TIMEFRAMES, completed_weeks, resample
 from ..indicators import add_features
 from ..markets import MARKETS
 from ..prices import PriceService
@@ -56,7 +56,15 @@ SCANS = {
     "setall": ("set", "set_all", "หุ้นไทยทั้งหมด (SET + mai)"),
     "us": ("us", "us50", "หุ้นสหรัฐ (US50)"),
     "asset": ("asset", "assets", "คริปโต / ทองคำ"),
+    "set_w": ("set", "set100", "หุ้นไทย W3 รายสัปดาห์"),
+    "us_w": ("us", "us50", "หุ้นสหรัฐ W3 รายสัปดาห์"),
 }
+
+
+def scan_tf(scan_id: str) -> str:
+    """"W" for scans that look for W3 / RF on weekly bars alone, "D" otherwise."""
+    return "W" if scan_id.endswith("_w") else "D"
+
 LIVE_SECONDS = 60       # the chart's live analysis refetches prices at most this often
 MIN_VALUE_THB = float(os.environ.get("TRADEPRO_MIN_VALUE", "1000000"))   # skip illiquid stocks in "setall"
 
@@ -98,26 +106,35 @@ class Scanner:
     def _run(self, scan_id: str):
         market, watchlist, _ = SCANS[scan_id]
         try:
+            tf = scan_tf(scan_id)
             cfg = market_cfg(market)
+            if tf == "W":   # weekly W3 / RF on its own: no higher-timeframe filter, keep a signal 1 week
+                cfg = replace(for_timeframe(cfg, "W"), w3_recent_bars=2)
             tickers = list(WATCHLISTS[watchlist])
             tickers += [h["ticker"] for h in self.store.holdings() if h["market"] == market and h["ticker"] not in tickers]
             results, errors, zones, fresh_green = [], [], [], 0
 
             def one(t):
-                df = self.prices.history(market, t)
-                last, px = df.index[-1], float(df["close"].iloc[-1])
+                # weekly scans and the weekly-structure filter need years of history
+                long = tf == "W" or "S" in cfg.htf_filter
+                df = self.prices.history(market, t, **({"start": "2015-01-01"} if long else {}))
                 if scan_id == "setall":
                     value = float((df["close"] * df["volume"]).iloc[-20:].mean())
                     if not value >= MIN_VALUE_THB:
                         return []                       # too thin to trade; skip
 
-                recent = list(df.index[-cfg.w3_recent_bars:])
                 cdc = cdc_action_zone(df)
-                green_now = bool(cdc["cdc_green"].iloc[-1])
                 g = cdc["cdc_green"].to_numpy()
-                # top-down: CDC of the last completed monthly and weekly bars
-                mz, wz = higher_tf_zone(df, "M").iloc[-1], higher_tf_zone(df, "W").iloc[-1]
-                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all()), t, mz, wz))
+                # top-down, the Chaloke way: weekly wave structure (completed weeks), then the daily first green
+                wst = weekly_structure(df, df.index[-1] + pd.Timedelta(days=1), cfg)
+                zones.append((str(cdc["cdc_zone"].iloc[-1]), bool(g[-1] and not g[-6:-1].all()), t, wst))
+                px = float(df["close"].iloc[-1])           # today's price, also in weekly mode
+                if tf == "W":
+                    df = completed_weeks(df)
+                    cdc = cdc_action_zone(df)
+                last = df.index[-1]
+                recent = list(df.index[-cfg.w3_recent_bars:])
+                green_now = bool(cdc["cdc_green"].iloc[-1])
                 rows = []
                 for s in detect(df, t, cfg):
                     if s.direction != "long":
@@ -140,7 +157,11 @@ class Scanner:
                     except Exception as e:  # keep scanning the rest
                         errors.append(f"{t}: {e}")
             results.sort(key=lambda r: (SETUP_ORDER.get(r["setup"], 9), -r["reward_r"]))
-            self.store.save_scan(scan_id, results, errors, self._overview(market, zones))
+            summary = self._overview(market, zones) | {"tf": tf}
+            w_ok = sorted((t, WEEKLY_OK[st]) for _, _, t, st in zones if st in WEEKLY_OK)
+            summary["funnel"] = {"w": w_ok, "wd": [x for x in w_ok if x[0] in
+                                                   {t for _, f, t, _ in zones if f}] if tf == "D" else []}
+            self.store.save_scan(scan_id, results, errors, summary)
         except Exception:
             log.exception("scan %s failed", scan_id)
         finally:
@@ -151,21 +172,17 @@ class Scanner:
         """Market direction: CDC breadth of the scanned stocks + the index (or its proxy) on D / W / M."""
         n = len(zones)
         counts = {z: sum(1 for x, *_ in zones if x == z) for z in ("green", "yellow", "orange", "red", "lblue", "blue")}
-        m_green = sorted(t for _, _, t, mz, _ in zones if mz == "green")
-        mw_green = sorted(t for _, _, t, mz, wz in zones if mz == "green" and wz == "green")
-        mwd = sorted(t for x, f, t, mz, wz in zones if mz == "green" and wz == "green" and f)
         out = {"n": n, "counts": counts, "fresh_green": sum(f for _, f, *_ in zones),
-               "funnel": {"m": m_green, "mw": mw_green, "mwd": mwd},
                "green_pct": round(counts["green"] / n * 100, 1) if n else 0}
         proxy = INDEX_PROXY.get(market)
         if proxy:
             try:
                 long = self.prices.history(market, proxy[0], start="2005-01-01")
-                cfg = replace(market_cfg(market), htf_filter="")
+                base_cfg = market_cfg(market)
                 out["index"] = {"ticker": proxy[0], "name": proxy[1], "frames": {}}
                 for tf, label in (("D", "รายวัน"), ("W", "รายสัปดาห์"), ("M", "รายเดือน")):
                     d = long.iloc[-400:] if tf == "D" else resample(long, tf)
-                    a = analyze_chaloke(d, cfg)
+                    a = analyze_chaloke(d, for_timeframe(replace(base_cfg, htf_filter=""), tf))
                     out["index"]["frames"][tf] = {"label": label, "zone": a["cdc"]["zone"], "cdc": a["cdc"]["name"],
                                                   "bars": a["cdc"]["bars"], "status": a["status_text"]}
             except Exception as e:  # the overview is a bonus; never fail the scan for it
@@ -214,7 +231,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if not password or request.endpoint == "static":
             return None
         auth = request.authorization
-        if auth and hmac.compare_digest(auth.password or "", password):
+        if auth and hmac.compare_digest((auth.password or "").encode(), password.encode()):   # bytes: Thai passwords work
             return None
         return Response("ต้องใส่รหัสผ่าน", 401, {"WWW-Authenticate": 'Basic realm="TradePro"'})
 
@@ -295,7 +312,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if scan_id not in SCANS:
             abort(404)
         market, watchlist, _ = SCANS[scan_id]
-        return render_template("scan.html", market=market, scan_id=scan_id, scans=SCANS,
+        return render_template("scan.html", market=market, scan_id=scan_id, scans=SCANS, tf=scan_tf(scan_id),
                                scan=store.latest_scan(scan_id), watchlist=WATCHLISTS[watchlist],
                                running=scan_id in scanner.running, active="scan")
 
@@ -341,7 +358,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
             else:
                 df = resample(prices.history(market, ticker, start="2000-01-01", max_age=LIVE_SECONDS), tf)
             # the weekly / monthly filter only makes sense on daily bars
-            a = analyze_chaloke(df, market_cfg(market) if tf == "D" else replace(market_cfg(market), htf_filter=""))
+            a = analyze_chaloke(df, for_timeframe(market_cfg(market), tf))
         except Exception as e:
             return jsonify(error=str(e)), 502
         return jsonify(a | {"checked_at": datetime.now(timezone.utc).isoformat()})
@@ -359,7 +376,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
             df = daily if tf == "D" else resample(prices.history(market, ticker, start="2000-01-01"), tf)
         except Exception as e:
             return jsonify(error=str(e)), 502
-        cfg = market_cfg(market) if tf == "D" else replace(market_cfg(market), htf_filter="")
+        cfg = for_timeframe(market_cfg(market), tf)
         full = add_features(df, cfg)
         cdc = cdc_action_zone(full)
         f = full.iloc[-250:] if tf in ("D", "W") else full

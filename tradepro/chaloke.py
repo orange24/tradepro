@@ -25,6 +25,25 @@ CDC_TH = {
 }
 FIB = (0.618, 0.786, 0.887, 0.942)
 
+# HTF "S": weekly wave states that allow a daily W3 / RF entry (big picture first, then Daily for timing):
+# wave 2 has reached the buy zone and wave 3 is starting, or the weekly chart is making new highs (in wave 3)
+WEEKLY_OK = {"wait_green": "Wave 2 ถึงโซนซื้อแล้ว", "buy": "เริ่ม Wave 3", "late_green": "อยู่ใน Wave 3",
+             "new_high": "ทำ high ใหม่ (อยู่ใน Wave 3)"}
+WEEKLY_NOT = {"shallow": "Wave 2 ยังย่อไม่ถึงโซนซื้อ", "deep": "Wave 2 ย่อลึกเกิน 94.2%", "broken": "หลุดฐาน Wave 1",
+              "no_wave": "ยังไม่เห็นโครงสร้าง Wave 1–2", "missed": "Wave 3 วิ่งไปไกลแล้ว",
+              "lost_green": "เขียวแรกแล้วแต่ CDC เปลี่ยนสี", "no_data": "ข้อมูลรายสัปดาห์ไม่พอ"}
+
+
+def weekly_structure(df: pd.DataFrame, before: pd.Timestamp, cfg: Config) -> str:
+    """Status of the weekly wave count (analyze() on weekly bars) using only weeks completed before
+    the week that contains `before`."""
+    from .config import for_timeframe
+    from .data import resample
+    w = resample(df[df.index < before - pd.Timedelta(days=before.weekday())], "W")
+    if len(w) < 60:
+        return "no_data"
+    return analyze(w, for_timeframe(cfg, "W"))["status"]
+
 
 def analyze(df: pd.DataFrame, cfg: Config) -> dict:
     f = add_features(df, cfg)
@@ -105,6 +124,12 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
     checks.append((cdc["zone"] == "green", f"CDC Action Zone: {cdc['name']} ({cdc['bars']} แท่ง) — {cdc['meaning']}"))
     checks.append((rr >= cfg.w3_min_rr, f"ถ้าซื้อที่ราคานี้ R/R = 1:{rr:.1f} (ต้อง ≥ 1:{cfg.w3_min_rr:g})"))
     htf_ok = True
+    if "S" in cfg.htf_filter:
+        st = weekly_structure(df, f.index[-1] + pd.Timedelta(days=1), cfg)
+        ok = st in WEEKLY_OK
+        htf_ok &= ok
+        checks.append((ok, "โครงสร้างเวฟ Weekly: " + {**WEEKLY_OK, **WEEKLY_NOT}.get(st, st)
+                           + ("" if ok else " ระบบจะยังไม่ให้สัญญาณซื้อบน Daily")))
     for tf, label in (("W", "รายสัปดาห์"), ("M", "รายเดือน")):
         if tf in cfg.htf_filter:
             z = higher_tf_zone(df, tf).iloc[-1]
@@ -144,7 +169,7 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
     elif zone[-1] != "green":
         status = ("lost_green", f"เขียวแรกเมื่อ {cdc['first_green']} แต่ตอนนี้ CDC เป็น{cdc['name']}แล้ว รอเขียวใหม่")
     elif fresh and not htf_ok:
-        status = ("wait_htf", "เขียวแรกรายวันแล้ว แต่ CDC timeframe ใหญ่ยังไม่เขียว รอให้เขียวก่อน")
+        status = ("wait_htf", "เขียวแรกรายวันแล้ว แต่ timeframe ใหญ่ยังไม่ผ่าน (ดูรายการด้านบน) รอก่อน")
     elif fresh:
         status = ("buy", f"เขียวแรกเมื่อ {cdc['first_green']} ({cdc['first_green_ago']} แท่งก่อน) "
                          "เข้าซื้อได้ที่ราคาเปิดแท่งถัดไป")

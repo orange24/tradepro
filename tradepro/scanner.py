@@ -5,18 +5,20 @@ from __future__ import annotations
 import pandas as pd
 
 from .config import DEFAULT, Config
-from .data import DataSource
+from .data import DataSource, completed_weeks
 from .setups import detect
 
 
 def scan(source: DataSource, tickers: list[str], recent_bars: int = 1, start: str | None = None,
-         cfg: Config = DEFAULT, on_error=None) -> pd.DataFrame:
+         cfg: Config = DEFAULT, on_error=None, tf: str = "D") -> pd.DataFrame:
     """Signals whose signal bar is among the last `recent_bars` bars of each ticker.
     With recent_bars=1 these are orders to place for the next session."""
     rows = []
     for t in tickers:
         try:
             df = source.get(t, start=start)
+            if tf == "W":
+                df = completed_weeks(df)
         except Exception as e:  # one bad ticker should not stop the scan
             if on_error:
                 on_error(t, e)
