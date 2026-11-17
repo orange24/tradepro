@@ -110,6 +110,22 @@ def test_chaloke_live_checklist():
     assert c["status"] == "no_wave" and c["wave"] is None
 
 
+def test_chaloke_matches_scan_when_wave1_top_leaves_window():
+    """The wave 2 window ends at the first green bar (as in the scan), so a few bars later the live
+    checklist must still find the same wave 1 even though its top is now > w3_max_wave2_bars bars old."""
+    from tradepro.chaloke import analyze
+
+    cfg = Config(w3_max_wave2_bars=33)                                  # top is 33 bars before the first green
+    base_w1 = list(np.linspace(100, 101, 30)) + list(np.linspace(101, 130, 20))
+    df = _bars(base_w1 + list(np.linspace(130, 107, 18)) + list(np.linspace(107.5, 124, 22)), spread=0.3)
+    w3 = [s for s in detect(df, "X", cfg) if s.setup == "W3"]
+    assert w3
+    a = analyze(df, cfg)
+    top_age = len(df) - 1 - int(np.argmax(df["high"].to_numpy()))
+    assert top_age > cfg.w3_max_wave2_bars                             # top slid out of today's window
+    assert a["wave"] is not None and a["wave"]["top"] == pytest.approx(w3[-1].levels["w1_top"])
+
+
 def test_w3_three_lots_and_stop_on_close():
     idx = pd.bdate_range("2024-01-01", periods=5)
     df = pd.DataFrame({"open": [10, 10, 10.5, 11, 11], "high": [10.2, 11.2, 12.1, 11.2, 13.5],

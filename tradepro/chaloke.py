@@ -69,7 +69,15 @@ def analyze(df: pd.DataFrame, cfg: Config) -> dict:
 
     # Wave 1: the highest unbroken swing high of the last w3_max_wave2_bars bars, with a real leg below it
     wave = None
-    h = wave1_top(hi, pivot_highs(hi, k), n - 1, cfg)
+    is_ph = pivot_highs(hi, k)
+    h = wave1_top(hi, is_ph, n - 1, cfg)
+    # The w3_max_wave2_bars window runs from the wave 1 top to the FIRST GREEN bar (as in setups / the scan),
+    # not to today. So also look from the latest first green bar: a top that has slid out of today's
+    # window but was inside it at the first green (and is still unbroken) is still this wave's top.
+    if first_green is not None:
+        hg = wave1_top(hi, is_ph, first_green, cfg)
+        if hg is not None and hi[hg] >= hi[hg:].max() and (h is None or hi[hg] > hi[h]):
+            h = hg
     for h in ([h] if h is not None else []):
         b0 = wave1_start(hi, h, cfg)
         b = b0 + int(np.argmin(lo[b0:h + 1]))
