@@ -90,3 +90,14 @@ def test_weekly_w3_scan(client):
     assert scan["summary"]["tf"] == "W"
     html = client.get("/scan?market=set_w").get_data(as_text=True)
     assert "โหมดรายสัปดาห์" in html and "ราคาเปิดสัปดาห์ถัดไป" in html
+
+
+def test_dividend_scan(client):
+    client.application.config["scanner"]._run("div_us")
+    html = client.get("/scan?market=div_us").get_data(as_text=True)
+    assert "สแกนหุ้นปันผล" in html and "สแกนล่าสุด" in html and "เกณฑ์" in html
+    scan = client.application.config["store"].latest_scan("div_us")
+    assert not scan["errors"]
+    for r in scan["results"]:
+        assert r["yield"] >= 2.5 and r["years"] >= 10 and r["cdc"] and "timing_ok" in r
+    assert "หุ้นปันผล" in client.get("/scan?market=set").get_data(as_text=True)

@@ -13,6 +13,7 @@
   <nav>
     <a href="{{ url_for('portfolio') }}" class="{{ 'on' if active == 'portfolio' }}">พอร์ตของฉัน</a>
     <a href="{{ url_for('scan_page', market='set') }}" class="{{ 'on' if active == 'scan' }}">สแกนหุ้นน่าซื้อ</a>
+    <a href="{{ url_for('scan_page', market='div_set') }}" class="{{ 'on' if active == 'div' }}">หุ้นปันผล</a>
   </nav>
   <form class="lookup" method="get" action="{{ url_for('chart_lookup') }}">
     <select name="market" aria-label="ตลาด"><option value="set">SET</option><option value="us">US</option><option value="asset">BTC / ทอง</option></select>

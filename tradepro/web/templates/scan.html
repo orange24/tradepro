@@ -8,7 +8,7 @@
 {% elif market in ('set', 'us') %}<p class="note">แบบลุงโฉลก: ดูภาพใหญ่ก่อน โครงสร้างเวฟ Weekly ต้องอยู่ในโซนซื้อ Wave 2 หรืออยู่ใน Wave 3 แล้วจึงหาจังหวะเข้า Wave 3 บน Daily</p>{% endif %}
 <div class="card-head">
   <div class="tabs">
-    {% for sid, (m, wl, label) in scans.items() %}
+    {% for sid, (m, wl, label) in scans.items() if not sid.startswith('div_') %}
     <a href="{{ url_for('scan_page', market=sid) }}" class="{{ 'on' if scan_id == sid }}">{{ label }}</a>
     {% endfor %}
   </div>

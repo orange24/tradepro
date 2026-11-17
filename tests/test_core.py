@@ -175,3 +175,19 @@ def test_for_timeframe_keeps_daily_time_spans():
     w = for_timeframe(Config(htf_filter="S"), "W")
     assert w.htf_filter == "" and w.w3_base_max_bars == DEFAULT.w3_base_max_bars // 5
     assert w.w3_max_wave2_bars >= 2 * w.w3_pivot_bars and for_timeframe(DEFAULT, "D") is DEFAULT
+
+
+def test_dividend_profile():
+    import pandas as pd
+    from tradepro.dividend import CRITERIA, passes, profile
+
+    dates = [pd.Timestamp(y, m, 1) for y in range(2017, 2027) for m in (3, 9)]
+    amounts = [1.0 + 0.05 * (d.year - 2017) for d in dates]
+    amounts[-2] = 10.0                                    # March 2026: a one-off special dividend
+    p = profile(pd.Series(amounts, index=pd.DatetimeIndex(dates)), 40.0, pd.Timestamp("2026-10-15"))
+    assert p["special"] and p["years"] == 10
+    assert p["ttm_dps"] == 1.45 and p["yield"] == round(1.45 / 40 * 100, 2)   # special left out
+    assert p["yield_all"] > p["yield"] and p["growth5"] > 0 and p["no_cut"] >= 5
+    assert passes(p | {"payout": 60}, CRITERIA["us"]) == [] and passes(p | {"payout": 95}, CRITERIA["us"])
+    assert passes(p | {"payout": 60}, CRITERIA["set"]) == ["ปันผล 3.6% < 4%"]
+    assert profile(pd.Series(dtype=float), 10, pd.Timestamp("2026-10-15"))["years"] == 0

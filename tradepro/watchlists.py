@@ -70,3 +70,16 @@ US50 = [
 ]
 
 WATCHLISTS["us50"] = US50
+
+# US dividend payers: long-time dividend raisers and high-yield large caps across sectors. Edit freely.
+US_DIV = [
+    "JNJ", "PG", "KO", "PEP", "ABBV", "MRK", "PFE", "BMY", "AMGN", "GILD",
+    "XOM", "CVX", "COP", "EOG", "KMI", "WMB", "OKE", "VZ", "T", "MO",
+    "PM", "IBM", "CSCO", "TXN", "AVGO", "QCOM", "HD", "LOW", "MCD", "SBUX",
+    "TGT", "WMT", "CL", "KMB", "GIS", "HSY", "MDLZ", "KHC", "JPM", "BAC",
+    "WFC", "USB", "PNC", "TFC", "MS", "GS", "BLK", "MET", "PRU", "AFL",
+    "TRV", "CB", "UPS", "LMT", "RTX", "GD", "CAT", "MMM", "EMR", "ITW",
+    "ADP", "NEE", "DUK", "SO", "D", "AEP", "XEL", "O", "SPG", "PLD",
+    "AMT", "VICI", "LYB", "DOW", "ABT", "MDT", "CVS", "BEN", "TROW", "ENB",
+]
+WATCHLISTS["us_div"] = US_DIV
