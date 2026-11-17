@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}สแกนหุ้นปันผล · TradePro{% endblock %}
+{% block head %}{% if running %}<meta http-equiv="refresh" content="10">{% endif %}{% endblock %}
+{% block body %}
+{% set cur = CURRENCY[market] %}
+<h1>สแกนหุ้นปันผล</h1>
+<p class="sub">คัดหุ้นที่ปันผลสูงและจ่ายสม่ำเสมอก่อน แล้วดูจังหวะซื้อตามแนวลุงโฉลก: โครงสร้างเวฟ Weekly (Wave 2 ถึงโซนซื้อ / อยู่ใน Wave 3) และ CDC Action Zone รายวันเขียว</p>
+<div class="card-head">
+  <div class="tabs">
+    {% for sid, (m, wl, label) in scans.items() if sid.startswith('div_') %}
+    <a href="{{ url_for('scan_page', market=sid) }}" class="{{ 'on' if scan_id == sid }}">{{ label }}</a>
+    {% endfor %}
+  </div>
+  <form method="post" action="{{ url_for('scan_run') }}" class="inline">
+    <input type="hidden" name="market" value="{{ scan_id }}">
+    <button {{ 'disabled' if running }}>{{ 'กำลังสแกน…' if running else 'สแกนใหม่' }}</button>
+  </form>
+</div>
+
+<section class="card">
+{% if scan %}
+  {% set sm = scan.summary %}{% set c = sm.criteria %}
+  <p class="note" style="margin-top:0">เกณฑ์: ปันผลย้อนหลัง 12 เดือน (ไม่นับปันผลพิเศษ) ≥ {{ c.min_yield }}% ·
+    จ่ายปันผลทุกปีติดต่อกัน ≥ {{ c.min_years }} ปี · จ่ายปันผลไม่เกิน {{ '%g'|format(c.max_payout) }}% ของกำไร
+    {% if market == 'set' %}· ข้ามหุ้นที่มูลค่าซื้อขายเฉลี่ยต่ำกว่า 1 ล้านบาท/วัน ({{ sm.thin }} ตัว){% endif %}</p>
+  <p class="note">สแกนล่าสุด: <span data-utc="{{ scan.run_at }}">{{ scan.run_at }}</span> · ดู {{ sm.n }} ตัว ·
+    ผ่านเกณฑ์ปันผล <b>{{ scan.results|length }}</b> ตัว · จังหวะดีตามลุงโฉลก <b>{{ sm.timing_ok }}</b> ตัว
+    {% if running %} · กำลังสแกนใหม่ หน้านี้จะรีเฟรชเอง{% endif %}</p>
+  {% if scan.results %}
+  <label class="note" style="display:inline-flex;flex-direction:row;gap:6px;align-items:center;margin:4px 0 10px">
+    <input type="checkbox" id="only-timing" style="width:auto;margin:0"> แสดงเฉพาะที่จังหวะดี (Weekly ผ่าน + CDC รายวันเขียว)</label>
+  <label class="note" style="display:inline-flex;flex-direction:row;gap:6px;align-items:center;margin:4px 0 10px 16px">
+    <input type="checkbox" id="no-reit" style="width:auto;margin:0"> ไม่รวม REIT / กองทุนอสังหาฯ</label>
+  <div class="table-wrap"><table id="div-table">
+    <tr><th>หุ้น</th><th class="n">ราคา</th><th class="n">ปันผล 12 เดือน</th><th class="n">เฉลี่ย 5 ปี</th>
+        <th class="n">จ่ายติดต่อ</th><th class="n">โต/ปี (5 ปี)</th><th class="n">Payout</th><th class="n">FCF คุ้ม</th>
+        <th>XD ล่าสุด</th><th>จังหวะตามลุงโฉลก</th></tr>
+    {% for s in scan.results %}
+    <tr data-timing="{{ 1 if s.timing_ok else 0 }}" data-reit="{{ 1 if s.reit else 0 }}">
+      <td><a class="tk" href="{{ url_for('chart_page', market=market, ticker=s.ticker) }}">{{ s.ticker }}</a>
+        {% if s.name %}<div class="note">{{ s.name }}</div>{% endif %}{% if s.reit %}<div class="note">REIT / กองทุนอสังหาฯ</div>{% endif %}</td>
+      <td class="n">{{ '{:,.2f}'.format(s.price) }}</td>
+      <td class="n"><b>{{ '{:.2f}'.format(s['yield']) }}%</b><div class="note">{{ cur }}{{ '{:,.2f}'.format(s.ttm_dps) }}/หุ้น
+        {% if s.special %}<br>+ปันผลพิเศษ (รวม {{ '{:.1f}'.format(s.yield_all) }}%){% endif %}</div></td>
+      <td class="n">{{ '{:.2f}%'.format(s.avg5_yield) if s.avg5_yield else '-' }}</td>
+      <td class="n">{{ "15+" if s.years >= 15 else s.years }} ปี{% if s.no_cut %}<div class="note">ไม่ลด {{ s.no_cut }} ปี</div>{% endif %}</td>
+      <td class="n {{ 'pos' if s.growth5 and s.growth5 > 0 else 'neg' if s.growth5 and s.growth5 < 0 }}">{{ '{:+.1f}%'.format(s.growth5) if s.growth5 is not none else '-' }}</td>
+      <td class="n">{{ '{:.0f}%'.format(s.payout) if s.payout is not none and not s.reit else '-' }}</td>
+      <td class="n {{ 'neg' if s.fcf_cover is not none and s.fcf_cover < 1 }}" title="กระแสเงินสดอิสระ ÷ เงินปันผลที่จ่าย (ต่ำกว่า 1 เท่า = จ่ายเกินเงินสดที่หาได้)">{{ '{:.2f}x'.format(s.fcf_cover) if s.fcf_cover is not none else '-' }}</td>
+      <td style="white-space:nowrap">{{ s.last_ex or '-' }}{% if s.next_xd %}<div class="note">XD ถัดไป {{ s.next_xd }}</div>{% endif %}</td>
+      <td>{% if s.timing_ok %}<span class="badge b-hold">จังหวะดี</span>{% elif s.weekly_ok %}<span class="badge b-watch">รอ CDC เขียว</span>{% else %}<span class="badge b-sell">ยังไม่ใช่จังหวะ</span>{% endif %}
+        {% if s.w3 %}<span class="badge b-hold">มีสัญญาณ W3</span>{% endif %}
+        <div class="note">Weekly: {{ s.weekly_th }} · CDC รายวัน <span class="dot z-{{ s.cdc }}"></span>{{ CDC_TH.get(s.cdc, ('-',))[0] }}</div></td>
+    </tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p class="empty">ยังไม่มีหุ้นที่ผ่านเกณฑ์ปันผล</p>{% endif %}
+  {% if sm.near %}<details style="margin-top:12px"><summary>เกือบผ่าน (พลาดเกณฑ์เดียว) {{ sm.near|length }} ตัว</summary>
+  <div class="table-wrap"><table>
+    <tr><th>หุ้น</th><th class="n">ปันผล 12 เดือน</th><th class="n">จ่ายติดต่อ</th><th class="n">Payout</th><th>ไม่ผ่านเพราะ</th></tr>
+    {% for s in sm.near %}<tr><td><a class="tk" href="{{ url_for('chart_page', market=market, ticker=s.ticker) }}">{{ s.ticker }}</a></td>
+      <td class="n">{{ '{:.2f}%'.format(s['yield']) }}</td><td class="n">{{ s.years }} ปี</td>
+      <td class="n">{{ '{:.0f}%'.format(s.payout) if s.payout is not none else '-' }}</td><td class="note">{{ s.fails|join(', ') }}</td></tr>{% endfor %}
+  </table></div></details>{% endif %}
+  {% if scan.errors %}<details><summary>ดึงข้อมูลไม่ได้ {{ scan.errors|length }} ตัว</summary>
+    <ul class="reasons">{% for e in scan.errors %}<li>{{ e }}</li>{% endfor %}</ul></details>{% endif %}
+{% elif running %}
+  <p class="empty">กำลังสแกนครั้งแรก (หุ้นไทยทั้งตลาดใช้เวลาหลายนาที) หน้านี้จะรีเฟรชเอง…</p>
+{% else %}
+  <p class="empty">ยังไม่เคยสแกน กด "สแกนใหม่" ได้เลย</p>
+{% endif %}
+</section>
+<p class="note">ปันผลพิเศษ = งวดที่จ่ายมากกว่า 2.5 เท่าของปกติ ไม่นับในอัตราปันผลหลักเพราะอาจไม่เกิดซ้ำ · ข้อมูลปันผลและงบจาก Yahoo Finance อาจคลาดเคลื่อน ควรเช็คกับ set.or.th ก่อนซื้อ</p>
+<script>
+document.querySelectorAll("[data-utc]").forEach(el => {
+  const d = new Date(el.dataset.utc);
+  if (!isNaN(d)) el.textContent = d.toLocaleString("th-TH", {dateStyle: "medium", timeStyle: "short"});
+});
+const box = document.getElementById("only-timing"), noReit = document.getElementById("no-reit");
+if (box) {
+  try {
+    box.checked = localStorage.getItem("div-only-timing") === "1";
+    noReit.checked = localStorage.getItem("div-no-reit") === "1";
+  } catch (e) {}
+  const apply = () => {
+    document.querySelectorAll("#div-table tr[data-timing]").forEach(tr => {
+      const hide = (box.checked && tr.dataset.timing !== "1") || (noReit.checked && tr.dataset.reit === "1");
+      tr.style.display = hide ? "none" : "";
+    });
+    try {
+      localStorage.setItem("div-only-timing", box.checked ? "1" : "0");
+      localStorage.setItem("div-no-reit", noReit.checked ? "1" : "0");
+    } catch (e) {}
+  };
+  box.addEventListener("change", apply);
+  noReit.addEventListener("change", apply);
+  apply();
+}
+</script>
+{% endblock %}

@@ -26,12 +26,14 @@ import pandas as pd
 from flask import Flask, Response, abort, jsonify, redirect, render_template, request, url_for
 
 from ..advisor import advise
-from ..chaloke import CDC_TH, WEEKLY_OK, analyze as analyze_chaloke, weekly_structure
+from ..chaloke import CDC_TH, WEEKLY_NOT, WEEKLY_OK, analyze as analyze_chaloke, weekly_structure
 from ..info import company_info
 from ..config import DEFAULT, for_timeframe
+from ..dividend import CRITERIA as DIV_CRITERIA, fetch as fetch_dividends, passes as div_passes
 from ..data import TIMEFRAMES, completed_weeks, resample
 from ..indicators import add_features
 from ..markets import MARKETS
+from ..setlist import load as load_set_list
 from ..prices import PriceService
 from ..setups import detect
 from ..wave import cdc_action_zone
@@ -58,7 +60,10 @@ SCANS = {
     "asset": ("asset", "assets", "คริปโต / ทองคำ"),
     "set_w": ("set", "set100", "หุ้นไทย W3 รายสัปดาห์"),
     "us_w": ("us", "us50", "หุ้นสหรัฐ W3 รายสัปดาห์"),
+    "div_set": ("set", "set_all", "หุ้นปันผลไทย"),
+    "div_us": ("us", "us_div", "หุ้นปันผลสหรัฐ"),
 }
+DIV_SCAN_HOURS = 24     # dividend data changes slowly; rescan at most once a day
 
 
 def scan_tf(scan_id: str) -> str:
@@ -104,6 +109,8 @@ class Scanner:
         return True
 
     def _run(self, scan_id: str):
+        if scan_id.startswith("div_"):
+            return self._run_div(scan_id)
         market, watchlist, _ = SCANS[scan_id]
         try:
             tf = scan_tf(scan_id)
@@ -168,6 +175,66 @@ class Scanner:
             with self._lock:
                 self.running.discard(scan_id)
 
+    def _run_div(self, scan_id: str):
+        """Dividend scan: yield / years paid / payout, then the Chaloke timing (weekly wave + daily CDC)."""
+        market, watchlist, _ = SCANS[scan_id]
+        crit = DIV_CRITERIA[market]
+        cfg = market_cfg(market)
+        try:
+            tickers = list(WATCHLISTS[watchlist])
+            tickers += [h["ticker"] for h in self.store.holdings() if h["market"] == market and h["ticker"] not in tickers]
+            w3 = {r["ticker"] for sid, (m, *_) in SCANS.items() if m == market and not sid.startswith("div_")
+                  for r in (self.store.latest_scan(sid) or {}).get("results", [])}
+            results, errors, near, thin = [], [], [], 0
+            set_rows = {r["symbol"]: r for r in load_set_list()} if market == "set" else {}
+            set_sector = {t: r["sector"] for t, r in set_rows.items()}
+            is_reit = lambda m, t, d: (set_sector.get(t) == "Property Fund & REITs" if m == "set"
+                                       else d.get("sector") == "Real Estate")
+
+            def one(t):
+                d = fetch_dividends(market, t, self.prices.source)
+                d["reit"] = is_reit(market, t, d)
+                if t in set_rows:     # Yahoo's Thai names look like "QHBREIT_QUALITY HOUSES..."; use the SET list
+                    d["name"] = set_rows[t]["company"].title()
+                if market == "set" and not d.get("value", 0) >= MIN_VALUE_THB:
+                    return None, "thin"
+                why = div_passes(d, crit)
+                row = d | {"ticker": t, "fails": why}
+                if why:
+                    return row, "fail"
+                # timing, the Chaloke way: weekly wave structure, then the daily CDC colour
+                df = self.prices.history(market, t, start="2015-01-01")
+                st = weekly_structure(df, df.index[-1] + pd.Timedelta(days=1), cfg)
+                zone = str(cdc_action_zone(df)["cdc_zone"].iloc[-1])
+                row |= {"weekly": st, "weekly_th": {**WEEKLY_OK, **WEEKLY_NOT}.get(st, st), "weekly_ok": st in WEEKLY_OK,
+                        "cdc": zone, "w3": t in w3}
+                row["timing_ok"] = row["weekly_ok"] and zone == "green"
+                return row, "pass"
+
+            with ThreadPoolExecutor(max_workers=8 if len(tickers) > 100 else 4) as pool:
+                for t, fut in [(t, pool.submit(one, t)) for t in tickers]:
+                    try:
+                        row, kind = fut.result()
+                    except Exception as e:
+                        errors.append(f"{t}: {e}")
+                        continue
+                    if kind == "pass":
+                        results.append(row)
+                    elif kind == "thin":
+                        thin += 1
+                    elif row["yield"] >= crit.min_yield * 0.75 and len(row["fails"]) == 1:
+                        near.append(row)        # misses by one rule: worth a look
+            results.sort(key=lambda r: (not r["timing_ok"], -r["yield"]))
+            near.sort(key=lambda r: -r["yield"])
+            summary = {"dividend": True, "n": len(tickers) - thin, "thin": thin, "criteria": vars(crit),
+                       "timing_ok": sum(r["timing_ok"] for r in results), "near": near[:30]}
+            self.store.save_scan(scan_id, results, errors, summary)
+        except Exception:
+            log.exception("scan %s failed", scan_id)
+        finally:
+            with self._lock:
+                self.running.discard(scan_id)
+
     def _overview(self, market: str, zones: list) -> dict:
         """Market direction: CDC breadth of the scanned stocks + the index (or its proxy) on D / W / M."""
         n = len(zones)
@@ -210,7 +277,8 @@ class Scanner:
                 last = self.store.latest_scan(market)
                 age = (datetime.now(timezone.utc) - datetime.fromisoformat(last["run_at"])).total_seconds() \
                     if last else None
-                if age is None or age > every_hours * 3600:
+                hours = max(every_hours, DIV_SCAN_HOURS) if market.startswith("div_") else every_hours
+                if age is None or age > hours * 3600:
                     self.start(market)
             time.sleep(600)
 
@@ -238,7 +306,7 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
     @app.context_processor
     def helpers():
         return {"STATUS_TH": STATUS_TH, "ACTION_TH": ACTION_TH, "CONTEXT_TH": CONTEXT_TH, "SETUP_TH": SETUP_TH,
-                "CURRENCY": CURRENCY, "MARKETS": MARKETS, "MARKET_TH": MARKET_TH, "ASSETS": ASSETS,
+                "CDC_TH": CDC_TH, "CURRENCY": CURRENCY, "MARKETS": MARKETS, "MARKET_TH": MARKET_TH, "ASSETS": ASSETS,
                 "PROXY_NAME": {t: name for t, name in INDEX_PROXY.values()}}
 
     def evaluate(h: dict, max_age: float | None = None) -> dict:
@@ -312,9 +380,10 @@ def create_app(db_path: str | None = None, source: str | None = None, autoscan: 
         if scan_id not in SCANS:
             abort(404)
         market, watchlist, _ = SCANS[scan_id]
-        return render_template("scan.html", market=market, scan_id=scan_id, scans=SCANS, tf=scan_tf(scan_id),
+        return render_template("dividend.html" if scan_id.startswith("div_") else "scan.html", market=market, scan_id=scan_id, scans=SCANS, tf=scan_tf(scan_id),
                                scan=store.latest_scan(scan_id), watchlist=WATCHLISTS[watchlist],
-                               running=scan_id in scanner.running, active="scan")
+                               running=scan_id in scanner.running,
+                               active="div" if scan_id.startswith("div_") else "scan")
 
     @app.post("/scan/run")
     def scan_run():
